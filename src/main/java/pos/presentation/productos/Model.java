@@ -3,15 +3,22 @@ import pos.Application;
 import pos.logic.Producto;
 import pos.logic.Categoria;
 import pos.presentation.AbstractModel;
+
+import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 public class Model extends AbstractModel{
-    private List<Categoria> categorias;
+    private
+    List<Categoria> categorias;
     Producto filter;
     List<Producto> list;
     Producto current;
     int mode;
+    DefaultComboBoxModel<Categoria> modeModel;
+
+    public void setSelectedItem(Object anItem){}
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -28,8 +35,17 @@ public class Model extends AbstractModel{
         categorias.add(new Categoria("Aceites"));
         categorias.add(new Categoria("Agua"));
         categorias.add(new Categoria("Vinos"));
+        modeModel = new DefaultComboBoxModel<>(categorias.toArray(new Categoria[0]));
 //fin
     }
+    public DefaultComboBoxModel<Categoria> getModeModel() {
+        return modeModel;
+    }
+
+    public void setSelectedItem(Categoria categoria) {
+        modeModel.setSelectedItem(categoria);
+    }
+
     public List<Categoria> getCategorias() {
         return categorias;
     }

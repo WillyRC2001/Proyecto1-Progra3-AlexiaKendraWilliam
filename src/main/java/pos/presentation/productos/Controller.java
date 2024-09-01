@@ -18,9 +18,9 @@ public class Controller {
         view.setModel(model);
     }
     //Prueba
-    public List<Categoria> getCategorias() {
-        return model.getCategorias();
-    }
+//    public List<Categoria> getCategorias() {
+//        return model.getCategorias();
+//    }
     //Fin
     public void search(Producto filter) throws Exception {
         model.setFilter(filter);

@@ -100,17 +100,23 @@ public class View  implements PropertyChangeListener{
             }
         });
     }
-
     private void setUpComboBox() {
         if (model != null) {
-            List<Categoria> categorias = model.getCategorias(); // Obtén las categorías del modelo
-
-            categoriaJcb.removeAllItems(); // Limpia cualquier elemento existente
-            for (Categoria categoria : categorias) {
-                categoriaJcb.addItem(categoria); // Añade cada objeto Categoria al JComboBox
-            }
+            DefaultComboBoxModel<Categoria> comboBoxModel = model.getModeModel();
+            categoriaJcb.setModel(comboBoxModel);
         }
     }
+
+//    private void setUpComboBox() {
+//        if (model != null) {
+//            List<Categoria> categorias = model.getCategorias(); // Obtén las categorías del modelo
+//
+//            categoriaJcb.removeAllItems(); // Limpia cualquier elemento existente
+//            for (Categoria categoria : categorias) {
+//                categoriaJcb.addItem(categoria); // Añade cada objeto Categoria al JComboBox
+//            }
+//        }
+//    }
 
     private boolean validate() {
         boolean valid = true;
@@ -218,14 +224,18 @@ public class View  implements PropertyChangeListener{
             case pos.presentation.productos.Model.LIST:
                 int[] cols = {pos.presentation.productos.TableModel.CODIGO, pos.presentation.productos.TableModel.DESCRIPCION,
                         pos.presentation.productos.TableModel.UNIDAD, pos.presentation.productos.TableModel.PRECIO,
-                       TableModel.EXISTENCIA //, pos.presentation.productos.TableModel.CATEGORIA
+                       TableModel.EXISTENCIA, pos.presentation.productos.TableModel.CATEGORIA
                         //
                         };
                         list.setModel(new TableModel(cols, model.getList()));
                         list.setRowHeight(30);
                         TableColumnModel columnModel = list.getColumnModel();
+                        columnModel.getColumn(0).setPreferredWidth(150);
                         columnModel.getColumn(1).setPreferredWidth(150);
+                        columnModel.getColumn(2).setPreferredWidth(150);
                         columnModel.getColumn(3).setPreferredWidth(150);
+                        columnModel.getColumn(4).setPreferredWidth(150);
+                        columnModel.getColumn(5).setPreferredWidth(150);
                         break;
                         case pos.presentation.clientes.Model.CURRENT:
                             codigo.setText(model.getCurrent().getCodigo());
@@ -256,8 +266,8 @@ public class View  implements PropertyChangeListener{
                     precioLbl.setBorder(null);
                     existenciaLbl.setBorder(null);
                     existenciaLbl.setToolTipText(null);
-                   //categoriaLbl.setBorder(null);
-                  //categoriaLbl.setToolTipText(null);
+                   categoriaLbl.setBorder(null);
+                  categoriaLbl.setToolTipText(null);
                     break;
                 case Model.FILTER:
                     codigo.setText(model.getFilter().getCodigo());
