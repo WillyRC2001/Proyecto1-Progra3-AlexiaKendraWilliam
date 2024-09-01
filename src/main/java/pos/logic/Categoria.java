@@ -25,16 +25,9 @@ public class Categoria {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Categoria other = (Categoria) obj;
+        if (this == obj) {return true;}
+        if (obj == null || getClass() != obj.getClass()) {return false;}
+        Categoria other = (Categoria) obj;
         return Objects.equals(this.Nombre, other.Nombre);
     }
 
@@ -46,4 +39,8 @@ public class Categoria {
         this.Nombre = Nombre;
     }
 
+    @Override
+    public String toString() {
+        return Nombre;
+    }
 }

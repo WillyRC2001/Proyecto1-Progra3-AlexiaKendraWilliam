@@ -95,7 +95,7 @@ public class Service {
     }
 
     public void delete(Cajero e) throws Exception{
-        data.getClientes().remove(e);
+        data.getCajeros().remove(e);
     }
 
     public List<Cajero> search(Cajero e){
@@ -137,8 +137,12 @@ public class Service {
     }
 
     public List<Producto> search(Producto e){
+//        return data.getProductos().stream()
+//                .filter(i->i.getCodigo().contains(e.getCodigo()))
+//                .sorted(Comparator.comparing(Producto::getDescripcion))
+//                .collect(Collectors.toList());
         return data.getProductos().stream()
-                .filter(i->i.getCodigo().contains(e.getCodigo()))
+                .filter(i -> e.getCodigo() == null || (i.getCodigo() != null && i.getCodigo().contains(e.getCodigo())))
                 .sorted(Comparator.comparing(Producto::getDescripcion))
                 .collect(Collectors.toList());
     }

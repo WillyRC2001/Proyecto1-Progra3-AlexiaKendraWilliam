@@ -40,7 +40,7 @@
               <hideActionText value="true"/>
               <horizontalAlignment value="0"/>
               <horizontalTextPosition value="2"/>
-              <icon value="pos/presentation/icons/pdf.png"/>
+              <icon value="pos/presentation/icons/expediente.png"/>
               <text value="Reporte"/>
             </properties>
           </component>
@@ -50,7 +50,7 @@
             </constraints>
             <properties>
               <horizontalTextPosition value="2"/>
-              <icon value="pos/presentation/icons/search.png"/>
+              <icon value="pos/presentation/icons/buscar.png"/>
               <text value="Buscar"/>
             </properties>
           </component>
@@ -210,7 +210,7 @@
                 <properties>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="2"/>
-                  <icon value="pos/presentation/icons/save.png"/>
+                  <icon value="pos/presentation/icons/guardar-el-archivo.png"/>
                   <text value="Guardar"/>
                 </properties>
               </component>
@@ -221,7 +221,7 @@
                 <properties>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="2"/>
-                  <icon value="pos/presentation/icons/delete.png"/>
+                  <icon value="pos/presentation/icons/cancelar.png"/>
                   <text value="Borrar"/>
                 </properties>
               </component>
@@ -231,7 +231,7 @@
                 </constraints>
                 <properties>
                   <horizontalTextPosition value="2"/>
-                  <icon value="pos/presentation/icons/clear.png"/>
+                  <icon value="pos/presentation/icons/borrar.png"/>
                   <text value="Limpiar"/>
                 </properties>
               </component>

@@ -30,15 +30,23 @@ public class Application {
         pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
         pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
         clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
-        Icon clientesIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
+        Icon clientesIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/cliente.png"));
 
         tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
 
         pos.presentation.cajeros.Model cajeroModel= new pos.presentation.cajeros.Model();
         pos.presentation.cajeros.View cajeroView = new pos.presentation.cajeros.View();
         cajeroController = new pos.presentation.cajeros.Controller(cajeroView,cajeroModel);
-        Icon cajeroIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/client.png"));
+        Icon cajeroIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/cajero.png"));
         tabbedPane.addTab("Cajero  ", cajeroIcon,cajeroView.getPanel());
+
+
+
+        pos.presentation.productos.Model productoModel= new pos.presentation.productos.Model();
+        pos.presentation.productos.View productoView = new pos.presentation.productos.View();
+        productoController = new pos.presentation.productos.Controller(productoView,productoModel);
+        Icon productoIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/productos.png"));
+        tabbedPane.addTab("Producto  ", productoIcon,productoView.getPanel());
 
 
         window.setSize(900,450);
@@ -51,6 +59,7 @@ public class Application {
 
     public static pos.presentation.clientes.Controller clientesController;
     public static pos.presentation.cajeros.Controller cajeroController;
+    public static pos.presentation.productos.Controller productoController;
     public static JFrame window;
 
     public final static int MODE_CREATE=1;

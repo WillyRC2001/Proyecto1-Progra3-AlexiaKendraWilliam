@@ -39,7 +39,6 @@ public class Data {
     public List<Categoria> getCategorias() {
         return categorias;
     }
-
     public List<Producto> getProductos() {
         return productos;
     }

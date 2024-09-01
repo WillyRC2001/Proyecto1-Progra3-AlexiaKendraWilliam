@@ -40,31 +40,23 @@ public class Model extends AbstractModel {
         firePropertyChange(LIST);
     }
 
-    public Cajero getCurrent() {
-        return current;
-    }
+    public Cajero getCurrent() {return current;}
 
     public void setCurrent(Cajero current) {
         this.current = current;
         firePropertyChange(CURRENT);
     }
 
-    public Cajero getFilter() {
-        return filter;
-    }
+    public Cajero getFilter() {return filter;}
 
     public void setFilter(Cajero filter) {
         this.filter = filter;
         firePropertyChange(FILTER);
     }
 
-    public int getMode() {
-        return mode;
-    }
+    public int getMode() {return mode;}
 
-    public void setMode(int mode) {
-        this.mode = mode;
-    }
+    public void setMode(int mode) {this.mode = mode;}
 
     public static final String LIST="list";
     public static final String CURRENT="current";
