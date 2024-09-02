@@ -73,6 +73,13 @@ public class View  implements PropertyChangeListener{
             }
         });
 
+        reporteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.generatePDF();
+            }
+        });
+
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

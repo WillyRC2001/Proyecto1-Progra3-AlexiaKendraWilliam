@@ -91,6 +91,13 @@ public class View   implements PropertyChangeListener{
                 controller.clear();
             }
         });
+        // Listener para el botón de generar PDF
+        reporteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.generatePdf(); // Llama al método para generar el PDF
+            }
+        });
     }
 
 

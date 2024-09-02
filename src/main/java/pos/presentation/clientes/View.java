@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+
 public class View implements PropertyChangeListener {
     private JPanel panel;
     private JTextField searchNombre;
@@ -40,6 +41,14 @@ public class View implements PropertyChangeListener {
     }
 
     public View() {
+        // Listener para el botón de generar PDF
+        report.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.generatePdf(); // Llama al método para generar el PDF
+            }
+        });
+
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -95,6 +104,7 @@ public class View implements PropertyChangeListener {
             }
         });
     }
+
 
     private boolean validate() {
         boolean valid = true;
@@ -157,7 +167,7 @@ public class View implements PropertyChangeListener {
         return e;
     }
 
-// MVC
+    // MVC
     Model model;
     Controller controller;
 
