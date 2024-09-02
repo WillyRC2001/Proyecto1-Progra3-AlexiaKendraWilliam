@@ -149,7 +149,7 @@ public class Service {
     //================= CATEGORIA ============
     public void create(Categoria e) throws Exception{
         Categoria result = data.getCategorias().stream()
-                .filter(i->i.getNombre().equals(e.getNombre()))
+                .filter(i->i.getId().equals(e.getId()))
                 .findFirst().orElse(null);
         if (result==null) data.getCategorias().add(e);
         else throw new Exception("Categoria no existe");
@@ -185,3 +185,4 @@ public class Service {
                 .collect(Collectors.toList());
     }
  }
+

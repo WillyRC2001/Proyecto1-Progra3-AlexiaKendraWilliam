@@ -8,19 +8,20 @@ import jakarta.xml.bind.annotation.XmlID;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Categoria {
     @XmlID
+    String id;
     String Nombre;
 
     public Categoria() {
     }
 
-    public Categoria(String Nombre) {
+    public Categoria(String id , String Nombre) {
+        this.id = id;
         this.Nombre = Nombre;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        return hash;
+        return Objects.hash(id);
     }
 
     @Override
@@ -28,19 +29,20 @@ public class Categoria {
         if (this == obj) {return true;}
         if (obj == null || getClass() != obj.getClass()) {return false;}
         Categoria other = (Categoria) obj;
-        return Objects.equals(this.Nombre, other.Nombre);
+        return Objects.equals(this.id, other.id);
     }
 
+    public String getId() {return id;}
+    public void setId(String id) {this.id = id;}
     public String getNombre() {
         return Nombre;
     }
-
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
     }
 
     @Override
     public String toString() {
-        return Nombre;
+        return id+ "-" + Nombre;
     }
 }

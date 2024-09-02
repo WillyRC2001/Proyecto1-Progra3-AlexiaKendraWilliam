@@ -4,6 +4,7 @@ import java.util.Objects;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import  jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.XmlIDREF;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Producto {
@@ -13,6 +14,7 @@ public class Producto {
     String UnidadMedida;
     double PrecioUnitario;
     int Existencias;
+    @XmlIDREF
     Categoria categoria;
 
     public Producto() {
@@ -28,25 +30,16 @@ public class Producto {
     }
     @Override
     public int hashCode() {
-        int hash = 5;
-        return hash;
+        return Objects.hashCode(Codigo);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
+        if (this == obj) {return true;}
+        if (obj == null) {return false;}
+        if (getClass() != obj.getClass()) {return false;}
         final Producto other = (Producto) obj;
-        if (!Objects.equals(this.Codigo, other.Codigo)) {
-            return false;
-        }
+        if (!Objects.equals(this.Codigo, other.Codigo)) {return false;}
         return Objects.equals(this.Descripcion, other.Descripcion);
     }
 

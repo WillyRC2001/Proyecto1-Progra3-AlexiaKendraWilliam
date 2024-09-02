@@ -159,7 +159,7 @@ public class View implements PropertyChangeListener {
 
     public Cliente take() {
         Cliente e = new Cliente();
-        e.setId(id.getText());
+        e.setId( "CLI-" + id.getText());
         e.setNombre(nombre.getText());
         e.setTelefono(telefono.getText());
         e.setEmail(email.getText());

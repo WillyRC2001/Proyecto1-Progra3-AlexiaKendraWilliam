@@ -42,7 +42,6 @@ public class View  implements PropertyChangeListener{
         return panel;
     }
 
-
     public View() {
 
         buscarButton.addActionListener(new ActionListener() {
@@ -180,14 +179,14 @@ public class View  implements PropertyChangeListener{
         }
 
 
-          if (categoriaJcb.getSelectedItem() == null ) {
+        if (categoriaJcb.getSelectedItem() == null ) {
             valid = false;
-          categoriaLbl.setBorder(Application.BORDER_ERROR);
-          categoriaLbl.setToolTipText("Categoría requerida");
-          } else {
-         categoriaLbl.setBorder(null);
-         categoriaLbl.setToolTipText(null);
-         }
+            categoriaLbl.setBorder(Application.BORDER_ERROR);
+            categoriaLbl.setToolTipText("Categoría requerida");
+        } else {
+            categoriaLbl.setBorder(null);
+            categoriaLbl.setToolTipText(null);
+        }
 
         return valid;
     }
@@ -205,9 +204,6 @@ public class View  implements PropertyChangeListener{
         e.setCategoria(categoria);
         return e;
     }
-
-
-
 
 
 
@@ -231,59 +227,58 @@ public class View  implements PropertyChangeListener{
             case pos.presentation.productos.Model.LIST:
                 int[] cols = {pos.presentation.productos.TableModel.CODIGO, pos.presentation.productos.TableModel.DESCRIPCION,
                         pos.presentation.productos.TableModel.UNIDAD, pos.presentation.productos.TableModel.PRECIO,
-                       TableModel.EXISTENCIA, pos.presentation.productos.TableModel.CATEGORIA
+                        TableModel.EXISTENCIA, pos.presentation.productos.TableModel.CATEGORIA
                         //
-                        };
-                        list.setModel(new TableModel(cols, model.getList()));
-                        list.setRowHeight(30);
-                        TableColumnModel columnModel = list.getColumnModel();
-                        columnModel.getColumn(0).setPreferredWidth(150);
-                        columnModel.getColumn(1).setPreferredWidth(150);
-                        columnModel.getColumn(2).setPreferredWidth(150);
-                        columnModel.getColumn(3).setPreferredWidth(150);
-                        columnModel.getColumn(4).setPreferredWidth(150);
-                        columnModel.getColumn(5).setPreferredWidth(150);
-                        break;
-                        case pos.presentation.clientes.Model.CURRENT:
-                            codigo.setText(model.getCurrent().getCodigo());
-                            descripcion.setText(model.getCurrent().getDescripcion());
-                            unidad.setText(model.getCurrent().getUnidadMedida());
-                            precio.setText("" + model.getCurrent().getPrecioUnitario());
-                            existencia.setText( "" + model.getCurrent().getExistencias());
-                            Producto current = model.getCurrent();
-                            Categoria selectedCategoria = current.getCategoria();
-                            if (selectedCategoria != null) {
-                                categoriaJcb.setSelectedItem(selectedCategoria); // Selecciona la categoría actual en el JComboBox
-                            }
+                };
+                list.setModel(new TableModel(cols, model.getList()));
+                list.setRowHeight(30);
+                TableColumnModel columnModel = list.getColumnModel();
+                columnModel.getColumn(0).setPreferredWidth(150);
+                columnModel.getColumn(1).setPreferredWidth(150);
+                columnModel.getColumn(2).setPreferredWidth(150);
+                columnModel.getColumn(3).setPreferredWidth(150);
+                columnModel.getColumn(4).setPreferredWidth(150);
+                columnModel.getColumn(5).setPreferredWidth(150);
+                break;
+            case pos.presentation.clientes.Model.CURRENT:
+                codigo.setText(model.getCurrent().getCodigo());
+                descripcion.setText(model.getCurrent().getDescripcion());
+                unidad.setText(model.getCurrent().getUnidadMedida());
+                precio.setText("" + model.getCurrent().getPrecioUnitario());
+                existencia.setText( "" + model.getCurrent().getExistencias());
+                Producto current = model.getCurrent();
+                Categoria selectedCategoria = current.getCategoria();
+                if (selectedCategoria != null) {
+                    categoriaJcb.setSelectedItem(selectedCategoria); // Selecciona la categoría actual en el JComboBox
+                }
 
-                        if (model.getMode() == Application.MODE_EDIT) {
-                            codigo.setEnabled(false);
-                            borrarButton.setEnabled(true);
-                        } else {
-                            codigo.setEnabled(true);
-                            borrarButton.setEnabled(false);
-                        }
+                if (model.getMode() == Application.MODE_EDIT) {
+                    codigo.setEnabled(false);
+                    borrarButton.setEnabled(true);
+                } else {
+                    codigo.setEnabled(true);
+                    borrarButton.setEnabled(false);
+                }
 
-                    codigoLbl.setBorder(null);
-                    codigoLbl.setToolTipText(null);
-                    descripcionLbl.setBorder(null);
-                    descripcionLbl.setToolTipText(null);
-                    unidadLbl.setBorder(null);
-                    unidadLbl.setToolTipText(null);
-                    precioLbl.setBorder(null);
-                    existenciaLbl.setBorder(null);
-                    existenciaLbl.setToolTipText(null);
-                   categoriaLbl.setBorder(null);
-                  categoriaLbl.setToolTipText(null);
-                    break;
-                case Model.FILTER:
-                    codigo.setText(model.getFilter().getCodigo());
-                    break;
+                codigoLbl.setBorder(null);
+                codigoLbl.setToolTipText(null);
+                descripcionLbl.setBorder(null);
+                descripcionLbl.setToolTipText(null);
+                unidadLbl.setBorder(null);
+                unidadLbl.setToolTipText(null);
+                precioLbl.setBorder(null);
+                existenciaLbl.setBorder(null);
+                existenciaLbl.setToolTipText(null);
+                categoriaLbl.setBorder(null);
+                categoriaLbl.setToolTipText(null);
+                break;
+            case Model.FILTER:
+                codigo.setText(model.getFilter().getCodigo());
+                break;
         }
 
         this.panel.revalidate();
     }
-
 
 
 

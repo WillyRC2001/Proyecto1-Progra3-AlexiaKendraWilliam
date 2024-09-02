@@ -111,7 +111,7 @@ public class Controller {
             // Cerrar el documento
             document.close();
 
-                JOptionPane.showMessageDialog(null, "PDF generado correctamente: " + pdfPath, "Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "PDF generado correctamente: " + pdfPath, "Información", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Error al crear PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

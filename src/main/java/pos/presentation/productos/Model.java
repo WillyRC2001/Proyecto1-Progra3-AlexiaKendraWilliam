@@ -31,12 +31,12 @@ public class Model extends AbstractModel{
     public Model() {
         //Prueba
         categorias = new ArrayList<>();
-        categorias.add(new Categoria("Dulces"));
-        categorias.add(new Categoria("Aceites"));
-        categorias.add(new Categoria("Agua"));
-        categorias.add(new Categoria("Vinos"));
+        categorias.add(new Categoria("CAT-002" ,"Dulces"));
+        categorias.add(new Categoria("CAT-003" ,"Aceites"));
+        categorias.add(new Categoria("CAT-001" ,"Agua"));
+        categorias.add(new Categoria("CAT-004" , "Vinos"));
         modeModel = new DefaultComboBoxModel<>(categorias.toArray(new Categoria[0]));
-//fin
+        //fin
     }
     public DefaultComboBoxModel<Categoria> getModeModel() {
         return modeModel;

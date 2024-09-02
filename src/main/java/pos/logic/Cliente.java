@@ -20,7 +20,7 @@ public class Cliente {
     }
 
     public Cliente(String id, String nombre, String telefono, String email, float descuento) {
-        this.id = id;
+        this.id =id;
         this.nombre = nombre;
         this.telefono = telefono;
         this.email = email;
