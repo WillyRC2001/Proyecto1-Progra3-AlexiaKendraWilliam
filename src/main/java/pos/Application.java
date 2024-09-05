@@ -62,6 +62,7 @@ public class Application {
         window.setVisible(true);
     }
 
+    //Holi 
     public static pos.presentation.clientes.Controller clientesController;
     public static pos.presentation.cajeros.Controller cajeroController;
     public static pos.presentation.productos.Controller productoController;
