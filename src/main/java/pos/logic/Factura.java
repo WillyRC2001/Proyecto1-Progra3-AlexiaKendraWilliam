@@ -39,12 +39,12 @@ public class Factura {
         this.numero = numero;
     }
 
-    public List<Producto> getLista_productos() {return linea;}
+    public List<Linea> getLista_productos() {return linea;}
     public Cliente getCliente() {return cliente;}
     public Cajero getCajero() {return cajero;}
     public LocalDate getFecha() {return fecha;}
     public String getNumero() {return numero;}
-    public void setLista_productos(List<Producto> lista_producto) {linea = lista_producto;}
+    public void setLista_productos(List<Linea> lista_producto) {linea = lista_producto;}
     public void setCliente(Cliente cliente) {this.cliente = cliente;}
     public void setCajero(Cajero cajero) {this.cajero = cajero;}
     public void setFecha(LocalDate fecha) {this.fecha = fecha;}
