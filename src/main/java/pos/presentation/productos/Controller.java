@@ -27,11 +27,6 @@ public class Controller {
         view.setController(this);
         view.setModel(model);
     }
-    //Prueba
-//    public List<Categoria> getCategorias() {
-//        return model.getCategorias();
-//    }
-    //Fin
     public void search(Producto filter) throws Exception {
         model.setFilter(filter);
         model.setMode(Application.MODE_CREATE);

@@ -113,17 +113,6 @@ public class View  implements PropertyChangeListener{
         }
     }
 
-//    private void setUpComboBox() {
-//        if (model != null) {
-//            List<Categoria> categorias = model.getCategorias(); // Obtén las categorías del modelo
-//
-//            categoriaJcb.removeAllItems(); // Limpia cualquier elemento existente
-//            for (Categoria categoria : categorias) {
-//                categoriaJcb.addItem(categoria); // Añade cada objeto Categoria al JComboBox
-//            }
-//        }
-//    }
-
     private boolean validate() {
         boolean valid = true;
 
@@ -156,26 +145,39 @@ public class View  implements PropertyChangeListener{
             unidadLbl.setToolTipText(null);
         }
 
-        if (existencia.getText().isEmpty()) {
-            int exit = Integer.parseInt(existencia.getText());
-            if (exit <= 0) {
+        try {
+            int exist = Integer.parseInt(existencia.getText());
+            if (exist<= 0) {
                 valid = false;
                 existenciaLbl.setBorder(Application.BORDER_ERROR);
-                existenciaLbl.setToolTipText("La existencia debe ser mayor que 0");
+                existenciaLbl.setToolTipText("El precio unitario debe ser mayor que 0");
             } else {
                 existenciaLbl.setBorder(null);
                 existenciaLbl.setToolTipText(null);
             }
 
+        } catch (Exception e) {
+            valid = false;
+            existenciaLbl.setBorder(Application.BORDER_ERROR);
+            existenciaLbl.setToolTipText("Existencia requerida");
+        }
+
+        try {
             double precioUnitario = Double.parseDouble(precio.getText());
             if (precioUnitario <= 0) {
                 valid = false;
                 precioLbl.setBorder(Application.BORDER_ERROR);
-                precioLbl.setToolTipText("Precio unitario debe ser mayor que 0");
+                precioLbl.setToolTipText("El precio unitario debe ser mayor que 0");
             } else {
                 precioLbl.setBorder(null);
                 precioLbl.setToolTipText(null);
             }
+
+        } catch (NumberFormatException e) {
+
+            valid = false;
+            precioLbl.setBorder(Application.BORDER_ERROR);
+            precioLbl.setToolTipText("Debe ingresar un número válido para el precio unitario");
         }
 
 
@@ -249,7 +251,7 @@ public class View  implements PropertyChangeListener{
                 Producto current = model.getCurrent();
                 Categoria selectedCategoria = current.getCategoria();
                 if (selectedCategoria != null) {
-                    categoriaJcb.setSelectedItem(selectedCategoria); // Selecciona la categoría actual en el JComboBox
+                    categoriaJcb.setSelectedItem(selectedCategoria);
                 }
 
                 if (model.getMode() == Application.MODE_EDIT) {

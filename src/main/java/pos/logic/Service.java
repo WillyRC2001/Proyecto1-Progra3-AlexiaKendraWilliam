@@ -147,8 +147,6 @@ public class Service {
                 .sorted(Comparator.comparing(Producto::getDescripcion))
                 .collect(Collectors.toList());
     }
-
-    //================= CATEGORIA ============
     public void create(Categoria e) throws Exception {
         Categoria result = data.getCategorias().stream()
                 .filter(i -> i.getId().equals(e.getId()))
@@ -187,100 +185,4 @@ public class Service {
                 .collect(Collectors.toList());
     }
 
-    //================= Linea ============
-    public void create(Linea e) throws Exception {
-        Linea result = data.getLineas().stream()
-                .filter(i -> i.getCodigo().equals(e.getCodigo()))
-                .findFirst().orElse(null);
-        if (result == null) {
-            data.getLineas().add(e);
-        } else {
-            throw new Exception("Linea ya existe");
-        }
-    }
-
-    public Linea read(Linea e) throws Exception {
-        Linea result = data.getLineas().stream().filter(i -> i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result != null) {
-            return result;
-        } else {
-            throw new Exception("Linea no existe");
-        }
-    }
-
-    public void update(Linea e) throws Exception {
-        Linea result;
-        try {
-            result = this.read(e);
-            data.getLineas().remove(result);
-            data.getLineas().add(e);
-        } catch (Exception ex) {
-            throw new Exception("Linea no existe");
-        }
-    }
-
-
-    public void delete(Linea e) throws Exception {
-        Linea result = data.getLineas().stream()
-                .filter(i -> i.getCodigo().equals(e.getCodigo()))
-                .findFirst().orElse(null);
-        if (result != null) {
-            data.getLineas().remove(result);
-        } else {
-            throw new Exception("Linea no existe");
-        }
-    }
-
-    public List<Linea> search(Linea e) {
-        return data.getLineas().stream()
-                .filter(i -> i.getCodigo().contains(e.getCodigo()))
-                .sorted(Comparator.comparing(Linea::getCodigo))
-                .collect(Collectors.toList());
-    }
-
-    //================= Factura ============
-
-//    public List<Factura> search(Factura e) {
-//        return data.getFacturas().stream()
-//                .filter(i -> i.getNumero().contains(e.getNumero()))
-//                .sorted(Comparator.comparing(Factura::getNumero))
-//                .collect(Collectors.toList());
-//    }
-//
-//    public void create(Factura e) throws Exception {
-//        Factura result = data.getFacturas().stream()
-//                .filter(i -> i.getNumero().equals(e.getNumero()))  // Assuming 'numero' is a unique identifier for Factura
-//                .findFirst().orElse(null);
-//        if (result == null) {
-//            data.getFacturas().add(e);
-//        } else {
-//            throw new Exception("Factura ya existe");
-//        }
-//    }
-//
-//
-//    public Factura read(Factura e) throws Exception {
-//        Factura result = data.getFacturas().stream()
-//                .filter(i -> i.getNumero().equals(e.getNumero()))
-//                .findFirst().orElse(null);
-//        if (result != null) {
-//            return result;
-//        } else {
-//            throw new Exception("Factura no existe");
-//        }
-//    }
-//
-//
-//    public void update(Factura e) throws Exception {
-//        Factura result;
-//        try {
-//            result = this.read(e);
-//            data.getFacturas().remove(result);
-//            data.getFacturas().add(e);
-//        } catch (Exception ex) {
-//            throw new Exception("Factura no existe");
-//        }
-//
-//
-//    }
 }

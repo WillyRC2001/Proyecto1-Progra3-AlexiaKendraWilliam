@@ -14,7 +14,6 @@ public class Producto {
     String UnidadMedida;
     double PrecioUnitario;
     int Existencias;
-    @XmlIDREF
     Categoria categoria;
 
     public Producto() {
@@ -29,9 +28,7 @@ public class Producto {
         this.categoria = categoria;
     }
     @Override
-    public int hashCode() {
-        return Objects.hashCode(Codigo);
-    }
+    public int hashCode() {return Objects.hashCode(Codigo);}
 
     @Override
     public boolean equals(Object obj) {
@@ -89,5 +86,10 @@ public class Producto {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    @Override
+    public String toString() {
+        return Codigo;
     }
 }

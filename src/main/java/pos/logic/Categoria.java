@@ -15,14 +15,14 @@ public class Categoria {
     }
 
     public Categoria(String id , String Nombre) {
-        this.id = id;
-        this.Nombre = Nombre;
+        this.id= id; this.Nombre = Nombre;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -42,7 +42,5 @@ public class Categoria {
     }
 
     @Override
-    public String toString() {
-        return id+ "-" + Nombre;
-    }
+    public String toString() {return id+ "-" + Nombre;}
 }

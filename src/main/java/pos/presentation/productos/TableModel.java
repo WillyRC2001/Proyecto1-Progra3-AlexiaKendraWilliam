@@ -1,9 +1,18 @@
 package pos.presentation.productos;
 
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import pos.Application;
 import pos.logic.Producto;
+import pos.logic.Service;
 import pos.presentation.AbstractTableModel;
 
 import javax.swing.*;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class TableModel extends AbstractTableModel<Producto> implements javax.swing.table.TableModel {
@@ -17,7 +26,7 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
     public static final int UNIDAD=2;
     public static final int PRECIO=3;
     public static final int EXISTENCIA=4;
-  public static final int CATEGORIA=5;
+    public static final int CATEGORIA=5;
 
     @Override
     protected Object getPropetyAt(Producto e, int col) {
@@ -27,7 +36,7 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
             case UNIDAD:return  e.getUnidadMedida();
             case PRECIO:return  e.getPrecioUnitario();
             case EXISTENCIA:return  e.getExistencias();
-           case CATEGORIA:return  e.getCategoria().getNombre();
+            case CATEGORIA:return  e.getCategoria().getNombre();
             default: return "";
         }
     }

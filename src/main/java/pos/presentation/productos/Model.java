@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+
 public class Model extends AbstractModel{
     private
     List<Categoria> categorias;
@@ -36,7 +37,7 @@ public class Model extends AbstractModel{
         categorias.add(new Categoria("CAT-001" ,"Agua"));
         categorias.add(new Categoria("CAT-004" , "Vinos"));
         modeModel = new DefaultComboBoxModel<>(categorias.toArray(new Categoria[0]));
-        //fin
+//fin
     }
     public DefaultComboBoxModel<Categoria> getModeModel() {
         return modeModel;
