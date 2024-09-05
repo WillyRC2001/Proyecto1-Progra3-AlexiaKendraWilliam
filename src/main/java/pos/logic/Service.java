@@ -240,47 +240,47 @@ public class Service {
 
     //================= Factura ============
 
-    public List<Factura> search(Factura e) {
-        return data.getFacturas().stream()
-                .filter(i -> i.getNumero().contains(e.getNumero()))
-                .sorted(Comparator.comparing(Factura::getNumero))
-                .collect(Collectors.toList());
-    }
-
-    public void create(Factura e) throws Exception {
-        Factura result = data.getFacturas().stream()
-                .filter(i -> i.getNumero().equals(e.getNumero()))  // Assuming 'numero' is a unique identifier for Factura
-                .findFirst().orElse(null);
-        if (result == null) {
-            data.getFacturas().add(e);
-        } else {
-            throw new Exception("Factura ya existe");
-        }
-    }
-
-
-    public Factura read(Factura e) throws Exception {
-        Factura result = data.getFacturas().stream()
-                .filter(i -> i.getNumero().equals(e.getNumero()))
-                .findFirst().orElse(null);
-        if (result != null) {
-            return result;
-        } else {
-            throw new Exception("Factura no existe");
-        }
-    }
-
-
-    public void update(Factura e) throws Exception {
-        Factura result;
-        try {
-            result = this.read(e);
-            data.getFacturas().remove(result);
-            data.getFacturas().add(e);
-        } catch (Exception ex) {
-            throw new Exception("Factura no existe");
-        }
-
-
-    }
+//    public List<Factura> search(Factura e) {
+//        return data.getFacturas().stream()
+//                .filter(i -> i.getNumero().contains(e.getNumero()))
+//                .sorted(Comparator.comparing(Factura::getNumero))
+//                .collect(Collectors.toList());
+//    }
+//
+//    public void create(Factura e) throws Exception {
+//        Factura result = data.getFacturas().stream()
+//                .filter(i -> i.getNumero().equals(e.getNumero()))  // Assuming 'numero' is a unique identifier for Factura
+//                .findFirst().orElse(null);
+//        if (result == null) {
+//            data.getFacturas().add(e);
+//        } else {
+//            throw new Exception("Factura ya existe");
+//        }
+//    }
+//
+//
+//    public Factura read(Factura e) throws Exception {
+//        Factura result = data.getFacturas().stream()
+//                .filter(i -> i.getNumero().equals(e.getNumero()))
+//                .findFirst().orElse(null);
+//        if (result != null) {
+//            return result;
+//        } else {
+//            throw new Exception("Factura no existe");
+//        }
+//    }
+//
+//
+//    public void update(Factura e) throws Exception {
+//        Factura result;
+//        try {
+//            result = this.read(e);
+//            data.getFacturas().remove(result);
+//            data.getFacturas().add(e);
+//        } catch (Exception ex) {
+//            throw new Exception("Factura no existe");
+//        }
+//
+//
+//    }
 }

@@ -41,18 +41,17 @@ public class Application {
         tabbedPane.addTab("Cajero  ", cajeroIcon,cajeroView.getPanel());
 
 
-
         pos.presentation.productos.Model productoModel= new pos.presentation.productos.Model();
         pos.presentation.productos.View productoView = new pos.presentation.productos.View();
         productoController = new pos.presentation.productos.Controller(productoView,productoModel);
         Icon productoIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/productos.png"));
         tabbedPane.addTab("Producto  ", productoIcon,productoView.getPanel());
 
-        pos.presentation.históricos.Model historicosModel = new pos.presentation.históricos.Model();
-        pos.presentation.históricos.View historicosView = new pos.presentation.históricos.View();
-        historicoController = new pos.presentation.históricos.Controller(historicosView, historicosModel);
-        Icon historicosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/servidor.png"));
-        tabbedPane.addTab("Históricos", historicosIcon, historicosView.getPanel());
+        //pos.presentation.históricos.Model historicosModel = new pos.presentation.históricos.Model();
+        //pos.presentation.históricos.View historicosView = new pos.presentation.históricos.View();
+        //historicoController = new pos.presentation.históricos.Controller(historicosView, historicosModel);
+        //Icon historicosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/servidor.png"));
+        //tabbedPane.addTab("Históricos", historicosIcon, historicosView.getPanel());
 
         window.setSize(900,450);
         window.setResizable(false);
@@ -66,7 +65,7 @@ public class Application {
     public static pos.presentation.clientes.Controller clientesController;
     public static pos.presentation.cajeros.Controller cajeroController;
     public static pos.presentation.productos.Controller productoController;
-    public static pos.presentation.históricos.Controller historicoController;
+    //public static pos.presentation.históricos.Controller historicoController;
     public static JFrame window;
 
     public final static int MODE_CREATE=1;

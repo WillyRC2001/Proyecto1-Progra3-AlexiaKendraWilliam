@@ -42,9 +42,7 @@ public class Data {
     public List<Cliente> getClientes() {
         return clientes;
     }
-    public List<Cajero> getCajeros() {
-        return cajeros;
-    }
+    public List<Cajero> getCajeros() {return cajeros;}
     public List<Categoria> getCategorias() {
         return categorias;
     }
