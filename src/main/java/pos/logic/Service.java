@@ -207,7 +207,6 @@ public class Service {
 //                    .filter(i -> i.getId() != null && e.getId() != null && i.getId().contains(e.getId()))
 //                    .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
 //                    .collect(Collectors.toList());
-        /////////////////////////////////////////////////////////////////////
 
         // Verifica el valor de e.getId()
         System.out.println("ID de filtro: " + e.getId());
