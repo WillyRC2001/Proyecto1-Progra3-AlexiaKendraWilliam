@@ -202,10 +202,31 @@ public class Service {
 //                .filter(i -> i.getId().contains(e.getId()))
 //                .sorted(Comparator.comparing(Categoria::getId))
 //                .collect(Collectors.toList());
-            return data.getCategorias().stream()
-                    .filter(i -> i.getId() != null && e.getId() != null && i.getId().contains(e.getId()))
-                    .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
-                    .collect(Collectors.toList());
+        //////////////////////////////////////////////////////////////////
+//            return data.getCategorias().stream()
+//                    .filter(i -> i.getId() != null && e.getId() != null && i.getId().contains(e.getId()))
+//                    .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
+//                    .collect(Collectors.toList());
+        /////////////////////////////////////////////////////////////////////
+
+        // Verifica el valor de e.getId()
+        System.out.println("ID de filtro: " + e.getId());
+        List<Categoria> result = data.getCategorias().stream()
+                .filter(i -> e.getId() == null || (i.getId() != null && i.getId().contains(e.getId())))
+                .peek(categoria -> System.out.println("Categoría filtrada: " + categoria)) // Imprime categorías filtradas
+                .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
+                .collect(Collectors.toList());
+//        List<Categoria> result = data.getCategorias().stream()
+//                .filter(i -> i.getId() != null && e.getId() != null && i.getId().contains(e.getId()))
+//                .peek(categoria -> System.out.println("Categoría filtrada: " + categoria)) // Imprime categorías filtradas
+//                .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
+//                .collect(Collectors.toList());
+
+        // Imprime la lista final después de la ordenación
+        System.out.println("Categorías después de la ordenación:");
+        result.forEach(categoria -> System.out.println(categoria));
+
+        return result;
     }
     //================= Linea ============
     public void create(Linea e) throws Exception {
