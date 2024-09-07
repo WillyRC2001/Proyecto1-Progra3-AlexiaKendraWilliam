@@ -142,9 +142,13 @@ public class Service {
 //                .filter(i->i.getCodigo().contains(e.getCodigo()))
 //                .sorted(Comparator.comparing(Producto::getDescripcion))
 //                .collect(Collectors.toList());
+//        return data.getProductos().stream()
+//                .filter(i -> e.getCodigo() == null || (i.getCodigo() != null && i.getCodigo().contains(e.getCodigo())))
+//                .sorted(Comparator.comparing(Producto::getCodigo))
+//                .collect(Collectors.toList());
         return data.getProductos().stream()
                 .filter(i -> e.getCodigo() == null || (i.getCodigo() != null && i.getCodigo().contains(e.getCodigo())))
-                .sorted(Comparator.comparing(Producto::getDescripcion))
+                .sorted(Comparator.comparing(Producto::getCodigo, Comparator.nullsLast(Comparator.naturalOrder())))
                 .collect(Collectors.toList());
     }
     public void create(Categoria e) throws Exception {
@@ -179,10 +183,14 @@ public class Service {
     }
 
     public List<Categoria> search(Categoria e) {
-        return data.getCategorias().stream()
-                .filter(i -> i.getNombre().contains(e.getNombre()))
-                .sorted(Comparator.comparing(Categoria::getNombre))
-                .collect(Collectors.toList());
+//        return data.getCategorias().stream()
+//                .filter(i -> i.getId().contains(e.getId()))
+//                .sorted(Comparator.comparing(Categoria::getId))
+//                .collect(Collectors.toList());
+            return data.getCategorias().stream()
+                    .filter(i -> i.getId() != null && e.getId() != null && i.getId().contains(e.getId()))
+                    .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
+                    .collect(Collectors.toList());
     }
     //================= Linea ============
     public void create(Linea e) throws Exception {

@@ -7,9 +7,9 @@ import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Linea {
-    @XmlIDREF
+    //@XmlIDREF
     Producto producto;
-    @XmlIDREF
+    //@XmlIDREF
     Factura factura;
     @XmlID
     String codigo;

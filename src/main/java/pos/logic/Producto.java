@@ -14,6 +14,7 @@ public class Producto {
     String UnidadMedida;
     double PrecioUnitario;
     int Existencias;
+    //@XmlIDREF
     Categoria categoria;
 
     public Producto() {
@@ -37,7 +38,8 @@ public class Producto {
         if (getClass() != obj.getClass()) {return false;}
         final Producto other = (Producto) obj;
         if (!Objects.equals(this.Codigo, other.Codigo)) {return false;}
-        return Objects.equals(this.Descripcion, other.Descripcion);
+        //return Objects.equals(this.Descripcion, other.Descripcion);
+        return Objects.equals(this.Codigo, other.Codigo);
     }
 
     public String getCodigo() {

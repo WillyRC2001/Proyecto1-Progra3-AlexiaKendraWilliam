@@ -21,7 +21,8 @@ public class Controller {
     Model model;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new Producto()));
+        model.init(Service.instance().search(new Producto()),Service.instance().search(new Categoria()));
+        //model.init(Service.instance().search(new Categoria()));
         this.view = view;
         this.model = model;
         view.setController(this);

@@ -106,12 +106,13 @@ public class View  implements PropertyChangeListener{
             }
         });
     }
-    private void setUpComboBox() {
-        if (model != null) {
-            DefaultComboBoxModel<Categoria> comboBoxModel = model.getModeModel();
-            categoriaJcb.setModel(comboBoxModel);
-        }
-    }
+//    private void setUpComboBox() {
+//        if (model != null) {
+//            //DefaultComboBoxModel<Categoria> comboBoxModel = model.getModeModel();
+//            //categoriaJcb.setModel(comboBoxModel);
+//            categoriaJcb.setModel(new DefaultComboBoxModel(model.getCategorias().toArray()));
+//        }
+//    }
 
     private boolean validate() {
         boolean valid = true;
@@ -216,7 +217,7 @@ public class View  implements PropertyChangeListener{
     public void setModel(Model model) {
         this.model = model;
         model.addPropertyChangeListener(this);
-        setUpComboBox();
+        //setUpComboBox();
     }
 
     public void setController(Controller controller) {
@@ -276,6 +277,9 @@ public class View  implements PropertyChangeListener{
                 break;
             case Model.FILTER:
                 codigo.setText(model.getFilter().getCodigo());
+                break;
+            case Model.CATEGORIAS:
+                categoriaJcb.setModel(new DefaultComboBoxModel<>(model.getCategorias().toArray(new Categoria[0])));
                 break;
         }
 

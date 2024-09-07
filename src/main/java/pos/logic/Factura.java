@@ -15,9 +15,9 @@ public class Factura {
    @XmlElementWrapper(name = "FLineas")
     @XmlElement(name = "Flinea")
     List<Linea> linea;
-    @XmlIDREF
+    //@XmlIDREF
     Cliente cliente;
-    @XmlIDREF
+    //@XmlIDREF
     Cajero cajero;
     @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
     LocalDate fecha;

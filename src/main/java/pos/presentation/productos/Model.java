@@ -17,7 +17,7 @@ public class Model extends AbstractModel{
     List<Producto> list;
     Producto current;
     int mode;
-    DefaultComboBoxModel<Categoria> modeModel;
+    //DefaultComboBoxModel<Categoria> modeModel;
 
     public void setSelectedItem(Object anItem){}
 
@@ -27,34 +27,42 @@ public class Model extends AbstractModel{
         firePropertyChange(LIST);
         firePropertyChange(CURRENT);
         firePropertyChange(FILTER);
+        firePropertyChange(CATEGORIAS);
     }
 
     public Model() {
         //Prueba
-        categorias = new ArrayList<>();
-        categorias.add(new Categoria("CAT-002" ,"Dulces"));
-        categorias.add(new Categoria("CAT-003" ,"Aceites"));
-        categorias.add(new Categoria("CAT-001" ,"Agua"));
-        categorias.add(new Categoria("CAT-004" , "Vinos"));
-        modeModel = new DefaultComboBoxModel<>(categorias.toArray(new Categoria[0]));
+//        categorias = new ArrayList<>();
+        //categorias.add(new Categoria("CAT-002" ,"Dulces"));
+        //categorias.add(new Categoria("CAT-003" ,"Aceites"));
+        //categorias.add(new Categoria("CAT-001" ,"Agua"));
+        //categorias.add(new Categoria("CAT-004" , "Vinos"));
+//        modeModel = new DefaultComboBoxModel<>(categorias.toArray(new Categoria[0]));
 //fin
     }
-    public DefaultComboBoxModel<Categoria> getModeModel() {
-        return modeModel;
-    }
+//    public DefaultComboBoxModel<Categoria> getModeModel() {
+//        return modeModel;
+//    }
 
-    public void setSelectedItem(Categoria categoria) {
-        modeModel.setSelectedItem(categoria);
-    }
+//    public void setSelectedItem(Categoria categoria) {
+//        modeModel.setSelectedItem(categoria);
+//    }
 
     public List<Categoria> getCategorias() {
         return categorias;
     }
-    public void init(List< Producto> list){
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+        firePropertyChange(CATEGORIAS);
+    }
+
+    public void init(List< Producto> list, List<Categoria> categorias){
         this.list = list;
         this.current = new  Producto();
         this.filter = new  Producto();
         this.mode= Application.MODE_CREATE;
+        this.categorias = categorias;
     }
 
     public List<Producto> getList() {
@@ -95,5 +103,6 @@ public class Model extends AbstractModel{
     public static final String LIST="list";
     public static final String CURRENT="current";
     public static final String FILTER="filter";
+    public static final String CATEGORIAS = "categorias";
 
 }
