@@ -12,12 +12,13 @@ import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Factura {
-   @XmlElementWrapper(name = "FLineas")
+    @XmlIDREF
+    @XmlElementWrapper(name = "FLineas")
     @XmlElement(name = "Flinea")
     List<Linea> linea;
-    //@XmlIDREF
+    @XmlIDREF
     Cliente cliente;
-    //@XmlIDREF
+    @XmlIDREF
     Cajero cajero;
     @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
     LocalDate fecha;
