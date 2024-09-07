@@ -249,11 +249,12 @@ public class View  implements PropertyChangeListener{
                 unidad.setText(model.getCurrent().getUnidadMedida());
                 precio.setText("" + model.getCurrent().getPrecioUnitario());
                 existencia.setText( "" + model.getCurrent().getExistencias());
-                Producto current = model.getCurrent();
-                Categoria selectedCategoria = current.getCategoria();
-                if (selectedCategoria != null) {
-                    categoriaJcb.setSelectedItem(selectedCategoria);
-                }
+                //Producto current = model.getCurrent();
+                //Categoria selectedCategoria = current.getCategoria();
+                this.categoriaJcb.setSelectedItem(this.model.getCurrent().getCategoria());
+//                if (selectedCategoria != null) {
+//                    categoriaJcb.setSelectedItem(selectedCategoria);
+//                }
 
                 if (model.getMode() == Application.MODE_EDIT) {
                     codigo.setEnabled(false);
@@ -279,7 +280,8 @@ public class View  implements PropertyChangeListener{
                 codigo.setText(model.getFilter().getCodigo());
                 break;
             case Model.CATEGORIAS:
-                categoriaJcb.setModel(new DefaultComboBoxModel<>(model.getCategorias().toArray(new Categoria[0])));
+                this.categoriaJcb.setModel(new DefaultComboBoxModel(this.model.getCategorias().toArray()));
+                //categoriaJcb.setModel(new DefaultComboBoxModel<>(model.getCategorias().toArray(new Categoria[0])));
                 break;
         }
 

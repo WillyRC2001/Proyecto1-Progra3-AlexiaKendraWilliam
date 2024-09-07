@@ -10,6 +10,7 @@ import pos.Application;
 import pos.logic.Producto;
 import pos.logic.Service;
 import pos.presentation.AbstractTableModel;
+import pos.logic.Categoria;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;
@@ -36,7 +37,9 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
             case UNIDAD:return  e.getUnidadMedida();
             case PRECIO:return  e.getPrecioUnitario();
             case EXISTENCIA:return  e.getExistencias();
-            case CATEGORIA:return  e.getCategoria().getNombre();
+            case CATEGORIA://return  e.getCategoria().getNombre();
+                Categoria categoria = e.getCategoria();
+                return categoria != null ? categoria.getNombre() : "";
             default: return "";
         }
     }
@@ -51,6 +54,7 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
         colNames[EXISTENCIA]= "Existencias";
         colNames[CATEGORIA]= "Categoria ";
     }
+
 
 
     /*

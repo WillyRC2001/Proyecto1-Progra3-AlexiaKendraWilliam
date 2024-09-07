@@ -14,7 +14,7 @@ public class Producto {
     String UnidadMedida;
     double PrecioUnitario;
     int Existencias;
-    //@XmlIDREF
+    @XmlIDREF
     Categoria categoria;
 
     public Producto() {

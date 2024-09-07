@@ -21,12 +21,30 @@ public class Controller {
     Model model;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new Producto()),Service.instance().search(new Categoria()));
+        try{
+        //model.init(Service.instance().search(new Producto()),Service.instance().search(new Categoria()));
         //model.init(Service.instance().search(new Categoria()));
-        this.view = view;
-        this.model = model;
-        view.setController(this);
-        view.setModel(model);
+            List<Producto> productos = Service.instance().search(new Producto());
+            List<Categoria> categorias = Service.instance().search(new Categoria());
+
+            // Imprimir las categorías para verificar que no estén vacías
+            System.out.println("Categorías obtenidas:");
+            for (Categoria categoria : categorias) {
+                System.out.println(categoria);
+            }
+
+            // Inicializar el modelo con los datos obtenidos
+            model.init(productos, categorias);
+            this.view = view;
+            this.model = model;
+            view.setController(this);
+            view.setModel(model);
+        } catch (Exception var5) {
+            Exception e = var5;
+            e.printStackTrace();
+        }
+
+
     }
     public void search(Producto filter) throws Exception {
         model.setFilter(filter);

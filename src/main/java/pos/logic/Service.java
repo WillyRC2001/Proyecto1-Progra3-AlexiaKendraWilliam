@@ -4,6 +4,7 @@ import pos.data.Data;
 import pos.data.XmlPersister;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -151,6 +152,11 @@ public class Service {
                 .sorted(Comparator.comparing(Producto::getCodigo, Comparator.nullsLast(Comparator.naturalOrder())))
                 .collect(Collectors.toList());
     }
+    //================= CATEGORIA ============
+
+    public List<Categoria> getCategorias() {
+        return this.data.getCategorias();
+    }
     public void create(Categoria e) throws Exception {
         Categoria result = data.getCategorias().stream()
                 .filter(i -> i.getId().equals(e.getId()))
@@ -183,6 +189,15 @@ public class Service {
     }
 
     public List<Categoria> search(Categoria e) {
+        // Verifica que data.getCategorias() no sea null
+        if (data.getCategorias() == null) {
+            System.out.println("data.getCategorias() es null");
+            return new ArrayList<>();
+        }
+
+        // Imprime las categorías antes de aplicar el filtro
+        System.out.println("Categorías disponibles:");
+        data.getCategorias().forEach(categoria -> System.out.println(categoria));
 //        return data.getCategorias().stream()
 //                .filter(i -> i.getId().contains(e.getId()))
 //                .sorted(Comparator.comparing(Categoria::getId))
