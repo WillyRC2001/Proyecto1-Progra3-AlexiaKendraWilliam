@@ -26,6 +26,11 @@ public class Application {
                 Service.instance().stop();
             }
         });
+        pos.presentation.facturas.Model facturasModel = new pos.presentation.facturas.Model();
+        pos.presentation.facturas.View.View facturasView = new pos.presentation.facturas.View.View();
+        facturasController = new pos.presentation.facturas.Controller(facturasView,facturasModel);
+        Icon facturasIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/factura.png"));
+        tabbedPane.addTab("Factura ",facturasIcon,facturasView.getPanel());
 
         pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
         pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
@@ -61,7 +66,8 @@ public class Application {
         window.setVisible(true);
     }
 
-    //Holi 
+    //Holi //Hola
+    public static pos.presentation.facturas.Controller facturasController;
     public static pos.presentation.clientes.Controller clientesController;
     public static pos.presentation.cajeros.Controller cajeroController;
     public static pos.presentation.productos.Controller productoController;
