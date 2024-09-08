@@ -1,9 +1,11 @@
 package pos.presentation.facturas.View;
 
+import pos.presentation.cajeros.TableModel;
 import pos.presentation.facturas.Controller;
 import pos.presentation.facturas.Model;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -40,6 +42,8 @@ public class View implements PropertyChangeListener{
 //                }
 //            }
 //        });
+        clienteJcb.setPreferredSize(new Dimension(200, 30));
+        cajeroJcb.setPreferredSize(new Dimension(200, 30));
     }
     pos.presentation.facturas.Model model;
     pos.presentation.facturas.Controller controller;
