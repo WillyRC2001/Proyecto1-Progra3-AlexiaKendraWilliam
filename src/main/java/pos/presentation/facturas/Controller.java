@@ -4,6 +4,7 @@ import pos.Application;
 import pos.logic.*;
 import pos.presentation.facturas.View.View;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Controller {
     Model model;
     public Controller(View view, Model model) {
         try {
-            List<Producto> productosC = new ArrayList<>();   //Revisar
+            List<Linea> productosC = new ArrayList<>();   //Revisar
             List<Producto> productosT = Service.instance().search(new Producto());
             List<Cliente> clientes = Service.instance().search(new Cliente());
             List<Cajero> cajeros = Service.instance().search(new Cajero());
@@ -20,7 +21,7 @@ public class Controller {
             this.view = view;
             this.model = model;
 //            System.out.println("Productos:");
-//            System.out.println(this.model.getProductosTotales());
+//            System.out.println(clientes.toString());
             view.setController(this);
             view.setModel(model);
         } catch (Exception var5) {
@@ -28,7 +29,52 @@ public class Controller {
             e.printStackTrace();
         }
     }
-    public void search(Factura filter) throws Exception{
+    public void AgregarButtonClick(String codigo, Cliente c) {
+        try {
+            if (codigo.isEmpty()) {
+                JOptionPane.showMessageDialog(view.getPanel(), "Código del producto no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Producto filter = new Producto();
+            filter.setCodigo(codigo);
+            List<Producto> productosEncontrados = Service.instance().search(filter);
+
+            if (productosEncontrados.isEmpty()) {
+                JOptionPane.showMessageDialog(view.getPanel(), "Producto no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Producto productoEncontrado = productosEncontrados.get(0);
+            Linea nuevaLinea = new Linea(productoEncontrado,null,productoEncontrado.getCodigo(),1,c.getDescuento());
+            model.addLineaComprada(nuevaLinea);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public void EliminarButtonClick(int fila) {
+        try {
+            if (model.getLineaComprados() == null) {
+                JOptionPane.showMessageDialog(view.getPanel(), "No hay Elementos en la Lista de Compra", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            model.deleteLineaComprada(fila);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public void CambiarCantidad(int cant){
+        try{
+            if(model.getLineaComprados() == null) {
+                JOptionPane.showMessageDialog(view.getPanel(), "No hay Elementos en la Lista de Compra", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            model.changeCantidad(cant);
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public void search(Producto filter) throws Exception{
         model.setFilter(filter);
         model.setMode(Application.MODE_CREATE);
         model.setCurrent(new Factura());

@@ -9,11 +9,14 @@ import java.util.List;
 public class Model extends AbstractModel{
 private
     List<Producto> productosTotales;
-    List<Producto> productosComprados;
+    //List<Producto> productosComprados;
+    List<Linea> lineaComprados;
     List<Cliente> clientes;
     List<Cajero> cajeros;
     Factura current;
-    Factura filter;
+    Producto filter;
+    Cliente currentCli;
+    Cajero currentCaj;
     int mode;
 
     public void setSelectedItem(Object anItem){}
@@ -21,7 +24,7 @@ private
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         super.addPropertyChangeListener(listener);
         firePropertyChange(PRODUCTOSTOTALES);
-        firePropertyChange(PRODUCTOSCOMPRADOS);
+        firePropertyChange(LINEACOMPRADOS);
         firePropertyChange(CLIENTES);
         firePropertyChange(CAJEROS);
         firePropertyChange(CURRENT);
@@ -33,8 +36,8 @@ private
     public List<Producto> getProductosTotales () {
         return productosTotales;
     }
-        public List<Producto> getProductosComprados() {
-        return productosComprados;
+        public List<Linea> getLineaComprados() {
+        return lineaComprados;
     }
         public List<Cliente> getClientes () {
         return clientes;
@@ -45,7 +48,7 @@ private
     public Factura getCurrent(){
         return current;
     }
-    public Factura getFilter(){
+    public Producto getFilter(){
         return filter;
     }
     public int getMode() {
@@ -56,9 +59,9 @@ private
         this.productosTotales = productosTotales;
         firePropertyChange(PRODUCTOSTOTALES);
     }
-    public void setProductosComprados(List<Producto> productosComprados) {
-        this.productosComprados = productosComprados;
-        firePropertyChange(PRODUCTOSCOMPRADOS);
+    public void setProductosComprados(List<Linea> lineaComprados) {
+        this.lineaComprados = lineaComprados;
+        firePropertyChange(LINEACOMPRADOS);
     }
     public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
@@ -72,7 +75,7 @@ private
         this.current = current;
         firePropertyChange(CURRENT);
     }
-    public void setFilter(Factura filter) {
+    public void setFilter(Producto filter) {
         this.filter = filter;
         firePropertyChange(FILTER);
     }
@@ -80,18 +83,33 @@ private
         this.mode = mode;
     }
 
-    public void init(List<Producto> listPT,List<Producto> listPC, List<Cliente> listCli, List<Cajero> listCaj){
+    public void init(List<Producto> listPT,List<Linea> linC, List<Cliente> listCli, List<Cajero> listCaj){
         this.productosTotales = listPT;
-        this.productosComprados = listPC;
+        this.lineaComprados = linC;
         this.clientes = listCli;
         this.cajeros = listCaj;
-        this.filter = new Factura();
+        this.filter = new Producto();
         this.current = new Factura();
         this.mode = Application.MODE_CREATE;
 
     }
+    public void addLineaComprada(Linea linea) {
+        if (this.lineaComprados == null) {
+            this.lineaComprados = new ArrayList<>();
+        }
+        this.lineaComprados.add(linea);
+        firePropertyChange(LINEACOMPRADOS);
+    }
+    public void deleteLineaComprada(int fila){
+        this.lineaComprados.remove(fila);
+        firePropertyChange(LINEACOMPRADOS);
+    }
+    public void changeCantidad(int cant){
+        //this.lineaComprados.
+        firePropertyChange(LINEACOMPRADOS);
+    }
     public static final String PRODUCTOSTOTALES="productosTotales";
-    public static final String PRODUCTOSCOMPRADOS="productosComprados";
+    public static final String LINEACOMPRADOS="lineaComprados";
     public static final String CLIENTES="clientes";
     public static final String CAJEROS="cajeros";
     public static final String FILTER="filter";

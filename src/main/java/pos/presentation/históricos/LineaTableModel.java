@@ -5,7 +5,7 @@ import pos.presentation.AbstractTableModel;
 
 import java.util.List;
 
-public class LineaTableModel extends AbstractTableModel<Linea> implements javax.swing.table.TableModel {
+public class LineaTableModel extends AbstractTableModel<Linea> implements javax.swing.table.TableModel{
 
     public LineaTableModel(int[] cols, List<Linea> rows) {super(cols, rows);}
 
@@ -57,6 +57,5 @@ public class LineaTableModel extends AbstractTableModel<Linea> implements javax.
         colNames[NETO] = "Neto";
         colNames[IMPORTE] = "Importe";
     }
-
 
 }
