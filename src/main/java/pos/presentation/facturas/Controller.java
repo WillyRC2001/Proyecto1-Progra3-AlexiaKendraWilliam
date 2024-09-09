@@ -3,7 +3,7 @@ package pos.presentation.facturas;
 import pos.Application;
 import pos.logic.*;
 import pos.presentation.facturas.View.View;
-
+import pos.presentation.facturas.View.ViewCantidad;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,15 +63,15 @@ public class Controller {
             JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    public void CambiarCantidad(int cant){
-        try{
-            if(model.getLineaComprados() == null) {
-                JOptionPane.showMessageDialog(view.getPanel(), "No hay Elementos en la Lista de Compra", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            model.changeCantidad(cant);
-        }catch (Exception ex) {
-            JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    public void CambiarCantidad() {
+        int row = view.getListaJT().getSelectedRow();
+        if (row >= 0) {
+            Linea lineaSeleccionada = model.getLineaComprados().get(row);
+            ViewCantidad dialog = new ViewCantidad(lineaSeleccionada);
+            dialog.pack();  // Ajusta el tamaño de la ventana según el contenido
+            dialog.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(view.getPanel(), "No se ha seleccionado ningún producto.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     public void search(Producto filter) throws Exception{

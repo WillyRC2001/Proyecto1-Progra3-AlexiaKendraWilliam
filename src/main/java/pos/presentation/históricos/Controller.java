@@ -5,8 +5,6 @@ import pos.Application;
 import pos.logic.Factura;
 import pos.logic.Linea;
 import pos.logic.Service;
-import pos.presentation.históricos.Model;
-import pos.presentation.históricos.View;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;

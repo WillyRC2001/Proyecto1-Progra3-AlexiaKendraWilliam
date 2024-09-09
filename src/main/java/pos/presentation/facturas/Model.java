@@ -104,10 +104,14 @@ private
         this.lineaComprados.remove(fila);
         firePropertyChange(LINEACOMPRADOS);
     }
-    public void changeCantidad(int cant){
-        //this.lineaComprados.
-        firePropertyChange(LINEACOMPRADOS);
+    public void changeCantidad(int index, int cantidad) {
+        if (lineaComprados != null && index >= 0 && index < lineaComprados.size()) {
+            Linea linea = lineaComprados.get(index);
+            linea.setCantidad(cantidad);
+            firePropertyChange(LINEACOMPRADOS);
+        }
     }
+
     public static final String PRODUCTOSTOTALES="productosTotales";
     public static final String LINEACOMPRADOS="lineaComprados";
     public static final String CLIENTES="clientes";

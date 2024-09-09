@@ -1,6 +1,7 @@
 package pos.presentation.facturas.View;
-
+import pos.logic.Linea;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class ViewCantidad extends JDialog {
@@ -9,27 +10,21 @@ public class ViewCantidad extends JDialog {
     private JButton buttonCancel;
     private JLabel Cantidad;
     private JTextField textCant;
-    pos.presentation.facturas.Model model;
-    pos.presentation.facturas.Controller controller;
+    private Linea linea; // Línea a modificar
 
-    public ViewCantidad() {
+    public ViewCantidad(Linea linea) {
+        this.linea = linea;
+        contentPane.setPreferredSize(new Dimension(300, 150));
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        // Inicializar el campo de texto con la cantidad actual
+        textCant.setText(String.valueOf(linea.getCantidad()));
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
+        buttonCancel.addActionListener(e -> onCancel());
 
-        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -37,29 +32,26 @@ public class ViewCantidad extends JDialog {
             }
         });
 
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(),
+                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void onOK() {
-        // add your code here
-        //model.
-        dispose();
+        try {
+            int cantidad = Integer.parseInt(textCant.getText());
+            if (cantidad > 0) {
+                linea.setCantidad(cantidad); // Actualizar la cantidad de la línea
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "La cantidad debe ser positiva.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Cantidad inválida.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
-    }
-
-    public static void main(String[] args) {
-        ViewCantidad dialog = new ViewCantidad();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
     }
 }

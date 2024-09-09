@@ -11,13 +11,14 @@ import pos.logic.Cliente;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class View implements PropertyChangeListener{
+public class View implements PropertyChangeListener {
     private JPanel panel;
     private JTextField producto;
     private JButton agregarButton;
@@ -37,9 +38,18 @@ public class View implements PropertyChangeListener{
     public JPanel getPanel() {
         return panel;
     }
+
+    public JTable getListaJT() {
+        return listaJT;
+    }
+
     public View() {
         clienteJcb.setPreferredSize(new Dimension(200, 30));
         cajeroJcb.setPreferredSize(new Dimension(200, 30));
+        // Ajustar el tamaño de la JTable
+        listaJT.setPreferredSize(new Dimension(800, 300));  // Ajusta las dimensiones según tus necesidades
+
+
 //        buscarButton.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
@@ -55,7 +65,7 @@ public class View implements PropertyChangeListener{
         agregarButton.addActionListener(e -> {
             String codigo = producto.getText();
             if (controller != null) {
-                controller.AgregarButtonClick(codigo,(Cliente) clienteJcb.getSelectedItem());
+                controller.AgregarButtonClick(codigo, (Cliente) clienteJcb.getSelectedItem());
             }
         });
         quitarButton.addActionListener(e -> {
@@ -65,23 +75,27 @@ public class View implements PropertyChangeListener{
             }
         });
         cantidadButton.addActionListener(e -> {
-            ViewCantidad viewCantidad = new ViewCantidad();
-            viewCantidad.setVisible(true);
-            //Linea L = listaJT.
+            if (controller != null) {
+                controller.CambiarCantidad();
+            }
         });
     }
+
     pos.presentation.facturas.Model model;
     pos.presentation.facturas.Controller controller;
-    public void setModel(pos.presentation.facturas.Model model){
+
+    public void setModel(pos.presentation.facturas.Model model) {
         this.model = model;
         model.addPropertyChangeListener(this::propertyChange);
     }
-    public void setController(pos.presentation.facturas.Controller controller){
+
+    public void setController(pos.presentation.facturas.Controller controller) {
         this.controller = controller;
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        switch (evt.getPropertyName()){
+        switch (evt.getPropertyName()) {
             case Model.CLIENTES:
                 this.clienteJcb.setModel(new DefaultComboBoxModel((Object[]) model.getClientes().toArray()));
                 break;
@@ -89,13 +103,38 @@ public class View implements PropertyChangeListener{
                 this.cajeroJcb.setModel(new DefaultComboBoxModel(this.model.getCajeros().toArray()));
                 break;
             case Model.LINEACOMPRADOS:
-                int[] cols = {LineaTableModel.CODIGO,LineaTableModel.ARTICULO,LineaTableModel.CATEGORIA,LineaTableModel.CANTIDAD, LineaTableModel.PRECIO, LineaTableModel.DESCUENTO, LineaTableModel.NETO, LineaTableModel.IMPORTE};
-                listaJT.setModel(new LineaTableModel(cols,model.getLineaComprados()));
-                listaJT.setRowHeight(30);
-                TableColumnModel columnModel = listaJT.getColumnModel();
-                columnModel.getColumn(1).setPreferredWidth(150);
-                columnModel.getColumn(3).setPreferredWidth(150);
+                int[] cols = {LineaTableModel.CODIGO, LineaTableModel.ARTICULO, LineaTableModel.CATEGORIA,
+                        LineaTableModel.CANTIDAD, LineaTableModel.PRECIO, LineaTableModel.DESCUENTO,
+                        LineaTableModel.NETO, LineaTableModel.IMPORTE};
+
+                listaJT.setModel(new LineaTableModel(cols, model.getLineaComprados()) {
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        return false;  // Deshabilitar la edición de celdas
+                    }
+                });
+
+                listaJT.setRowHeight(50); // Ajustar la altura de las filas
+
+                // Ajuste del ancho de las columnas basado en el contenido
+                ajustarAnchoDeColumnas(listaJT);
                 break;
+        }
+    }
+    // Método para ajustar el ancho de las columnas
+    private void ajustarAnchoDeColumnas(JTable table) {
+        final TableColumnModel columnModel = table.getColumnModel();
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            int width = 350; // Ancho mínimo
+            for (int row = 0; row < table.getRowCount(); row++) {
+                TableCellRenderer renderer = table.getCellRenderer(row, column);
+                Component comp = table.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+            }
+            if (width > 500) {
+                width = 500;  // Ancho máximo
+            }
+            columnModel.getColumn(column).setPreferredWidth(width);
         }
     }
 }
