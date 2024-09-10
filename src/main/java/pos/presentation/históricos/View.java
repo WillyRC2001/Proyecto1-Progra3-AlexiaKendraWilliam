@@ -36,6 +36,12 @@ public class View implements PropertyChangeListener {
                 }
             }
         });
+        reporteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.generatePDF();
+            }
+        });
 
     }
     // MVC
@@ -96,7 +102,7 @@ public class View implements PropertyChangeListener {
                 break;
 
             case Model.FILTER:
-                buscarButton.setText(model.getFilter().getNumero());
+                numero.setText(model.getFilter().getNumero());
                 break;
         }
 

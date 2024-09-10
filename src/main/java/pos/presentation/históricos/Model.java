@@ -42,6 +42,8 @@ public class Model extends AbstractModel {
     public void setList(List<Factura> list){
         this.listFacturas = list;
         firePropertyChange(LISTF);
+        this.listLinea = filterLineasByFacturas(list);  // Actualizar la lista de líneas de factura
+        firePropertyChange(LISTL);
     }
 
     public List<Linea> getListL() {
@@ -76,6 +78,22 @@ public class Model extends AbstractModel {
         this.mode = mode;
     }
 
+
+    public List<Linea> filterLineasByFacturas(List<Factura> facturas) {
+        List<Linea> filteredLineas = new ArrayList<>();
+
+        // Iterar sobre todas las líneas de factura
+        for (Linea linea : this.listLinea) {  // Suponiendo que listLinea contiene todas las líneas originales
+            // Comprobar si la línea pertenece a una de las facturas filtradas
+            for (Factura factura : facturas) {
+                if (linea.getFactura().getNumero().equals(factura.getNumero())) {  // Asegúrate de que `getNumeroFactura()` exista
+                    filteredLineas.add(linea);
+                    break;  // Salimos del bucle interior una vez que encontramos la coincidencia
+                }
+            }
+        }
+        return filteredLineas;
+    }
 
     public static final String LISTF="listF";
     public static final String LISTL="listL";

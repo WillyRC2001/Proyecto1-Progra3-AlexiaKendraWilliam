@@ -3,6 +3,7 @@ package pos.presentation.facturas;
 import pos.Application;
 import pos.logic.*;
 import pos.presentation.facturas.View.View;
+import pos.presentation.facturas.View.ViewBuscar;
 import pos.presentation.facturas.View.ViewCantidad;
 import javax.swing.*;
 import java.util.ArrayList;
@@ -92,6 +93,36 @@ public class Controller {
         model.setCurrent(new Factura());
         search(model.getFilter());
     }
+
+    public void Cobrar(){
+    }
+
+    public void CambiarCantidadLinea(Linea lineaModificada) {
+        int index = model.getLineaComprados().indexOf(lineaModificada);
+        if (index >= 0) {
+            model.changeCantidad(index, lineaModificada.getCantidad());
+        }
+    }
+
+    public void BuscarProducto() {
+        try {
+            List<Producto> productosT = Service.instance().search(new Producto());
+            ViewBuscar dialog = new ViewBuscar(productosT); // Pasamos la lista y el controlador al diálogo
+            dialog.pack();  // Ajusta el tamaño de la ventana según el contenido
+            dialog.setVisible(true);
+            Producto productoSeleccionado = dialog.getProductoSeleccionado();
+            if (productoSeleccionado != null) {
+                // Llama al método para agregar el producto a la factura
+                AgregarButtonClick(productoSeleccionado.getCodigo(), (Cliente) view.getClienteJcb().getSelectedItem());
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view.getPanel(), e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+
     //Metodos que desconozco si se necesitan en Factura
     //public void edit(int row){}
     //public void delete(){}

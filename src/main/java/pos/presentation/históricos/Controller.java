@@ -36,10 +36,7 @@ public class Controller {
         model.setList(Service.instance().search(model.getFilter()));
     }
 
-    public void clear() {
-        model.setMode(Application.MODE_CREATE);
-        model.setCurrent(new Factura());
-    }
+
     public void generatePDF() {
         // Ruta donde se guardará el PDF
         String pdfPath = "historico_reporter.pdf";

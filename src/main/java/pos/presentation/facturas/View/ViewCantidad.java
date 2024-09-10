@@ -1,5 +1,8 @@
 package pos.presentation.facturas.View;
 import pos.logic.Linea;
+import pos.logic.Producto;
+import pos.presentation.facturas.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,7 +14,7 @@ public class ViewCantidad extends JDialog {
     private JLabel Cantidad;
     private JTextField textCant;
     private Linea linea; // Línea a modificar
-
+    private Controller controller;
     public ViewCantidad(Linea linea) {
         this.linea = linea;
         contentPane.setPreferredSize(new Dimension(300, 150));
@@ -40,9 +43,17 @@ public class ViewCantidad extends JDialog {
     private void onOK() {
         try {
             int cantidad = Integer.parseInt(textCant.getText());
-            if (cantidad > 0) {
+            Producto producto = linea.getProducto();  // Suponiendo que Linea tiene un método getProducto
+            int existencia = producto.getExistencias();  // Suponiendo que Producto tiene un método getExistencia
+
+            if (cantidad > 0 && cantidad <= existencia) {
                 linea.setCantidad(cantidad); // Actualizar la cantidad de la línea
+                if (controller != null) {
+                    controller.CambiarCantidadLinea(linea); // Método que actualizará la cantidad
+                }
                 dispose();
+            } else if (cantidad > existencia) {
+                JOptionPane.showMessageDialog(this, "La cantidad no puede ser mayor a la existencia del producto.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "La cantidad debe ser positiva.", "Error", JOptionPane.ERROR_MESSAGE);
             }

@@ -44,6 +44,11 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
         }
     }
 
+    public void setProductos(List<Producto> productos) {
+        this.rows = productos;
+        fireTableDataChanged();  // Notifica a la tabla que los datos han cambiado
+    }
+
     @Override
     protected void initColNames(){
         colNames = new String[6];

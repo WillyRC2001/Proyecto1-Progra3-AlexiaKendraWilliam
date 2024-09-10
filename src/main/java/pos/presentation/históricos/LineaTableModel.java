@@ -25,7 +25,7 @@ public class LineaTableModel extends AbstractTableModel<Linea> implements javax.
             case CODIGO:
                 return e.getCodigo();
             case ARTICULO:
-                return e.getProducto().getCodigo();
+                return e.getProducto().getDescripcion();
             case CATEGORIA:
                 return e.getProducto().getCategoria().getNombre();
             case CANTIDAD:

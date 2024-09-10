@@ -1,10 +1,6 @@
 package pos.presentation.facturas.View;
 
-import pos.logic.Cajero;
-import pos.logic.Linea;
-import pos.logic.Producto;
-import pos.presentation.cajeros.TableModel;
-import pos.presentation.facturas.Controller;
+
 import pos.presentation.facturas.Model;
 import pos.presentation.históricos.LineaTableModel;
 import pos.logic.Cliente;
@@ -13,8 +9,6 @@ import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -43,6 +37,10 @@ public class View implements PropertyChangeListener {
         return listaJT;
     }
 
+    public JComboBox<Cliente> getClienteJcb() {  // Añadido
+        return clienteJcb;
+    }
+
     public View() {
         clienteJcb.setPreferredSize(new Dimension(200, 30));
         cajeroJcb.setPreferredSize(new Dimension(200, 30));
@@ -50,18 +48,18 @@ public class View implements PropertyChangeListener {
         listaJT.setPreferredSize(new Dimension(800, 300));  // Ajusta las dimensiones según tus necesidades
 
 
-//        buscarButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try{
-//                    Producto filter = new Producto();
-//                    filter.setCodigo(producto.getText());   //PRO-001
-//                    controller.search(filter);
-//                }catch(Exception ex){
-//                    JOptionPane.showMessageDialog(panel, ex.getMessage(),"Informacion",JOptionPane.INFORMATION_MESSAGE);
-//                }
-//            }
-//        });
+        CobrarButton.addActionListener(e -> {
+            if (controller != null) {
+                controller.Cobrar();
+            }
+        });
+
+        buscarButton.addActionListener(e -> {
+            if (controller != null) {
+                controller.BuscarProducto();
+            }
+        });
+
         agregarButton.addActionListener(e -> {
             String codigo = producto.getText();
             if (controller != null) {
