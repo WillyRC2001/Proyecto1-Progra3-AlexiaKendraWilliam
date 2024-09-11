@@ -1,6 +1,6 @@
 package pos.presentation.facturas.View;
 
-
+import pos.logic.Cajero;
 import pos.presentation.facturas.Model;
 import pos.presentation.históricos.LineaTableModel;
 import pos.logic.Cliente;
@@ -42,7 +42,9 @@ public class View implements PropertyChangeListener {
     public JComboBox<Cliente> getClienteJcb() {  // Añadido
         return clienteJcb;
     }
-
+    public JComboBox<Cajero> getCajeroJcb() {  // Añadido
+        return cajeroJcb;
+    }
     public View() {
         clienteJcb.setPreferredSize(new Dimension(200, 30));
         cajeroJcb.setPreferredSize(new Dimension(200, 30));

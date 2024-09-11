@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class Service {
     private static Service theInstance;
+    //private static int ultimoNumeroFactura = 1000; // Comienza en 1000 o el número que prefieras
 
     public static Service instance() {
         if (theInstance == null) theInstance = new Service();
@@ -34,6 +35,27 @@ public class Service {
             System.out.println(e);
         }
     }
+
+    //Método para obtener el siguiente número de factura
+    public synchronized String generarNumeroFactura() {
+        try {
+            updateF(data.getContadorF()+1);
+            return String.format( "FAC-"+ "%05d", data.getContadorF());  // Formato con ceros a la izquierda si es necesario
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public synchronized String generarNumeroLinea() {
+        try {
+            updateL(data.getContadorL()+1);
+            return String.format( "LIN-"+ "%05d", data.getContadorL());  // Formato con ceros a la izquierda si es necesario
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //====================================================================================================================================================
+
+
 
 //================= CLIENTES ============
 
@@ -139,6 +161,15 @@ public class Service {
     }
 
     public List<Producto> search(Producto e) {
+        //        return data.getProductos().stream()
+//                .filter(i->i.getCodigo().contains(e.getCodigo()))
+//                .sorted(Comparator.comparing(Producto::getDescripcion))
+//                .collect(Collectors.toList());
+//        return data.getProductos().stream()
+//                .filter(i -> e.getCodigo() == null || (i.getCodigo() != null && i.getCodigo().contains(e.getCodigo())))
+//                .sorted(Comparator.comparing(Producto::getCodigo))
+//                .collect(Collectors.toList());
+
         return data.getProductos().stream()
                 .filter(i -> e.getCodigo() == null || (i.getCodigo() != null && i.getCodigo().contains(e.getCodigo())))
                 .sorted(Comparator.comparing(Producto::getCodigo, Comparator.nullsLast(Comparator.naturalOrder())))
@@ -149,6 +180,7 @@ public class Service {
     public List<Categoria> getCategorias() {
         return this.data.getCategorias();
     }
+
     public void create(Categoria e) throws Exception {
         Categoria result = data.getCategorias().stream()
                 .filter(i -> i.getId().equals(e.getId()))
@@ -186,6 +218,10 @@ public class Service {
             System.out.println("data.getCategorias() es null");
             return new ArrayList<>();
         }
+        // Imprime las categorías antes de aplicar el filtro
+        System.out.println("Categorías disponibles:");
+        data.getCategorias().forEach(categoria -> System.out.println(categoria));
+
         //////////////////////////////////////////////////////////////////
 //            return data.getCategorias().stream()
 //                    .filter(i -> i.getId() != null && e.getId() != null && i.getId().contains(e.getId()))
@@ -198,10 +234,23 @@ public class Service {
 //                .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
 //                .collect(Collectors.toList());
         /////////////////////////////////////
+        // Verifica el valor de e.getId()
+        System.out.println("ID de filtro: " + e.getId());
         List<Categoria> result = data.getCategorias().stream()
                 .filter(i -> e.getId() == null || (i.getId() != null && i.getId().contains(e.getId())))
+                .peek(categoria -> System.out.println("Categoría filtrada: " + categoria)) // Imprime categorías filtradas
                 .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
                 .collect(Collectors.toList());
+        //        List<Categoria> result = data.getCategorias().stream()
+//                .filter(i -> i.getId() != null && e.getId() != null && i.getId().contains(e.getId()))
+//                .peek(categoria -> System.out.println("Categoría filtrada: " + categoria)) // Imprime categorías filtradas
+//                .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
+//                .collect(Collectors.toList());
+
+        // Imprime la lista final después de la ordenación
+        System.out.println("Categorías después de la ordenación:");
+        result.forEach(categoria -> System.out.println(categoria));
+
         return result;
     }
     //================= Linea ============
@@ -249,19 +298,30 @@ public class Service {
     }
 
     public List<Linea> search(Linea e) {
+        String numeroBuscado = e.getCodigo() != null ? e.getCodigo() : "";
+
         return data.getLineas().stream()
-                .filter(i -> i.getCodigo().contains(e.getCodigo()))
+                .filter(i -> i.getCodigo() != null && i.getCodigo().contains(numeroBuscado))
                 .sorted(Comparator.comparing(Linea::getCodigo))
                 .collect(Collectors.toList());
+//        return data.getLineas().stream()
+//                .filter(i -> i.getCodigo().contains(e.getCodigo()))
+//                .sorted(Comparator.comparing(Linea::getCodigo))
+//                .collect(Collectors.toList());
     }
 
     //================= Factura ============
 
     public List<Factura> search(Factura e) {
+        String numeroBuscado = e.getNumero() != null ? e.getNumero() : "";
         return data.getFacturas().stream()
-                .filter(i -> i.getNumero().contains(e.getNumero()))
+                .filter(i -> i.getNumero() != null && i.getNumero().contains(numeroBuscado))
                 .sorted(Comparator.comparing(Factura::getNumero))
                 .collect(Collectors.toList());
+//        return data.getFacturas().stream()
+//                .filter(i -> i.getNumero().contains(e.getNumero()))
+//                .sorted(Comparator.comparing(Factura::getNumero))
+//                .collect(Collectors.toList());
     }
 
     public void create(Factura e) throws Exception {
@@ -297,7 +357,23 @@ public class Service {
         } catch (Exception ex) {
             throw new Exception("Factura no existe");
         }
-
-
     }
+
+    //=================Contador (Factura y Linea)
+    public void updateF(int contador) throws Exception {
+        try{
+            data.setContadorF(contador);
+        }catch(Exception e){
+            throw new Exception("Contador no existe");
+        }
+    }
+    public void updateL(int contador) throws Exception {
+        try{
+            data.setContadorL(contador);
+        }catch(Exception e){
+            throw new Exception("Contador no existe");
+        }
+    }
+    //====================================================================================================================================================
+
 }

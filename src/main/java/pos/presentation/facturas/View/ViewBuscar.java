@@ -18,6 +18,7 @@ public class ViewBuscar extends JDialog {
     private TableModel tableModelProducto;
     private List<Producto> productosOriginales;
     private Producto productoSeleccionado;
+
     public ViewBuscar(List<Producto> productos) {
         this.productosOriginales = productos;
 

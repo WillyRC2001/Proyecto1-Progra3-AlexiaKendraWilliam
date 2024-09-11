@@ -7,9 +7,10 @@ import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Linea {
-    //@XmlIDREF
+    private static int contador = 0; // Variable estática para el contador
+    @XmlIDREF
     Producto producto;
-    //@XmlIDREF
+    @XmlIDREF
     Factura factura;
     @XmlID
     String codigo;
@@ -20,10 +21,10 @@ public class Linea {
     public Linea(){
 
     }
-    public Linea(Producto producto, Factura factura, String codigo, int cantidad, float descuento) {
+    public Linea(Producto producto, Factura factura, int cantidad, float descuento) {
         this.producto = producto;
         this.factura = factura;
-        this.codigo = codigo;
+        //this.codigo = generarCodigo(); // Asigna un código único
         this.cantidad = cantidad;
         this.descuento = descuento;
     }

@@ -4,12 +4,15 @@ import pos.Application;
 import pos.logic.*;
 import pos.presentation.facturas.View.View;
 import pos.presentation.facturas.View.ViewBuscar;
+import pos.presentation.facturas.View.ViewCobrar;
 import pos.presentation.facturas.View.ViewCantidad;
 import pos.presentation.facturas.View.ViewDescuento;
 
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Controller {
     View view;
@@ -49,11 +52,13 @@ public class Controller {
             }
 
             Producto productoEncontrado = productosEncontrados.get(0);
-            Linea nuevaLinea = new Linea(productoEncontrado,null,productoEncontrado.getCodigo(),1,c.getDescuento());
+            Linea nuevaLinea = new Linea(productoEncontrado,null,1,c.getDescuento());
+            nuevaLinea.setCodigo(Service.instance().generarNumeroLinea());
             model.addLineaComprada(nuevaLinea);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }
     public void EliminarButtonClick(int fila) {
         try {
@@ -81,7 +86,7 @@ public class Controller {
         int row = view.getListaJT().getSelectedRow();
         if (row >= 0) {
             Linea lineaSeleccionada = model.getLineaComprados().get(row);
-            ViewCantidad dialog = new ViewCantidad(lineaSeleccionada, this);
+            ViewCantidad dialog = new ViewCantidad(lineaSeleccionada,null); //view cantidad constructor
             dialog.pack();  // Ajusta el tamaño de la ventana según el contenido
             dialog.setVisible(true);
         } else {
@@ -124,7 +129,33 @@ public class Controller {
         search(model.getFilter());
     }
 
-    public void Cobrar(){
+    public void Cobrar() {
+        if (model.getLineaComprados().isEmpty()) {
+            JOptionPane.showMessageDialog(view.getPanel(), "No hay productos en la factura.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        double totalFactura = model.getLineaComprados().stream().mapToDouble(linea -> linea.getProducto().getPrecioUnitario() * linea.getCantidad()).sum();
+        ViewCobrar dialog = new ViewCobrar(totalFactura);
+        dialog.pack();
+        dialog.setVisible(true);
+
+        Factura factura = model.getCurrent();
+        factura.setNumero(Service.instance().generarNumeroFactura()); // Asignar número secuencial
+        factura.setFecha(LocalDate.now());
+        factura.setLista_productos(model.getLineaComprados());
+        factura.setCliente((Cliente) view.getClienteJcb().getSelectedItem());
+        factura.setCajero((Cajero) view.getCajeroJcb().getSelectedItem());
+        try {
+            for(Linea linea : model.getLineaComprados()){
+                //linea.setCodigo(Service.instance().generarNumeroLinea());
+                Service.instance().create(linea);
+            }
+            Service.instance().create(factura);
+            model.setProductosComprados(new ArrayList<>());
+            JOptionPane.showMessageDialog(view.getPanel(), "Factura guardada exitosamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void CambiarCantidadLinea(Linea lineaModificada) {
@@ -133,6 +164,7 @@ public class Controller {
             model.changeCantidad(index, lineaModificada.getCantidad());
         }
     }
+
 
     public void BuscarProducto() {
         try {
@@ -150,8 +182,6 @@ public class Controller {
             JOptionPane.showMessageDialog(view.getPanel(), e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
 
     //Metodos que desconozco si se necesitan en Factura
     //public void edit(int row){}

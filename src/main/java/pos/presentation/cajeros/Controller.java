@@ -14,7 +14,6 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 
-
 public class Controller {
     View view;
     Model model;

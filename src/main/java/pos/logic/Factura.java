@@ -24,16 +24,17 @@ public class Factura {
     LocalDate fecha;
     @XmlID
     String numero;
-
+    private static int contador = 0;
 
     public Factura() {}
 
-    public Factura(List<Linea> lista_productos , Cliente cliente, Cajero cajero, LocalDate fecha, String numero) {
+    public Factura(List<Linea> lista_productos , Cliente cliente, Cajero cajero, LocalDate fecha) {
         this.linea = lista_productos;
         this.cliente = cliente;
         this.cajero = cajero;
         this.fecha = fecha;
-        this.numero = numero;
+        //this.numero = generarCodigo(); // Asigna un código único
+        //this.numero = numero;
     }
 
     public List<Linea> getLista_productos() {return linea;}
@@ -55,8 +56,6 @@ public class Factura {
         }
         return subtotal;
     }
-
-
 
     public double Total(){
         double subtotal = 0.0;

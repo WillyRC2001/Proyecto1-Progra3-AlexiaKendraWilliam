@@ -28,7 +28,10 @@ public class Data {
     @XmlElementWrapper(name = "facturas")
     @XmlElement(name = "factura")
     private List<Factura> facturas;
-
+    @XmlElement(name = "contadorF")
+    private int contadorF; // Nuevo campo para el contador
+    @XmlElement(name = "contadorL")
+    private int contadorL; // Nuevo campo para el contador
 
     public Data() {
         clientes = new ArrayList<>();
@@ -37,6 +40,8 @@ public class Data {
         productos = new ArrayList<>();
         lineas = new ArrayList<>();
         facturas = new ArrayList<>();
+        contadorF = 0; // Inicializar contador
+        contadorL = 0; // Inicializar contador
     }
 
     public List<Cliente> getClientes() {
@@ -53,6 +58,9 @@ public class Data {
     }
     public List<Linea> getLineas() {return lineas;}
     public List<Factura> getFacturas() {return facturas;}
-
+    public int getContadorF() {return contadorF;}
+    public void setContadorF(int contador) {this.contadorF = contador;}
+    public int getContadorL() {return contadorL;}
+    public void setContadorL(int contador) {this.contadorL = contador;}
 
 }
