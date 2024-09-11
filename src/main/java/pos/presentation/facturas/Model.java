@@ -29,6 +29,8 @@ private
         firePropertyChange(CAJEROS);
         firePropertyChange(CURRENT);
         firePropertyChange(FILTER);
+        firePropertyChange(CURRENTCLI);
+        firePropertyChange(CURRENTFCAJ);
     }
 
     public Model() {}
@@ -67,6 +69,12 @@ private
         this.clientes = clientes;
         firePropertyChange(CLIENTES);
     }
+
+    public void setCliente(Cliente clientes) {
+        this.currentCli = clientes;
+        firePropertyChange(CLIENTES);
+    }
+
     public void setCajeros(List<Cajero> cajeros) {
         this.cajeros = cajeros;
         firePropertyChange(CAJEROS);
@@ -146,4 +154,6 @@ private
     public static final String CAJEROS="cajeros";
     public static final String FILTER="filter";
     public static final String CURRENT="current";
+    public static final String CURRENTCLI="currentcli";
+    public static final String CURRENTFCAJ="currentcaj";
 }

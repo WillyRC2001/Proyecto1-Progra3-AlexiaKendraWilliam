@@ -162,7 +162,6 @@ public class View   implements PropertyChangeListener{
             case pos.presentation.cajeros.Model.CURRENT:
                 id.setText(model.getCurrent().getId());
                 nombre.setText(model.getCurrent().getNombre());
-
                 if (model.getMode() == Application.MODE_EDIT) {
                     id.setEnabled(false);
                     borrarButton.setEnabled(true);
@@ -179,6 +178,8 @@ public class View   implements PropertyChangeListener{
             case pos.presentation.cajeros.Model.FILTER:
                 searchNombre.setText(model.getFilter().getNombre());
                 break;
+         
+
         }
 
         this.panel.revalidate();
