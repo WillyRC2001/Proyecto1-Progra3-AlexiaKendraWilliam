@@ -104,11 +104,23 @@ private
         this.lineaComprados.remove(fila);
         firePropertyChange(LINEACOMPRADOS);
     }
+    public void deleteAllCompras(List<Linea> linea){
+        this.lineaComprados.removeAll(linea);
+        firePropertyChange(LINEACOMPRADOS);
+    }
     public void changeCantidad(int index, int cantidad) {
         if (lineaComprados != null && index >= 0 && index < lineaComprados.size()) {
             Linea linea = lineaComprados.get(index);
             linea.setCantidad(cantidad);
             firePropertyChange(LINEACOMPRADOS);
+        }
+    }
+    public void changeDescuento(int index, float desc){
+        if(lineaComprados != null && index >= 0 && index < lineaComprados.size()){
+            Linea linea = lineaComprados.get(index);
+            linea.setDescuento(desc);
+            firePropertyChange(LINEACOMPRADOS);
+
         }
     }
 

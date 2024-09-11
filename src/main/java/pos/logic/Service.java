@@ -139,14 +139,6 @@ public class Service {
     }
 
     public List<Producto> search(Producto e) {
-//        return data.getProductos().stream()
-//                .filter(i->i.getCodigo().contains(e.getCodigo()))
-//                .sorted(Comparator.comparing(Producto::getDescripcion))
-//                .collect(Collectors.toList());
-//        return data.getProductos().stream()
-//                .filter(i -> e.getCodigo() == null || (i.getCodigo() != null && i.getCodigo().contains(e.getCodigo())))
-//                .sorted(Comparator.comparing(Producto::getCodigo))
-//                .collect(Collectors.toList());
         return data.getProductos().stream()
                 .filter(i -> e.getCodigo() == null || (i.getCodigo() != null && i.getCodigo().contains(e.getCodigo())))
                 .sorted(Comparator.comparing(Producto::getCodigo, Comparator.nullsLast(Comparator.naturalOrder())))
@@ -194,37 +186,22 @@ public class Service {
             System.out.println("data.getCategorias() es null");
             return new ArrayList<>();
         }
-
-        // Imprime las categorías antes de aplicar el filtro
-        System.out.println("Categorías disponibles:");
-        data.getCategorias().forEach(categoria -> System.out.println(categoria));
-//        return data.getCategorias().stream()
-//                .filter(i -> i.getId().contains(e.getId()))
-//                .sorted(Comparator.comparing(Categoria::getId))
-//                .collect(Collectors.toList());
         //////////////////////////////////////////////////////////////////
 //            return data.getCategorias().stream()
 //                    .filter(i -> i.getId() != null && e.getId() != null && i.getId().contains(e.getId()))
 //                    .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
 //                    .collect(Collectors.toList());
-
-        // Verifica el valor de e.getId()
-        System.out.println("ID de filtro: " + e.getId());
-        List<Categoria> result = data.getCategorias().stream()
-                .filter(i -> e.getId() == null || (i.getId() != null && i.getId().contains(e.getId())))
-                .peek(categoria -> System.out.println("Categoría filtrada: " + categoria)) // Imprime categorías filtradas
-                .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
-                .collect(Collectors.toList());
+        ///////////////////////////////////////////////////////
 //        List<Categoria> result = data.getCategorias().stream()
-//                .filter(i -> i.getId() != null && e.getId() != null && i.getId().contains(e.getId()))
+//                .filter(i -> e.getId() == null || (i.getId() != null && i.getId().contains(e.getId())))
 //                .peek(categoria -> System.out.println("Categoría filtrada: " + categoria)) // Imprime categorías filtradas
 //                .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
 //                .collect(Collectors.toList());
-
-        // Imprime la lista final después de la ordenación
-        System.out.println("Categorías después de la ordenación:");
-        result.forEach(categoria -> System.out.println(categoria));
-
+        /////////////////////////////////////
+        List<Categoria> result = data.getCategorias().stream()
+                .filter(i -> e.getId() == null || (i.getId() != null && i.getId().contains(e.getId())))
+                .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
+                .collect(Collectors.toList());
         return result;
     }
     //================= Linea ============

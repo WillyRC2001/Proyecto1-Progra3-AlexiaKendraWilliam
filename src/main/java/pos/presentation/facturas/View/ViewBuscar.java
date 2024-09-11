@@ -52,12 +52,28 @@ public class ViewBuscar extends JDialog {
         contentPane.registerKeyboardAction(e -> onCancel(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        codigo.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                onBuscar();  // Llamar al método de búsqueda cuando se inserta texto
+            }
+
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                onBuscar();  // Llamar al método de búsqueda cuando se elimina texto
+            }
+
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                onBuscar();  // Llamar al método de búsqueda cuando cambia el texto
+            }
+        });
     }
 
     private void onBuscar() {
         String codigoBuscar = codigo.getText().trim();  // Obtén el texto del campo de búsqueda
         List<Producto> productosFiltrados = productosOriginales.stream()
-                .filter(p -> p.getCodigo().contains(codigoBuscar))
+                .filter(p -> p.getDescripcion().contains(codigoBuscar))
                 .collect(Collectors.toList());  // Filtra los productos por el código
 
         // Actualiza el modelo de la tabla con los productos filtrados

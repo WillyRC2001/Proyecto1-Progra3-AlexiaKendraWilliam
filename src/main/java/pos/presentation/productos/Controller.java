@@ -27,12 +27,6 @@ public class Controller {
             List<Producto> productos = Service.instance().search(new Producto());
             List<Categoria> categorias = Service.instance().search(new Categoria());
 
-            // Imprimir las categorías para verificar que no estén vacías
-            System.out.println("Categorías obtenidas:");
-            for (Categoria categoria : categorias) {
-                System.out.println(categoria);
-            }
-
             // Inicializar el modelo con los datos obtenidos
             model.init(productos, categorias);
             this.view = view;

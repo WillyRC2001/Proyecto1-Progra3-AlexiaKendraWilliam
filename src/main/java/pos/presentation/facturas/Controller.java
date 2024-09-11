@@ -5,6 +5,8 @@ import pos.logic.*;
 import pos.presentation.facturas.View.View;
 import pos.presentation.facturas.View.ViewBuscar;
 import pos.presentation.facturas.View.ViewCantidad;
+import pos.presentation.facturas.View.ViewDescuento;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,15 +66,43 @@ public class Controller {
             JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    public void CancelarButtonClick() {
+        try {
+            if (model.getLineaComprados() == null) {
+                JOptionPane.showMessageDialog(view.getPanel(), "No hay Elementos en la Lista de Compra", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            model.deleteAllCompras(model.getLineaComprados());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     public void CambiarCantidad() {
         int row = view.getListaJT().getSelectedRow();
         if (row >= 0) {
             Linea lineaSeleccionada = model.getLineaComprados().get(row);
-            ViewCantidad dialog = new ViewCantidad(lineaSeleccionada);
+            ViewCantidad dialog = new ViewCantidad(lineaSeleccionada, this);
             dialog.pack();  // Ajusta el tamaño de la ventana según el contenido
             dialog.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(view.getPanel(), "No se ha seleccionado ningún producto.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public void ActivarViewDescuento(){
+        int row = view.getListaJT().getSelectedRow();
+        if(row >= 0){
+            Linea lineaSeleccionada = model.getLineaComprados().get(row);
+            ViewDescuento dialog = new ViewDescuento(lineaSeleccionada, this);
+            dialog.pack();
+            dialog.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(view.getPanel(), "No se ha seleccionado ningún producto.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public void CambiarDescuentoLinea(Linea lineaModificada){
+        int index = model.getLineaComprados().indexOf(lineaModificada);
+        if (index >= 0) {
+            model.changeDescuento(index, lineaModificada.getDescuento());
         }
     }
     public void search(Producto filter) throws Exception{

@@ -9,6 +9,8 @@ import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -75,6 +77,17 @@ public class View implements PropertyChangeListener {
         cantidadButton.addActionListener(e -> {
             if (controller != null) {
                 controller.CambiarCantidad();
+            }
+        });
+        //Evento del boton Cancelar
+        cancelarButton.addActionListener(e -> {
+            if(controller != null) {
+                controller.CancelarButtonClick();
+            }
+        });
+        descuentoButton.addActionListener(e -> {
+            if (controller != null) {
+                controller.ActivarViewDescuento();
             }
         });
     }

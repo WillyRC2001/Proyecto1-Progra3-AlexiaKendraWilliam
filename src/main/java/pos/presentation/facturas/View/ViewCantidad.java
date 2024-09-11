@@ -15,8 +15,9 @@ public class ViewCantidad extends JDialog {
     private JTextField textCant;
     private Linea linea; // Línea a modificar
     private Controller controller;
-    public ViewCantidad(Linea linea) {
+    public ViewCantidad(Linea linea, Controller controller) {
         this.linea = linea;
+        this.controller = controller;
         contentPane.setPreferredSize(new Dimension(300, 150));
         setContentPane(contentPane);
         setModal(true);
