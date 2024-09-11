@@ -46,7 +46,7 @@ public class Linea {
         return  producto.getPrecioUnitario() ;
     }
     public double Importe(){
-        return (Neto() * cantidad) - descuento;
+        return (Neto() * cantidad) - descuento *10;
     }
 
     @Override

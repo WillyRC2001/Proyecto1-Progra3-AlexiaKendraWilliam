@@ -34,6 +34,7 @@ public class Controller {
         model.setMode(Application.MODE_CREATE);
         model.setCurrent(new Factura());
         model.setList(Service.instance().search(model.getFilter()));
+        model.setListLinea(Service.instance().searchF(model.getFilter()));
     }
 
 

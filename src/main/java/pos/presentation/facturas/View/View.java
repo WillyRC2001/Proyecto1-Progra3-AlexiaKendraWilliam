@@ -30,6 +30,11 @@ public class View implements PropertyChangeListener {
     private JLabel clienteLbl;
     private JLabel cajeroLbl;
     private JLabel productoLbl;
+    private JLabel Articulos;
+    private JLabel SubTotal;
+    private JLabel Descuento;
+    private JLabel total;
+    private JPanel Lista;
 
     public JPanel getPanel() {
         return panel;
@@ -126,11 +131,20 @@ public class View implements PropertyChangeListener {
                         return false;  // Deshabilitar la edición de celdas
                     }
                 });
-
-                listaJT.setRowHeight(50); // Ajustar la altura de las filas
+                TableColumnModel columnModel = listaJT.getColumnModel();
+                columnModel.getColumn(0).setPreferredWidth(180);
+                columnModel.getColumn(1).setPreferredWidth(180);
+                columnModel.getColumn(2).setPreferredWidth(180);
+                columnModel.getColumn(3).setPreferredWidth(180);
+                columnModel.getColumn(4).setPreferredWidth(180);
+                columnModel.getColumn(5).setPreferredWidth(180);
+                columnModel.getColumn(6).setPreferredWidth(180);
+                columnModel.getColumn(7).setPreferredWidth(180);
+                //listaJT.setRowHeight(50); // Ajustar la altura de las filas
 
                 // Ajuste del ancho de las columnas basado en el contenido
-                ajustarAnchoDeColumnas(listaJT);
+                //ajustarAnchoDeColumnas(listaJT);
+                updateLabels();
                 break;
         }
     }
@@ -138,7 +152,7 @@ public class View implements PropertyChangeListener {
     private void ajustarAnchoDeColumnas(JTable table) {
         final TableColumnModel columnModel = table.getColumnModel();
         for (int column = 0; column < table.getColumnCount(); column++) {
-            int width = 350; // Ancho mínimo
+            int width = 450; // Ancho mínimo
             for (int row = 0; row < table.getRowCount(); row++) {
                 TableCellRenderer renderer = table.getCellRenderer(row, column);
                 Component comp = table.prepareRenderer(renderer, row, column);
@@ -149,5 +163,12 @@ public class View implements PropertyChangeListener {
             }
             columnModel.getColumn(column).setPreferredWidth(width);
         }
+    }
+
+    private void updateLabels() {
+        Articulos.setText("" + model.getTotalArticulos());
+        SubTotal.setText("" + String.format("%.2f", model.getSubtotal()));
+        Descuento.setText("" + String.format("%.2f", model.getDescuentoTotal()));
+        total.setText("" + String.format("%.2f", model.getTotal()));
     }
 }

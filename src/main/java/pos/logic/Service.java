@@ -5,6 +5,7 @@ import pos.data.XmlPersister;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -310,6 +311,19 @@ public class Service {
 //                .collect(Collectors.toList());
     }
 
+    public List<Linea> searchF(Factura e) {
+        String numeroBuscado = e.getNumero() != null ? e.getNumero() : "";
+        if (numeroBuscado.isEmpty()) {
+            return Collections.emptyList(); // Retorna una lista vacía
+        }
+        return data.getLineas().stream()
+                .filter(i -> i.getFactura() != null && i.getFactura().getNumero() != null &&
+                        i.getFactura().getNumero().contains(numeroBuscado))
+                .sorted(Comparator.comparing(i -> i.getFactura().getNumero())) // Ajusta según el criterio de ordenación deseado
+                .collect(Collectors.toList());
+    }
+
+
     //================= Factura ============
 
     public List<Factura> search(Factura e) {
@@ -325,13 +339,36 @@ public class Service {
     }
 
     public void create(Factura e) throws Exception {
+//        Factura result = data.getFacturas().stream()
+//                .filter(i -> i.getNumero().equals(e.getNumero()))  // Assuming 'numero' is a unique identifier for Factura
+//                .findFirst().orElse(null);
+//        if (result == null) {
+//            data.getFacturas().add(e);
+//        } else {
+//            throw new Exception("Factura ya existe");
+//        }
+        // Imprimir todas las facturas existentes
+        System.out.println("Facturas existentes:");
+        for (Factura factura : data.getFacturas()) {
+            System.out.println("Numero: " + factura.getNumero() );
+        }
+
+        // Imprimir la factura que se está intentando agregar
+        System.out.println("Intentando agregar factura:");
+        System.out.println("Numero: " + e.getNumero() );
+
+        // Buscar si ya existe una factura con el mismo número
         Factura result = data.getFacturas().stream()
-                .filter(i -> i.getNumero().equals(e.getNumero()))  // Assuming 'numero' is a unique identifier for Factura
+                .filter(i -> i.getNumero().equals(e.getNumero()))
                 .findFirst().orElse(null);
+
         if (result == null) {
+            // Si no hay factura con ese número, agregarla
             data.getFacturas().add(e);
+            System.out.println("Factura agregada exitosamente.");
         } else {
-            throw new Exception("Factura ya existe");
+            // Si ya existe una factura con el mismo número, lanzar una excepción
+            throw new Exception("Factura ya existe con el número: " + e.getNumero());
         }
     }
 

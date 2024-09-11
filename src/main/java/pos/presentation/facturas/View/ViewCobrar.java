@@ -1,27 +1,29 @@
 package pos.presentation.facturas.View;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class ViewCobrar extends JDialog {
-    private JPanel contentPane;
     private JButton buttonOK;
+    private JPanel contentPane;
     private JButton buttonCancel;
     private JTextField efectivo;
     private JTextField tarjeta;
     private JTextField cheque;
     private JTextField simpe;
-    private JTextField textField1;
     private JLabel totalLabel;
+    private JPanel Pagar;
     private double total;  // Variable para almacenar el total de la factura
-
+    private boolean pagoExitoso = false;
     public ViewCobrar(double total) {
+        Pagar.setPreferredSize(new Dimension(180, 30));
         this.total=total;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        totalLabel.setText("Total a pagar: " + String.format("%.2f", total));
+        totalLabel.setText("" + String.format("%.2f", total));
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -68,13 +70,17 @@ public class ViewCobrar extends JDialog {
             } else {
                 double cambio = totalPagado - total;
                 JOptionPane.showMessageDialog(this, "Pago realizado con éxito. Cambio: " + String.format("%.2f", cambio), "Pago Completado", JOptionPane.INFORMATION_MESSAGE);
+                pagoExitoso = true;
                 dispose();  // Cerrar el diálogo después del pago
+
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese valores numéricos válidos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    public boolean isPagoExitoso() {
+        return pagoExitoso;
+    }
     private void onCancel() {
         // add your code here if necessary
         dispose();

@@ -62,7 +62,7 @@ public class Factura {
         for (Linea linea : linea) {
             subtotal += linea.Importe();
         }
-        return subtotal - cliente.descuento;
+        return subtotal - cliente.descuento * 10 ;
     }
 
     @Override

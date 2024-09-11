@@ -86,7 +86,7 @@ public class Controller {
         int row = view.getListaJT().getSelectedRow();
         if (row >= 0) {
             Linea lineaSeleccionada = model.getLineaComprados().get(row);
-            ViewCantidad dialog = new ViewCantidad(lineaSeleccionada,null); //view cantidad constructor
+            ViewCantidad dialog = new ViewCantidad(lineaSeleccionada,this); //view cantidad constructor
             dialog.pack();  // Ajusta el tamaño de la ventana según el contenido
             dialog.setVisible(true);
         } else {
@@ -134,10 +134,15 @@ public class Controller {
             JOptionPane.showMessageDialog(view.getPanel(), "No hay productos en la factura.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        double totalFactura = model.getLineaComprados().stream().mapToDouble(linea -> linea.getProducto().getPrecioUnitario() * linea.getCantidad()).sum();
+
+        double totalFactura = model.getTotal();
         ViewCobrar dialog = new ViewCobrar(totalFactura);
         dialog.pack();
         dialog.setVisible(true);
+        if (!dialog.isPagoExitoso()) {
+            JOptionPane.showMessageDialog(view.getPanel(), "El pago no se completó. No se ha creado la factura.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;  // Salir si el pago no fue exitoso
+        }
 
         Factura factura = model.getCurrent();
         factura.setNumero(Service.instance().generarNumeroFactura()); // Asignar número secuencial
@@ -148,10 +153,12 @@ public class Controller {
         try {
             for(Linea linea : model.getLineaComprados()){
                 //linea.setCodigo(Service.instance().generarNumeroLinea());
+                linea.setFactura(factura);
                 Service.instance().create(linea);
             }
             Service.instance().create(factura);
             model.setProductosComprados(new ArrayList<>());
+            model.setCurrent(new Factura());
             JOptionPane.showMessageDialog(view.getPanel(), "Factura guardada exitosamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

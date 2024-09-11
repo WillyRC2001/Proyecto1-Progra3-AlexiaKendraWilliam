@@ -124,6 +124,22 @@ private
         }
     }
 
+    public int getTotalArticulos() {
+        return lineaComprados.stream().mapToInt(Linea::getCantidad).sum();
+    }
+
+    public double getSubtotal() {
+        return lineaComprados.stream().mapToDouble(linea -> linea.getProducto().getPrecioUnitario() * linea.getCantidad()).sum();
+    }
+
+    public double getDescuentoTotal() {
+        return lineaComprados.stream().mapToDouble(Linea::getDescuento).sum();
+    }
+
+    public double getTotal() {
+        return getSubtotal() - getDescuentoTotal() *100;
+    }
+
     public static final String PRODUCTOSTOTALES="productosTotales";
     public static final String LINEACOMPRADOS="lineaComprados";
     public static final String CLIENTES="clientes";
