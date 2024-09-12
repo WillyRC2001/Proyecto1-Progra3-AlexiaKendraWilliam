@@ -190,6 +190,12 @@ public class Controller {
         }
     }
 
+    public void shown() {
+        model.setCajeros(Service.instance().search(new Cajero()));
+        model.setProductosTotales(Service.instance().search(new Producto()));
+        model.setClientes(Service.instance().search(new Cliente()));
+    }
+
     //Metodos que desconozco si se necesitan en Factura
     //public void edit(int row){}
     //public void delete(){}

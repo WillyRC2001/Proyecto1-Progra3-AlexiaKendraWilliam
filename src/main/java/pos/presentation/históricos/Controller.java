@@ -2,9 +2,7 @@ package pos.presentation.históricos;
 
 
 import pos.Application;
-import pos.logic.Factura;
-import pos.logic.Linea;
-import pos.logic.Service;
+import pos.logic.*;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;
@@ -105,6 +103,11 @@ public class Controller {
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Error al crear PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    public void shown() {
+        model.setList(Service.instance().search(new Factura()));
+        model.setListLinea(Service.instance().search(new Linea()));
+
     }
 
 }
