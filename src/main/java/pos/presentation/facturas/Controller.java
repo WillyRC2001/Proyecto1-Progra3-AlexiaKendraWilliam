@@ -143,7 +143,6 @@ public class Controller {
             JOptionPane.showMessageDialog(view.getPanel(), "El pago no se completó. No se ha creado la factura.", "Error", JOptionPane.ERROR_MESSAGE);
             return;  // Salir si el pago no fue exitoso
         }
-
         Factura factura = model.getCurrent();
         factura.setNumero(Service.instance().generarNumeroFactura()); // Asignar número secuencial
         factura.setFecha(LocalDate.now());
@@ -152,7 +151,6 @@ public class Controller {
         factura.setCajero((Cajero) view.getCajeroJcb().getSelectedItem());
         try {
             for(Linea linea : model.getLineaComprados()){
-                //linea.setCodigo(Service.instance().generarNumeroLinea());
                 linea.setFactura(factura);
                 Service.instance().create(linea);
             }

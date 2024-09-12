@@ -178,7 +178,7 @@ public class View   implements PropertyChangeListener{
             case pos.presentation.cajeros.Model.FILTER:
                 searchNombre.setText(model.getFilter().getNombre());
                 break;
-         
+
 
         }
 

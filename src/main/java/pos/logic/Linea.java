@@ -33,7 +33,7 @@ public class Linea {
     public Factura getFactura() {
         return factura;
     }
-    public void setFactura(Factura factura) {}
+    public void setFactura(Factura fac) {factura = fac;}
     public String getCodigo() {return codigo;}
     public void setCodigo(String codigo) {this.codigo = codigo;}
     public int getCantidad() {return cantidad;}
