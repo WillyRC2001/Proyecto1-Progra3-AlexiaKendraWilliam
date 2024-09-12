@@ -75,7 +75,9 @@
             <children>
               <component id="2f39" class="javax.swing.JTable" binding="listado">
                 <constraints/>
-                <properties/>
+                <properties>
+                  <preferredScrollableViewportSize width="650" height="400"/>
+                </properties>
               </component>
             </children>
           </scrollpane>
@@ -98,7 +100,9 @@
             <children>
               <component id="b4ff5" class="javax.swing.JTable" binding="lineas">
                 <constraints/>
-                <properties/>
+                <properties>
+                  <preferredScrollableViewportSize width="650" height="400"/>
+                </properties>
               </component>
             </children>
           </scrollpane>

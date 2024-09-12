@@ -23,7 +23,7 @@ public class LineaTableModel extends AbstractTableModel<Linea> implements javax.
     protected Object getPropetyAt(Linea e, int col) {
         switch (cols[col]) {
             case CODIGO:
-                return e.getCodigo();
+                return e.getProducto().getCodigo();
             case ARTICULO:
                 return e.getProducto().getDescripcion();
             case CATEGORIA:
