@@ -10,7 +10,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class View implements PropertyChangeListener {
     private JTextField numero;
@@ -49,6 +50,21 @@ public class View implements PropertyChangeListener {
             public void componentShown(ComponentEvent e) {
                 super.componentShown(e);
                 controller.shown();
+            }
+        });
+        // Añadir el ListSelectionListener a la tabla listado
+        listado.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = listado.getSelectedRow();
+                    if (selectedRow >= 0) {
+                        Factura facturaSeleccionada = model.getList().get(selectedRow);
+                        controller.loadLineas(facturaSeleccionada);
+                    } else {
+                        controller.clearLineas();
+                    }
+                }
             }
         });
 

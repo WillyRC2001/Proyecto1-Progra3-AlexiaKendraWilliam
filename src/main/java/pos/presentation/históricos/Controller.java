@@ -1,6 +1,5 @@
 package pos.presentation.históricos;
 
-
 import pos.Application;
 import pos.logic.*;
 
@@ -12,6 +11,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Cell;
+import java.util.ArrayList;
 
 
 public class Controller {
@@ -103,6 +103,16 @@ public class Controller {
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Error al crear PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    // Método para cargar las líneas de una factura seleccionada
+    public void loadLineas(Factura factura) {
+        model.setListLinea(Service.instance().searchF(factura));
+    }
+
+    // Método para limpiar las líneas cuando no se selecciona ninguna factura
+    public void clearLineas() {
+        model.setListLinea(new ArrayList<>());
     }
     public void shown() {
         model.setList(Service.instance().search(new Factura()));

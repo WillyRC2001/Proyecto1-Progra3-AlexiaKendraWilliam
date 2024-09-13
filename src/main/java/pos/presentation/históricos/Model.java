@@ -76,9 +76,6 @@ public class Model extends AbstractModel {
         this.mode = mode;
     }
 
-
-
-
     public static final String LISTF="listF";
     public static final String LISTL="listL";
     public static final String CURRENT="current";

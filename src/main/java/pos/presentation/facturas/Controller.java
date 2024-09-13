@@ -150,11 +150,29 @@ public class Controller {
         factura.setCliente((Cliente) view.getClienteJcb().getSelectedItem());
         factura.setCajero((Cajero) view.getCajeroJcb().getSelectedItem());
         try {
-            for(Linea linea : model.getLineaComprados()){
-                linea.setFactura(factura);
-                Service.instance().create(linea);
+            // Actualizar inventario
+            for (Linea linea : model.getLineaComprados()) {
+                Producto producto = linea.getProducto();
+                int cantidadComprada = linea.getCantidad();
+                int nuevaCantidad = producto.getExistencias() - cantidadComprada;
+
+                if (nuevaCantidad < 0) {
+                    JOptionPane.showMessageDialog(view.getPanel(), "No hay suficiente stock para el producto: " + producto.getDescripcion(), "Error", JOptionPane.ERROR_MESSAGE);
+                    return;  // Detener si no hay suficiente stock
+                }
+
+                // Actualizar las existencias del producto
+                producto.setExistencias(nuevaCantidad);
+                Service.instance().update(producto);  // Guardar el cambio en la base de datos
             }
-            Service.instance().create(factura);
+
+            // Guardar la factura
+            for (Linea linea : model.getLineaComprados()) {
+                linea.setFactura(factura);
+                Service.instance().create(linea);  // Guardar la línea de la factura
+            }
+
+            Service.instance().create(factura);  // Guardar la factura completa
             model.setProductosComprados(new ArrayList<>());
             model.setCurrent(new Factura());
             JOptionPane.showMessageDialog(view.getPanel(), "Factura guardada exitosamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
