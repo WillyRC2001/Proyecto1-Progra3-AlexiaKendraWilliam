@@ -288,6 +288,4 @@ public class View  implements PropertyChangeListener{
         this.panel.revalidate();
     }
 
-
-
 }

@@ -29,7 +29,7 @@ public class ViewDescuento extends JDialog {
         textDesc.setText(String.valueOf(linea.getDescuento()));
 
         buttonOK.addActionListener(e -> onOK());
-        buttonCancel.addActionListener(e->onCancel());
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -48,20 +48,19 @@ public class ViewDescuento extends JDialog {
     }
 
     private void onOK() {
-        try{
+        try {
             float desc = Float.parseFloat(textDesc.getText());
-            //float old = linea.getDescuento();
-            if(desc >= 0){
+            if (desc >= 0 && desc <= 9) {
                 linea.setDescuento(desc);
-                if(controller != null){
+                if (controller != null) {
                     controller.CambiarDescuentoLinea(linea);
                 }
                 dispose();
-            }else {
-                JOptionPane.showMessageDialog(this, "El descuento debe ser mayor o igual a cero", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "El descuento debe estar entre 0 y 9", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Descuento invalido.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Descuento inválido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -70,10 +69,4 @@ public class ViewDescuento extends JDialog {
         dispose();
     }
 
-//    public static void main(String[] args) {
-//        ViewDescuento dialog = new ViewDescuento();
-//        dialog.pack();
-//        dialog.setVisible(true);
-//        System.exit(0);
-//    }
 }

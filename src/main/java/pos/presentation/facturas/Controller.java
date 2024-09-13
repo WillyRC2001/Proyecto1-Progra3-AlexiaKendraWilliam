@@ -26,8 +26,6 @@ public class Controller {
             model.init(productosT, productosC, clientes, cajeros);
             this.view = view;
             this.model = model;
-//            System.out.println("Productos:");
-//            System.out.println(clientes.toString());
             view.setController(this);
             view.setModel(model);
         } catch (Exception var5) {
