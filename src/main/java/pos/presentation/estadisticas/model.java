@@ -29,6 +29,8 @@ public class model extends AbstractModel {
     public void init(List<Categoria> list){
 
     }
+
+
     public static final String  CATEGORIES_ALL="categorias_all";
     public static final String  CATEGORIES="categorias";
     public static final String RANGE="range";
