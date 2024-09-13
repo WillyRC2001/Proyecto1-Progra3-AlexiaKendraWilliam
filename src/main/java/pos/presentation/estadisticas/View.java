@@ -1,4 +1,4 @@
-package pos.presentation.estadíscas;
+package pos.presentation.estadisticas;
 
 import javax.swing.*;
 
