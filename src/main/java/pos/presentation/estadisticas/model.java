@@ -26,10 +26,66 @@ public class model extends AbstractModel {
     public model() {
     }
 
-    public void init(List<Categoria> list){
 
+    public void init(List<Categoria> list , Rango ra){
+        this.categoriasAll = list;
+        this.rango = ra;
     }
 
+
+    /*Metodos get y set*/
+
+    public List<Categoria> getCategoriasAll() {return categoriasAll;}
+
+    public List<Categoria> getCategorias() {return categorias;}
+    public Rango getRango() {return rango;}
+
+
+    public void setCategoriasAll(List<Categoria> categoriasAll) {
+        this.categoriasAll = categoriasAll;
+        firePropertyChange(CATEGORIES_ALL);
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+        firePropertyChange(CATEGORIES);
+    }
+
+    public  void setRango(Rango rango) {this.rango = rango;
+        firePropertyChange(RANGE);
+    }
+
+
+
+    /*---------------*/
+    /*Metodo del profe no sirve */
+//    public TableModel getTableModel() {
+//        return new AbstractTableModel() {
+//            @Override
+//            public int getRowCount() {return rows.size();}
+//            public int getColumnCount() {return cols.length+1;}
+//
+//            @Override
+//            public Object getValueAt(int rowIndex, int columnIndex) {
+//                if (columnIndex == 0) {
+//                    return rows.get(rowIndex);
+//                }
+//                else {
+//                    return data[rowIndex][columnIndex]-1;
+//                }
+//            }
+//
+//            @Override
+//            public String getColumnName(int column) {
+//                if (column == 0) {
+//                    return "Categoria";
+//                }
+//                else{
+//                    return cols[column-1];
+//                }
+//            }
+//        };
+//    }
 
     public static final String  CATEGORIES_ALL="categorias_all";
     public static final String  CATEGORIES="categorias";

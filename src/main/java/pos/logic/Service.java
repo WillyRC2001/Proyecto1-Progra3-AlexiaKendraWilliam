@@ -356,4 +356,20 @@ public class Service {
     }
     //====================================================================================================================================================
 
+    public double getVentas(Categoria c , int  anno , int mes){
+        double result = 0;
+        for(Factura f : data.getFacturas()){
+            int facturaAnno = f.getFecha().getYear();
+            int facturaMes = f.getFecha().getMonthValue();
+            if( facturaAnno == anno && facturaMes == mes ) {
+                for(Linea l : f.getLista_productos()){
+                    if(l.getProducto().getCategoria() ==c){
+                        result = l.Importe();
+                    }
+                }
+            }
+        }
+        return result;
+    }
 }
+

@@ -24,7 +24,7 @@ public class Factura {
     LocalDate fecha;
     @XmlID
     String numero;
-    private static int contador = 0;
+
 
     public Factura() {}
 
@@ -33,8 +33,6 @@ public class Factura {
         this.cliente = cliente;
         this.cajero = cajero;
         this.fecha = fecha;
-        //this.numero = generarCodigo(); // Asigna un código único
-        //this.numero = numero;
     }
 
     public List<Linea> getLista_productos() {return linea;}
