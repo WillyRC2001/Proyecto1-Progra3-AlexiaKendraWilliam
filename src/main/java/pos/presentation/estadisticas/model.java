@@ -1,11 +1,14 @@
 package pos.presentation.estadisticas;
 
-import pos.Application;
+
 import pos.logic.Categoria;
-import pos.logic.Cliente;
 import pos.presentation.AbstractModel;
 
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class model extends AbstractModel {
@@ -21,6 +24,11 @@ public class model extends AbstractModel {
         super.addPropertyChangeListener(listener);
         firePropertyChange(CATEGORIES_ALL);
         firePropertyChange(RANGE);
+        /*-----------------*/
+        firePropertyChange(CATEGORIES);
+        firePropertyChange(COLS);
+        firePropertyChange(DATA);
+        /*-----------------*/
     }
 
     public model() {
@@ -30,6 +38,7 @@ public class model extends AbstractModel {
     public void init(List<Categoria> list , Rango ra){
         this.categoriasAll = list;
         this.rango = ra;
+        this.categorias = new ArrayList<>();
     }
 
 
@@ -51,41 +60,52 @@ public class model extends AbstractModel {
         firePropertyChange(CATEGORIES);
     }
 
-    public  void setRango(Rango rango) {this.rango = rango;
+    public  void setRango(Rango rango) {
+        this.rango = rango;
         firePropertyChange(RANGE);
     }
-
-
-
+    /*--------------------*/
+    public  void setData(float[][]data) {
+        this.data = data;
+        firePropertyChange(model.DATA);
+        firePropertyChange(model.COLS);
+    }
+    /*--------------------*/
     /*---------------*/
-    /*Metodo del profe no sirve */
-//    public TableModel getTableModel() {
-//        return new AbstractTableModel() {
-//            @Override
-//            public int getRowCount() {return rows.size();}
-//            public int getColumnCount() {return cols.length+1;}
-//
-//            @Override
-//            public Object getValueAt(int rowIndex, int columnIndex) {
-//                if (columnIndex == 0) {
-//                    return rows.get(rowIndex);
-//                }
-//                else {
-//                    return data[rowIndex][columnIndex]-1;
-//                }
-//            }
-//
-//            @Override
-//            public String getColumnName(int column) {
-//                if (column == 0) {
-//                    return "Categoria";
-//                }
-//                else{
-//                    return cols[column-1];
-//                }
-//            }
-//        };
-//    }
+//    /*Metodo del profe no sirve */
+    public  TableModel getTableModel() {
+        return new AbstractTableModel() {
+            @Override
+            public int getRowCount() {
+                return (rows != null) ? rows.length : 0;  // Verifica si rows es null
+            }
+
+            @Override
+            public int getColumnCount() {
+                return (cols != null) ? cols.length + 1 : 1;  // Verifica si cols es null
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                if (rows == null || cols == null) {
+                    return null;  // Maneja el caso cuando rows o cols son null
+                }
+                if (columnIndex == 0) {
+                    return rows[rowIndex];
+                } else {
+                    return (data != null) ? data[rowIndex][columnIndex - 1] : null;  // Maneja el caso cuando data es null
+                }
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                if (cols == null) {
+                    return (column == 0) ? "Categoria" : "";  // Maneja el caso cuando cols es null
+                }
+                return (column == 0) ? "Categoria" : cols[column - 1];
+            }
+        };
+    }
 
     public static final String  CATEGORIES_ALL="categorias_all";
     public static final String  CATEGORIES="categorias";

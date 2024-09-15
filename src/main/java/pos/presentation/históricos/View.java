@@ -115,15 +115,6 @@ public class View implements PropertyChangeListener {
                 };
                 lineas.setModel(new LineaTableModel(colsL, model.getListL()));
                 lineas.setRowHeight(30);
-                TableColumnModel columnModelL = lineas.getColumnModel();
-                columnModelL.getColumn(0).setPreferredWidth(200);
-                columnModelL.getColumn(1).setPreferredWidth(200);
-                columnModelL.getColumn(2).setPreferredWidth(200);
-                columnModelL.getColumn(3).setPreferredWidth(200);
-                columnModelL.getColumn(4).setPreferredWidth(200);
-                columnModelL.getColumn(5).setPreferredWidth(200);
-                columnModelL.getColumn(6).setPreferredWidth(200);
-                columnModelL.getColumn(7).setPreferredWidth(200);
                 break;
 
             case Model.FILTER:
