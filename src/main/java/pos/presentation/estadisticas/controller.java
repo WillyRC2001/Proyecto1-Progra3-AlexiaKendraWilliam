@@ -1,6 +1,4 @@
 package pos.presentation.estadisticas;
-
-
 import pos.logic.Categoria;
 import pos.logic.Service;
 import java.util.ArrayList;
@@ -52,10 +50,6 @@ public class controller {
     public void clear() {
        model.setCategorias(new ArrayList<>());
     }
-
-
-
-
 
     public void actualizarData() {
         Rango r = model.getRango();
