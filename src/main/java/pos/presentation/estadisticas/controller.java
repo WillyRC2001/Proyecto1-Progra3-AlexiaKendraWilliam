@@ -26,13 +26,26 @@ public class controller {
         if (existe) {
             throw new Exception("La categoría ya existe.");
         } else {
-            categoriasActuales.add(p);
+            categoriasActuales.add(p);  //Se agrega la categoria a la Lista
             model.setCategorias(categoriasActuales);
+            //Se crea un vector con los nombres de la Categorias agregadas para luego almacenarlas en el model.rows
+            String[] rows = new String[categoriasActuales.size()];
+            for(int i = 0; i < categoriasActuales.size(); i++) {
+                rows[i] = categoriasActuales.get(i).getNombre();
+            }
+            model.rows = rows;
         }
     }
 
     public void agregarTodo(){
         model.setCategorias(model.getCategoriasAll());
+        //Se crea un vector con los nombres de todas las categorias para luego almacenarlas en el model.rows
+        String[] rows = new String[model.getCategoriasAll().size()];
+        for(int i = 0; i < model.getCategoriasAll().size(); i++) {
+            rows[i] = model.getCategoriasAll().get(i).getNombre();
+            System.out.println(rows[i]);
+        }
+        model.rows = rows;
     }
 
     public void eliminar(Categoria categoria) throws Exception {
@@ -44,34 +57,40 @@ public class controller {
         } else {
             categoriasActuales.remove(categoria);
             model.setCategorias(categoriasActuales);
-
+            //Se crea un vector con los nombres de la Categorias agregadas para luego almacenarlas en el model.rows
+            String[] rows = new String[categoriasActuales.size()];
+            for(int i = 0; i < categoriasActuales.size(); i++) {
+                rows[i] = categoriasActuales.get(i).getNombre();
+            }
+            model.rows = rows;
         }
     }
     public void clear() {
        model.setCategorias(new ArrayList<>());
+       model.setRows(null);
     }
 
-    public void actualizarData(Categoria categoria, int count) {
+    public void actualizarData() {
         Rango r = model.getRango();
         int colCount = (r.annoHasta - r.annoDesde) * 12 + r.mesHasta - r.mesDesde+1;
         int rowCount = model.categorias.size();
 
-        //Creación de la Fila 0 con todas las columnas (Falta agregar las fechas)
+        //Creación de la Fila 0 con todas las columnas (Aqui es donde estoy viendo como hacer lo de las fechas, luego veo si se pude pasar a cada metodo respectivo)
         String[] cols = new String[colCount];
         for(int i = 0; i < colCount; i++){
-            cols[i] = model.getRango().annoHasta + "-" + model.getRango().mesHasta; //Aqui se deberían agregar las fechas
+            cols[i] = model.getRango().annoDesde + "-" + model.getRango().mesHasta; //Aqui se deberían agregar las fechas
         }
 
-        //Creación de la Columna 0 con todos los nombres de las Categorias que se van agregando
-        String[] rows = new String[rowCount];
-        //Este if es para ver si el model ya tiene categorias y que el rows las copie antes de agregar la nueva y actualizar el model.rows
-        if(model.rows != null){
-            for(int i = 0; i < model.rows.length; i++){
-                rows[i] = model.rows[i];
-            }
-        }
-        //Se agrega el nuevo nombre de la categoria
-        rows[count] = categoria.getNombre();
+//        //Creación de la Columna 0 con todos los nombres de las Categorias que se van agregando
+//        String[] rows = new String[rowCount];
+//        //Este if es para ver si el model ya tiene categorias y que el rows las copie antes de agregar la nueva y actualizar el model.rows
+//        if(model.rows != null){
+//            for(int i = 0; i < model.rows.length; i++){
+//                rows[i] = model.rows[i];
+//            }
+//        }
+//        //Se agrega el nuevo nombre de la categoria
+//        rows[count] = categoria.getNombre();
 
         //cols[1] = "aa";
 
@@ -85,7 +104,7 @@ public class controller {
 //        }
 
         //Se Actualiza en el model
-        model.rows = rows;
+        //model.rows = rows;
         model.cols = cols;
         float[][] data = new float[rowCount][colCount];
         // Aquí deberías llenar la matriz `data` con los valores correspondientes

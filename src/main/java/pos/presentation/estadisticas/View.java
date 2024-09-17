@@ -67,9 +67,9 @@ public class View implements PropertyChangeListener {
                     Categoria categoria = (Categoria) categoriaCbx.getSelectedItem();
                     try {
                             controller.agregar(categoria);
-                            Rango R = new Rango(añoDesdeCbx.getSelectedIndex(),añoHastaCbx2.getSelectedIndex(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
+                            Rango R = new Rango((int) añoDesdeCbx.getSelectedItem(),(int) añoHastaCbx2.getSelectedItem(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
                             Model.setRango(R);
-                            controller.actualizarData((Categoria) categoriaCbx.getSelectedItem(), categoriaCbx.getSelectedIndex());
+                            controller.actualizarData();
 
                         JOptionPane.showMessageDialog(panel, "Categoria agregada", "", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception ex) {
@@ -85,6 +85,9 @@ public class View implements PropertyChangeListener {
                if (validarAnios() && validarMeses()) {
                     try {
                         controller.agregarTodo();
+                        Rango R = new Rango(añoDesdeCbx.getSelectedIndex(),añoHastaCbx2.getSelectedIndex(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
+                        Model.setRango(R);
+                        controller.actualizarData();
                         JOptionPane.showMessageDialog(panel, "Categorias agregadas", "", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -99,6 +102,9 @@ public class View implements PropertyChangeListener {
                 if (validarAnios() && validarMeses()) {
                     try {
                         controller.clear();
+                        Rango R = new Rango(añoDesdeCbx.getSelectedIndex(),añoHastaCbx2.getSelectedIndex(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
+                        Model.setRango(R);
+                        controller.actualizarData();
                         JOptionPane.showMessageDialog(panel, "Eliminadas", "", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -114,6 +120,9 @@ public class View implements PropertyChangeListener {
                     Categoria categoria = (Categoria) categoriaCbx.getSelectedItem();
                     try {
                         controller.eliminar(categoria);
+                        Rango R = new Rango(añoDesdeCbx.getSelectedIndex(),añoHastaCbx2.getSelectedIndex(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
+                        Model.setRango(R);
+                        controller.actualizarData();
                         JOptionPane.showMessageDialog(panel, "Eliminado", "", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

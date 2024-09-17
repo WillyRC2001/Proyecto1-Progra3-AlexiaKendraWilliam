@@ -31,6 +31,7 @@ public class model extends AbstractModel {
         firePropertyChange(RANGE);
         /*-----------------*/
         firePropertyChange(CATEGORIES);
+        firePropertyChange(ROWS);
         firePropertyChange(COLS);
         firePropertyChange(DATA);
         /*-----------------*/
