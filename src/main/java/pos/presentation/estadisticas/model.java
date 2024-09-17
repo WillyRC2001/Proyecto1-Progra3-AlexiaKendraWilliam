@@ -65,10 +65,12 @@ public class model extends AbstractModel {
         firePropertyChange(CATEGORIES);
     }
 
-    public  void setRango(Rango rango) {
+    public void setRango(Rango rango) {
         this.rango = rango;
         firePropertyChange(RANGE);
     }
+    public void setRows(String[] rows) {this.rows = rows; firePropertyChange(ROWS);}
+    public void setCols(String[] cols) {this.cols = cols; firePropertyChange(COLS);}
     /*--------------------*/
     public  void setData(float[][]data) {
         this.data = data;
@@ -114,32 +116,32 @@ public class model extends AbstractModel {
 
     //==================================================================================================================
     //metodo de chat
-    public void actualizarData() {
-        Rango r = this.getRango();
-        int colCount = (r.getAnoHasta() - r.getAnoDesde()) * 12 + r.getMesHasta() - r.getMesDesde() + 1;
-        int rowCount = this.getCategorias().size();
-        String[] cols = new String[colCount];
-
-        for (int i = 0; i < colCount; i++) {
-            int currentYear = r.getAnoDesde() + (r.getMesDesde() + i - 1) / 12;
-            int currentMonth = (r.getMesDesde() + i - 1) % 12 + 1;
-            String monthName = Month.of(currentMonth).getDisplayName(TextStyle.FULL, Locale.getDefault());
-            cols[i] = monthName + " " + currentYear;
-        }
-
-        this.cols = cols;
-
-        float[][] data = new float[rowCount][colCount];
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < colCount; j++) {
-                data[i][j] = (float) (Math.random() * 1000); // Generar datos ficticios
-            }
-        }
-
-        this.data = data;
-        firePropertyChange(model.DATA);
-        firePropertyChange(model.COLS);
-    }
+//    public void actualizarData() {
+//        Rango r = this.getRango();
+//        int colCount = (r.getAnoHasta() - r.getAnoDesde()) * 12 + r.getMesHasta() - r.getMesDesde() + 1;
+//        int rowCount = this.getCategorias().size();
+//        String[] cols = new String[colCount];
+//
+//        for (int i = 0; i < colCount; i++) {
+//            int currentYear = r.getAnoDesde() + (r.getMesDesde() + i - 1) / 12;
+//            int currentMonth = (r.getMesDesde() + i - 1) % 12 + 1;
+//            String monthName = Month.of(currentMonth).getDisplayName(TextStyle.FULL, Locale.getDefault());
+//            cols[i] = monthName + " " + currentYear;
+//        }
+//
+//        this.cols = cols;
+//
+//        float[][] data = new float[rowCount][colCount];
+//        for (int i = 0; i < rowCount; i++) {
+//            for (int j = 0; j < colCount; j++) {
+//                data[i][j] = (float) (Math.random() * 1000); // Generar datos ficticios
+//            }
+//        }
+//
+//        this.data = data;
+//        firePropertyChange(model.DATA);
+//        firePropertyChange(model.COLS);
+//    }
     //==================================================================================================================
     public static final String  CATEGORIES_ALL="categorias_all";
     public static final String  CATEGORIES="categorias";

@@ -67,6 +67,10 @@ public class View implements PropertyChangeListener {
                     Categoria categoria = (Categoria) categoriaCbx.getSelectedItem();
                     try {
                             controller.agregar(categoria);
+                            Rango R = new Rango(añoDesdeCbx.getSelectedIndex(),añoHastaCbx2.getSelectedIndex(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
+                            Model.setRango(R);
+                            controller.actualizarData((Categoria) categoriaCbx.getSelectedItem(), categoriaCbx.getSelectedIndex());
+
                         JOptionPane.showMessageDialog(panel, "Categoria agregada", "", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

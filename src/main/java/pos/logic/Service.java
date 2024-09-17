@@ -212,10 +212,8 @@ public class Service {
             System.out.println("data.getCategorias() es null");
             return new ArrayList<>();
         }
-        System.out.println("ID de filtro: " + e.getId());
         List<Categoria> result = data.getCategorias().stream()
                 .filter(i -> e.getId() == null || (i.getId() != null && i.getId().contains(e.getId())))
-                .peek(categoria -> System.out.println("Categoría filtrada: " + categoria)) // Imprime categorías filtradas
                 .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
                 .collect(Collectors.toList());
         return result;
