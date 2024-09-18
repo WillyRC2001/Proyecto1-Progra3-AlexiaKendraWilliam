@@ -4,13 +4,17 @@ package pos.presentation.estadisticas;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 //==================================================================================================================
 import pos.Application;
 import pos.logic.Categoria;
 import pos.logic.Producto;
+import pos.logic.Service;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +23,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class View implements PropertyChangeListener {
@@ -86,7 +91,7 @@ public class View implements PropertyChangeListener {
                if (validarAnios() && validarMeses()) {
                     try {
                         controller.agregarTodo();
-                        Rango R = new Rango(añoDesdeCbx.getSelectedIndex(),añoHastaCbx2.getSelectedIndex(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
+                        Rango R = new Rango((int) añoDesdeCbx.getSelectedItem(), (int) añoHastaCbx2.getSelectedItem(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
                         Model.setRango(R);
                         controller.actualizarData();
                         JOptionPane.showMessageDialog(panel, "Categorias agregadas", "", JOptionPane.INFORMATION_MESSAGE);
@@ -103,7 +108,7 @@ public class View implements PropertyChangeListener {
                 if (validarAnios() && validarMeses()) {
                     try {
                         controller.clear();
-                        Rango R = new Rango(añoDesdeCbx.getSelectedIndex(),añoHastaCbx2.getSelectedIndex(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
+                        Rango R = new Rango((int) añoDesdeCbx.getSelectedItem(),(int) añoHastaCbx2.getSelectedItem(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
                         Model.setRango(R);
                         controller.actualizarData();
                         JOptionPane.showMessageDialog(panel, "Eliminadas", "", JOptionPane.INFORMATION_MESSAGE);
@@ -121,7 +126,7 @@ public class View implements PropertyChangeListener {
                     Categoria categoria = (Categoria) categoriaCbx.getSelectedItem();
                     try {
                         controller.eliminar(categoria);
-                        Rango R = new Rango(añoDesdeCbx.getSelectedIndex(),añoHastaCbx2.getSelectedIndex(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
+                        Rango R = new Rango((int) añoDesdeCbx.getSelectedItem(),(int) añoHastaCbx2.getSelectedItem(),mesDesdeCbx.getSelectedIndex(),mesHastaCbx2.getSelectedIndex());
                         Model.setRango(R);
                         controller.actualizarData();
                         JOptionPane.showMessageDialog(panel, "Eliminado", "", JOptionPane.INFORMATION_MESSAGE);
@@ -233,55 +238,6 @@ public class View implements PropertyChangeListener {
         return valido;
     }
 
-    private void actualizarGrafico() {
-        // Crear dataset basado en el modelo
-        CategoryDataset dataset = crearDataset();
-
-        // Crear el gráfico
-        JFreeChart chart = ChartFactory.createLineChart(
-                "Ventas por Categoría",
-                "Meses",
-                "Ventas",
-                dataset,
-                PlotOrientation.VERTICAL,
-                true, true, false);
-
-        // Mostrar el gráfico en un JPanel o JFrame
-        ChartPanel chartPanel = new ChartPanel(chart);
-
-        // Hacer que el gráfico tenga un tamaño más grande
-        chartPanel.setPreferredSize(new Dimension(800, 600));  // Aquí configuras el tamaño
-
-        // Configurar JpanelGrafico con un BorderLayout
-        if (JpanelGrafico != null) {
-            JpanelGrafico.setLayout(new BorderLayout());
-            JpanelGrafico.removeAll();
-            JpanelGrafico.add(chartPanel, BorderLayout.CENTER);
-            JpanelGrafico.revalidate();
-            JpanelGrafico.repaint();
-        }
-    }
-
-    private CategoryDataset crearDataset() {
-        // Crear un dataset vacío
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        // Ejemplo de datos ficticios para distintas categorías
-        String[] categorias = {"Categoría 1", "Categoría 2", "Categoría 3"};
-        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo"};
-
-        // Añadir datos al dataset
-        for (String categoria : categorias) {
-            for (int i = 0; i < meses.length; i++) {
-                // Aquí puedes agregar tus valores reales, este es solo un ejemplo de valores
-                int valor = (int) (Math.random() * 100);  // Genera un valor aleatorio para el ejemplo
-                dataset.addValue(valor, categoria, meses[i]);
-            }
-        }
-
-        return dataset;
-    }
-
     // MVC
      model Model;
     controller controller;
@@ -310,14 +266,58 @@ public class View implements PropertyChangeListener {
                 break;
             case model.DATA:
                 list.setModel(Model.getTableModel());
-                //controller.generarGrafico(); //NUEVO
-                actualizarGrafico();
+                Grafico();
                 break;
             case model.COLS:
                 list.setModel(Model.getTableModel());
                 break;
         }
         this.panel.revalidate();
+    }
+    public void Grafico() {
+        if(Model.getCategorias().size() > 0){
+            DefaultCategoryDataset line_chart_dataset = new DefaultCategoryDataset();
+            int añoDesde = (int) añoDesdeCbx.getSelectedItem();
+            int mesDesde = mesDesdeCbx.getSelectedIndex() + 1;
+            int añoHasta = (int) añoHastaCbx2.getSelectedItem();
+            int mesHasta = mesHastaCbx2.getSelectedIndex() + 1;
+
+            for (int i = 0; i < Model.getCategorias().size(); i++) {
+                // Iterar desde añoDesde hasta añoHasta
+                for (int año = añoDesde; año <= añoHasta; año++) {
+                    // Determinar el mes de inicio y fin para el año actual
+                    int inicioMes = (año == añoDesde) ? mesDesde : 1;
+                    int finMes = (año == añoHasta) ? mesHasta : 12;
+
+                    // Iterar a través de los meses en el rango determinado
+                    for (int mes = inicioMes; mes <= finMes; mes++) {
+                        line_chart_dataset.addValue(
+                                Service.instance().getVentas(Model.getCategorias().get(i), año, mes),
+                                Model.getCategorias().get(i).getNombre(),
+                                String.format("%d-%02d", año, mes + 1) // Formato año-mes para la etiqueta
+                        );
+                    }
+                }
+            }
+            // usar fileReader & BufferedReader
+            JFreeChart lineChartObject = ChartFactory.createLineChart(
+                    "Ventas por Mes", "Meses", "Ventas",
+                    line_chart_dataset, PlotOrientation.VERTICAL, true, true, false);
+            // Mostrar el gráfico en un JPanel o JFrame
+            ChartPanel chartPanel = new ChartPanel(lineChartObject);
+
+            // Hacer que el gráfico tenga un tamaño más grande
+            chartPanel.setPreferredSize(new Dimension(800, 600));  // Aquí configuras el tamaño
+
+            // Configurar JpanelGrafico con un BorderLayout
+            if (JpanelGrafico != null) {
+                JpanelGrafico.setLayout(new BorderLayout());
+                JpanelGrafico.removeAll();
+                JpanelGrafico.add(chartPanel, BorderLayout.CENTER);
+                JpanelGrafico.revalidate();
+                JpanelGrafico.repaint();
+            }
+        }
     }
 }
 

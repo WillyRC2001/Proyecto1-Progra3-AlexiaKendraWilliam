@@ -2,6 +2,7 @@ package pos.presentation.estadisticas;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import pos.logic.Categoria;
@@ -75,6 +76,7 @@ public class controller {
     public void clear() {
        model.setCategorias(new ArrayList<>());
        model.setRows(null);
+       model.setCols(null);
     }
 
     public void actualizarData() {
@@ -84,80 +86,25 @@ public class controller {
 
         //Creación de la Fila 0 con todas las columnas (Aqui es donde estoy viendo como hacer lo de las fechas, luego veo si se pude pasar a cada metodo respectivo)
         String[] cols = new String[colCount];
-        for(int i = 0; i < colCount; i++){
-            cols[i] = model.getRango().annoDesde + "-" + model.getRango().mesHasta; //Aqui se deberían agregar las fechas
+        int mes = model.getRango().mesDesde;
+        int annio = model.getRango().annoDesde;
+        int k = 0;          //Contador para agregar en el vector de columnas
+        int j = mes + 1;    //Para que j inicialice con el mes Desde (+1 porque el valor del mes es un menos al correspondiente)
+
+        //Ciclo para los años y meses de las columnas
+        for(int i = annio; i <= model.getRango().annoHasta; i++){
+            while(j <= 12 && k < colCount){
+                cols[k] = i + "-" + j;
+                k++;
+                j++;
+            }
+            if(j > 12){ j = 1;} //if para que se reinicie el contador de meses una vez llega a 12
         }
+
 
         model.cols = cols;
         float[][] data = new float[rowCount][colCount];
         // Aquí deberías llenar la matriz `data` con los valores correspondientes
         model.setData(data);
     }
-
-    // Método para crear el gráfico
-    //public ChartPanel generarGrafico() {
-
-//        // Obtener la lista de categorías
-//        List<Categoria> categorias = model.getCategorias();
-//
-//        if (categorias.size() >= 3) {
-//            // Obtener el primer, segundo y tercer elemento
-//            Categoria categoria1 = categorias.get(0);
-//            Categoria categoria2 = categorias.get(1);
-//            Categoria categoria3 = categorias.get(2);
-//
-//        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-//        LocalDate localMesDesde = model.getRango().getMesDesde();
-//        l localAnioDesde = model.getRango().getAnoDesde();
-//        double totalMes1 = Service.instance().getVentas(categoria1,localAnioDesde,localMesDesde);
-//        double totalMes2 = Service.instance().getVentas(categoria2,localAnioDesde,localMesDesde+1);
-//        double totalMes3 = Service.instance().getVentas(categoria3,localAnioDesde,localMesDesde+1);
-//
-//        dataset.addValue(totalMes1, "Ventas", localMesDesde);
-//        dataset.addValue(totalMes2, "Ventas", localMesDesde);
-//        dataset.addValue(totalMes3, "Ventas", localMesDesde);
-//
-//        JFreeChart chart = ChartFactory.createBarChart(
-//                "Ventas por Mes - Categoría: " + categoriaCbx.getSelectedItem(),
-//                "Mes",
-//                "Total Ventas",
-//                dataset
-//        );
-//
-//        return new ChartPanel(chart);
-//    }
-        //    Obtener la lista de categorías
-//        List<Categoria> categorias = model.getCategorias();
-//        // Obtener el año y mes desde el modelo
-//        int anoDesde = model.getRango().getAnoDesde();
-//        int mesDesde = model.getRango().getMesDesde();
-//
-//        // Crear LocalDate para el primer día del mes
-//        LocalDate fechaInicio = LocalDate.of(anoDesde, mesDesde, 1);
-//
-//        // Obtener el siguiente mes y el mes después del siguiente
-//        LocalDate fechaInicioMes2 = fechaInicio.plusMonths(1);
-//        LocalDate fechaInicioMes3 = fechaInicio.plusMonths(2);
-//
-//        // Usa estos LocalDate en tu lógica
-//        double totalMes1 = Service.instance().getVentas(model.getCategorias().getFirst(), fechaInicio.getYear(), fechaInicio.getMonthValue());
-//        double totalMes2 = Service.instance().getVentas(model.getCategorias().get(1), fechaInicioMes2.getYear(), fechaInicioMes2.getMonthValue());
-//        double totalMes3 = Service.instance().getVentas(model.getCategorias().get(2), fechaInicioMes3.getYear(), fechaInicioMes3.getMonthValue());
-//
-//        // Aquí puedes agregar los datos al dataset
-//        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-//        dataset.addValue(totalMes1, "Ventas", "Mes " + fechaInicio.getMonth().toString());
-//        dataset.addValue(totalMes2, "Ventas", "Mes " + fechaInicioMes2.getMonth().toString());
-//        dataset.addValue(totalMes3, "Ventas", "Mes " + fechaInicioMes3.getMonth().toString());
-//
-//        // Mostrar el gráfico en un JPanel o JFrame
-//        JFreeChart chart = ChartFactory.createBarChart(
-//                "Ventas por Mes - Categoría: " + categorias,
-//                "Mes",
-//                "Total Ventas",
-//                dataset
-//        );
-//
-//        return new ChartPanel(chart);
-//    }
 }

@@ -189,7 +189,7 @@ public class View  implements PropertyChangeListener{
 
     public Producto take() {
         Producto e = new Producto();
-        e.setCodigo(codigo.getText());
+        e.setCodigo("PRO-" + codigo.getText());
         e.setDescripcion(descripcion.getText());
         e.setUnidadMedida(unidad.getText());
         int exit = Integer.parseInt(existencia.getText());
