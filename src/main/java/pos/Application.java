@@ -72,7 +72,6 @@ public class Application {
         window.setVisible(true);
     }
 
-
     public static pos.presentation.facturas.Controller facturasController;
     public static pos.presentation.clientes.Controller clientesController;
     public static pos.presentation.cajeros.Controller cajeroController;

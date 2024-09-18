@@ -67,7 +67,6 @@ public class View implements PropertyChangeListener {
                 }
             }
         });
-
     }
     // MVC
     Model model;
@@ -81,7 +80,6 @@ public class View implements PropertyChangeListener {
     public void setController(Controller controller) {
         this.controller = controller;
     }
-
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

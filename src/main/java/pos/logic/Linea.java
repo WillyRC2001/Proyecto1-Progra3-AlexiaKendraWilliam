@@ -24,7 +24,6 @@ public class Linea {
     public Linea(Producto producto, Factura factura, int cantidad, float descuento) {
         this.producto = producto;
         this.factura = factura;
-        //this.codigo = generarCodigo(); // Asigna un código único
         this.cantidad = cantidad;
         this.descuento = descuento;
     }

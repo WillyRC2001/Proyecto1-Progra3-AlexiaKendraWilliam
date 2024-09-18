@@ -6,15 +6,11 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 import java.beans.PropertyChangeListener;
-//==================================================================================================================
 import java.time.Month; //nuevo
 import java.time.format.TextStyle; //nuevo
-//==================================================================================================================
-import java.util.ArrayList; //esto ya estaba
-import java.util.List; //esto ya estaba
-//==================================================================================================================
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale; //nuevo
-//==================================================================================================================
 
 public class model extends AbstractModel {
     List<Categoria> categoriasAll;
@@ -40,13 +36,11 @@ public class model extends AbstractModel {
     public model() {
     }
 
-
     public void init(List<Categoria> list , Rango ra){
         this.categoriasAll = list;
         this.rango = ra;
         this.categorias = new ArrayList<>();
     }
-
 
     /*Metodos get y set*/
 
@@ -78,8 +72,7 @@ public class model extends AbstractModel {
         firePropertyChange(model.DATA);
         firePropertyChange(model.COLS);
     }
-    /*--------------------*/
-    /*---------------*/
+
 //    /*Metodo del profe no sirve */
     public  TableModel getTableModel() {
         return new AbstractTableModel() {
@@ -115,35 +108,6 @@ public class model extends AbstractModel {
         };
     }
 
-    //==================================================================================================================
-    //metodo de chat
-//    public void actualizarData() {
-//        Rango r = this.getRango();
-//        int colCount = (r.getAnoHasta() - r.getAnoDesde()) * 12 + r.getMesHasta() - r.getMesDesde() + 1;
-//        int rowCount = this.getCategorias().size();
-//        String[] cols = new String[colCount];
-//
-//        for (int i = 0; i < colCount; i++) {
-//            int currentYear = r.getAnoDesde() + (r.getMesDesde() + i - 1) / 12;
-//            int currentMonth = (r.getMesDesde() + i - 1) % 12 + 1;
-//            String monthName = Month.of(currentMonth).getDisplayName(TextStyle.FULL, Locale.getDefault());
-//            cols[i] = monthName + " " + currentYear;
-//        }
-//
-//        this.cols = cols;
-//
-//        float[][] data = new float[rowCount][colCount];
-//        for (int i = 0; i < rowCount; i++) {
-//            for (int j = 0; j < colCount; j++) {
-//                data[i][j] = (float) (Math.random() * 1000); // Generar datos ficticios
-//            }
-//        }
-//
-//        this.data = data;
-//        firePropertyChange(model.DATA);
-//        firePropertyChange(model.COLS);
-//    }
-    //==================================================================================================================
     public static final String  CATEGORIES_ALL="categorias_all";
     public static final String  CATEGORIES="categorias";
     public static final String RANGE="range";

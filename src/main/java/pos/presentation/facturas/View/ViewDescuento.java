@@ -25,7 +25,6 @@ public class ViewDescuento extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        //textDesc.setText(Float.valueOf((float) linea.getDescuento()).toString()); //Dudas
         textDesc.setText(String.valueOf(linea.getDescuento()));
 
         buttonOK.addActionListener(e -> onOK());

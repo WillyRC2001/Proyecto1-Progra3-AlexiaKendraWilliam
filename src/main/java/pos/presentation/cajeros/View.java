@@ -35,7 +35,6 @@ public class View   implements PropertyChangeListener{
         return panel;
     }
 
-
     public View() {
         buscarButton.addActionListener(new ActionListener() {
             @Override
@@ -99,9 +98,6 @@ public class View   implements PropertyChangeListener{
             }
         });
     }
-
-
-
 
     private boolean validate() {
         boolean valid = true;
@@ -178,8 +174,6 @@ public class View   implements PropertyChangeListener{
             case pos.presentation.cajeros.Model.FILTER:
                 searchNombre.setText(model.getFilter().getNombre());
                 break;
-
-
         }
 
         this.panel.revalidate();

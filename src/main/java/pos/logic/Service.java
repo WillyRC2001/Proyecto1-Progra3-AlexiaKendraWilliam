@@ -209,7 +209,7 @@ public class Service {
     public List<Categoria> search(Categoria e) {
         // Verifica que data.getCategorias() no sea null
         if (data.getCategorias() == null) {
-            System.out.println("data.getCategorias() es null");
+            //System.out.println("data.getCategorias() es null");
             return new ArrayList<>();
         }
         List<Categoria> result = data.getCategorias().stream()
@@ -296,8 +296,6 @@ public class Service {
     }
 
     public void create(Factura e) throws Exception {
-
-
         // Buscar si ya existe una factura con el mismo número
         Factura result = data.getFacturas().stream()
                 .filter(i -> i.getNumero().equals(e.getNumero()))

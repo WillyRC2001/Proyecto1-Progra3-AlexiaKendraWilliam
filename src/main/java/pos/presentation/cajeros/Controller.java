@@ -83,7 +83,6 @@ public class Controller {
                 document.add(new Paragraph("Nombre: " + cajero.getNombre()));
                 document.add(new Paragraph("------------------------------------------"));
             }
-
             // Cierra el documento
             document.close();
 

@@ -9,7 +9,6 @@ import java.util.List;
 public class Model extends AbstractModel{
 private
     List<Producto> productosTotales;
-    //List<Producto> productosComprados;
     List<Linea> lineaComprados;
     List<Cliente> clientes;
     List<Cajero> cajeros;

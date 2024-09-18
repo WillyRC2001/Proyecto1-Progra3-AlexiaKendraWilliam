@@ -173,7 +173,6 @@ public class View implements PropertyChangeListener {
             columnModel.getColumn(column).setPreferredWidth(width);
         }
     }
-
     private void updateLabels() {
         Articulos.setText("" + model.getTotalArticulos());
         SubTotal.setText("" + String.format("%.2f", model.getSubtotal()));

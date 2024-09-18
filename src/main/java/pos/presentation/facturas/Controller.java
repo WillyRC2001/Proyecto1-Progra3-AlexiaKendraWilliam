@@ -186,7 +186,6 @@ public class Controller {
         }
     }
 
-
     public void BuscarProducto() {
         try {
             List<Producto> productosT = Service.instance().search(new Producto());
@@ -209,10 +208,4 @@ public class Controller {
         model.setProductosTotales(Service.instance().search(new Producto()));
         model.setClientes(Service.instance().search(new Cliente()));
     }
-
-    //Metodos que desconozco si se necesitan en Factura
-    //public void edit(int row){}
-    //public void delete(){}
-    //public void clear(){}
-
 }

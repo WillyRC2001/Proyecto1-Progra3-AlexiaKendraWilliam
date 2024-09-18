@@ -22,8 +22,6 @@ public class Controller {
 
     public Controller(View view, Model model) {
         try{
-        //model.init(Service.instance().search(new Producto()),Service.instance().search(new Categoria()));
-        //model.init(Service.instance().search(new Categoria()));
             List<Producto> productos = Service.instance().search(new Producto());
             List<Categoria> categorias = Service.instance().search(new Categoria());
 
@@ -125,6 +123,4 @@ public class Controller {
             JOptionPane.showMessageDialog(null, "Error al crear PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
 }

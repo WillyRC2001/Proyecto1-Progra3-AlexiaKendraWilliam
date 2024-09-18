@@ -41,9 +41,10 @@ public class View implements PropertyChangeListener {
     public JPanel getPanel() {
         return panel;
     }
-    public View() {
-        int currentYear = LocalDate.now().getYear();
 
+    public View() {
+        JpanelGrafico.setPreferredSize(new Dimension(800, 600));
+        int currentYear = LocalDate.now().getYear();
         // Llenar los JComboBox de años (5 años antes y 5 años después del actual)
         IntStream.range(currentYear - 5, currentYear + 6)
                 .forEach(year -> {
@@ -131,10 +132,6 @@ public class View implements PropertyChangeListener {
             }
         });
     }
-
-
-
-
 
     private boolean validarAnios() {
         boolean valido = true;
@@ -236,8 +233,6 @@ public class View implements PropertyChangeListener {
         return valido;
     }
 
-    //==================================================================================================================
-    //NUEVO
     private void actualizarGrafico() {
         // Crear dataset basado en el modelo
         CategoryDataset dataset = crearDataset();
@@ -286,7 +281,7 @@ public class View implements PropertyChangeListener {
 
         return dataset;
     }
-    //==================================================================================================================
+
     // MVC
      model Model;
     controller controller;
@@ -315,7 +310,8 @@ public class View implements PropertyChangeListener {
                 break;
             case model.DATA:
                 list.setModel(Model.getTableModel());
-                actualizarGrafico(); //NUEVO
+                //controller.generarGrafico(); //NUEVO
+                actualizarGrafico();
                 break;
             case model.COLS:
                 list.setModel(Model.getTableModel());

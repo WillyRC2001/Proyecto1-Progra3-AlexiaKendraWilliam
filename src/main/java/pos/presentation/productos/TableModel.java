@@ -37,7 +37,7 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
             case UNIDAD:return  e.getUnidadMedida();
             case PRECIO:return  e.getPrecioUnitario();
             case EXISTENCIA:return  e.getExistencias();
-            case CATEGORIA://return  e.getCategoria().getNombre();
+            case CATEGORIA:
                 Categoria categoria = e.getCategoria();
                 return categoria != null ? categoria.getNombre() : "";
             default: return "";
@@ -59,15 +59,4 @@ public class TableModel extends AbstractTableModel<Producto> implements javax.sw
         colNames[EXISTENCIA]= "Existencias";
         colNames[CATEGORIA]= "Categoria ";
     }
-
-
-
-    /*
-     String Codigo;
-    String Descripcion;
-    String UnidadMedida;
-    double PrecioUnitario;
-    int Existencias;
-    Categoria categoria;
-    * */
 }

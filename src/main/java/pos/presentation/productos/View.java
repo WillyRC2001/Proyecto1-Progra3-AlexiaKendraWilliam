@@ -106,13 +106,6 @@ public class View  implements PropertyChangeListener{
             }
         });
     }
-//    private void setUpComboBox() {
-//        if (model != null) {
-//            //DefaultComboBoxModel<Categoria> comboBoxModel = model.getModeModel();
-//            //categoriaJcb.setModel(comboBoxModel);
-//            categoriaJcb.setModel(new DefaultComboBoxModel(model.getCategorias().toArray()));
-//        }
-//    }
 
     private boolean validate() {
         boolean valid = true;
@@ -208,8 +201,6 @@ public class View  implements PropertyChangeListener{
         return e;
     }
 
-
-
     // MVC
     pos.presentation.productos.Model model;
     pos.presentation.productos.Controller controller;
@@ -217,7 +208,6 @@ public class View  implements PropertyChangeListener{
     public void setModel(Model model) {
         this.model = model;
         model.addPropertyChangeListener(this);
-        //setUpComboBox();
     }
 
     public void setController(Controller controller) {
@@ -249,12 +239,8 @@ public class View  implements PropertyChangeListener{
                 unidad.setText(model.getCurrent().getUnidadMedida());
                 precio.setText("" + model.getCurrent().getPrecioUnitario());
                 existencia.setText( "" + model.getCurrent().getExistencias());
-                //Producto current = model.getCurrent();
-                //Categoria selectedCategoria = current.getCategoria();
+
                 this.categoriaJcb.setSelectedItem(this.model.getCurrent().getCategoria());
-//                if (selectedCategoria != null) {
-//                    categoriaJcb.setSelectedItem(selectedCategoria);
-//                }
 
                 if (model.getMode() == Application.MODE_EDIT) {
                     codigo.setEnabled(false);
@@ -281,7 +267,6 @@ public class View  implements PropertyChangeListener{
                 break;
             case Model.CATEGORIAS:
                 this.categoriaJcb.setModel(new DefaultComboBoxModel(this.model.getCategorias().toArray()));
-                //categoriaJcb.setModel(new DefaultComboBoxModel<>(model.getCategorias().toArray(new Categoria[0])));
                 break;
         }
 

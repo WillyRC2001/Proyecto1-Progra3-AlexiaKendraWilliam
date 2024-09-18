@@ -1,9 +1,7 @@
 package pos.presentation.estadisticas;
-//==================================================================================================================
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.DatasetGroup;
-//==================================================================================================================
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,7 +15,7 @@ class MatrixDataSet implements CategoryDataset {
         this.colKeys = Arrays.asList(cols);
         this.data = data;
     }
-//metodos para no hacer / si hacer la clase abstracta (generados por intellij)
+
     @Override
     public Comparable getRowKey(int row) {
         return rowKeys.get(row);
