@@ -105,6 +105,23 @@ public class controller {
         model.cols = cols;
         float[][] data = new float[rowCount][colCount];
         // Aquí deberías llenar la matriz `data` con los valores correspondientes
+        // Llenar la matriz `data` con los valores correspondientes
+        for (int i = 0; i < rowCount; i++) {
+            Categoria categoria = model.categorias.get(i);
+            mes = model.getRango().mesDesde;
+            j = mes + 1; // Reiniciar el mes para cada categoría
+
+            for (int año = r.annoDesde; año <= r.annoHasta; año++) {
+                for (int m = j; m <= 12; m++) {
+                    if (k < colCount) {
+                        data[i][k] = (float) Service.instance().getVentas(categoria, año, m);
+                        k++;
+                    }
+                }
+                j = 1; // Reiniciar el mes a 1 para años posteriores
+            }
+        }
+
         model.setData(data);
     }
 }

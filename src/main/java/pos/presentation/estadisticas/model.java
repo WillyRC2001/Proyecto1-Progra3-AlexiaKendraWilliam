@@ -71,6 +71,8 @@ public class model extends AbstractModel {
         this.data = data;
         firePropertyChange(model.DATA);
         firePropertyChange(model.COLS);
+        firePropertyChange(model.ROWS);
+        firePropertyChange(model.RANGE);
     }
 
 //    /*Metodo del profe no sirve */
