@@ -75,7 +75,6 @@ public class model extends AbstractModel {
         firePropertyChange(model.RANGE);
     }
 
-//    /*Metodo del profe no sirve */
     public  TableModel getTableModel() {
         return new AbstractTableModel() {
             @Override

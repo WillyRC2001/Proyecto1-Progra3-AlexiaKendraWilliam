@@ -81,47 +81,42 @@ public class controller {
 
     public void actualizarData() {
         Rango r = model.getRango();
-        int colCount = (r.annoHasta - r.annoDesde) * 12 + r.mesHasta - r.mesDesde+1;
-        int rowCount = model.categorias.size();
+        int colCount = (r.annoHasta - r.annoDesde) * 12 + r.mesHasta - r.mesDesde + 1;
+        int rowCount = model.getCategorias().size();
 
-        //Creación de la Fila 0 con todas las columnas (Aqui es donde estoy viendo como hacer lo de las fechas, luego veo si se pude pasar a cada metodo respectivo)
+        // Creación de la Fila 0 con todas las columnas
         String[] cols = new String[colCount];
         int mes = model.getRango().mesDesde;
         int annio = model.getRango().annoDesde;
-        int k = 0;          //Contador para agregar en el vector de columnas
-        int j = mes + 1;    //Para que j inicialice con el mes Desde (+1 porque el valor del mes es un menos al correspondiente)
+        int k = 0; // Contador para agregar en el vector de columnas
 
-        //Ciclo para los años y meses de las columnas
-        for(int i = annio; i <= model.getRango().annoHasta; i++){
-            while(j <= 12 && k < colCount){
+        // Ciclo para los años y meses de las columnas
+        for (int i = annio; i <= model.getRango().annoHasta; i++) {
+            for (int j = (i == annio ? mes : 1); j <= 12 && k < colCount; j++) {
                 cols[k] = i + "-" + j;
                 k++;
-                j++;
             }
-            if(j > 12){ j = 1;} //if para que se reinicie el contador de meses una vez llega a 12
         }
 
-
-        model.cols = cols;
+        model.setCols(cols);
         float[][] data = new float[rowCount][colCount];
-        // Aquí deberías llenar la matriz `data` con los valores correspondientes
+
         // Llenar la matriz `data` con los valores correspondientes
         for (int i = 0; i < rowCount; i++) {
-            Categoria categoria = model.categorias.get(i);
-            mes = model.getRango().mesDesde;
-            j = mes + 1; // Reiniciar el mes para cada categoría
+            Categoria categoria = model.getCategorias().get(i);
+            k = 0; // Reiniciar el contador de columnas para cada fila
 
             for (int año = r.annoDesde; año <= r.annoHasta; año++) {
-                for (int m = j; m <= 12; m++) {
-                    if (k < colCount) {
-                        data[i][k] = (float) Service.instance().getVentas(categoria, año, m);
-                        k++;
-                    }
+                for (int m = (año == r.annoDesde ? r.mesDesde : 1); m <= 12 && k < colCount; m++) {
+                    data[i][k] = (float) Service.instance().getVentas(categoria, año, m);
+                    k++;
                 }
-                j = 1; // Reiniciar el mes a 1 para años posteriores
             }
         }
 
         model.setData(data);
     }
+
+
+
 }
