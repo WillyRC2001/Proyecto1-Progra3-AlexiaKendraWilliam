@@ -7,9 +7,7 @@ import java.util.List;
 
 public class TableModel extends AbstractTableModel<Cliente> implements javax.swing.table.TableModel {
 
-    public TableModel(int[] cols, List<Cliente> rows) {
-        super(cols, rows);
-    }
+    public TableModel(int[] cols, List<Cliente> rows) {super(cols, rows);}
 
     public static final int ID=0;
     public static final int NOMBRE=1;

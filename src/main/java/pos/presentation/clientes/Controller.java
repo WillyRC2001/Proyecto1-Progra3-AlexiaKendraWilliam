@@ -2,6 +2,7 @@ package pos.presentation.clientes;
 
 import pos.Application;
 import pos.logic.Cliente;
+import pos.logic.Producto;
 import pos.logic.Service;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -17,17 +18,18 @@ public class Controller {
     Model model;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new Cliente()));
+        model.init();
         this.view = view;
         this.model = model;
+        model.setList(Service.instance().search(new Cliente()));
         view.setController(this);
         view.setModel(model);
     }
 
     public void search(Cliente filter) throws  Exception{
         model.setFilter(filter);
+        List<Cliente> rows = Service.instance().search(model.getFilter());
         model.setMode(Application.MODE_CREATE);
-        model.setCurrent(new Cliente());
         model.setList(Service.instance().search(model.getFilter()));
     }
 

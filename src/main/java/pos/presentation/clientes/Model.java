@@ -24,8 +24,7 @@ public class Model extends AbstractModel {
     public Model() {
     }
 
-    public void init(List<Cliente> list){
-        this.list = list;
+    public void init(){
         this.current = new Cliente();
         this.filter = new Cliente();
         this.mode= Application.MODE_CREATE;
@@ -38,6 +37,7 @@ public class Model extends AbstractModel {
     public void setList(List<Cliente> list){
         this.list = list;
         firePropertyChange(LIST);
+        setCurrent(new Cliente());
     }
 
     public Cliente getCurrent() {

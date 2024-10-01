@@ -73,8 +73,8 @@ public class ClienteDao {
 
     public List<Cliente> search(Cliente e) throws Exception {
         List<Cliente> resultado = new ArrayList<Cliente>();
-        String sql = "select * " +
-                "from " +
+        String sql = "SELECT *" +
+                "FROM " +
                 "Cliente t " +
                 "where t.nombre like ?";
         PreparedStatement stm = db.prepareStatement(sql);
@@ -90,11 +90,11 @@ public class ClienteDao {
 
     public Cliente from(ResultSet rs, String alias) throws Exception {
        Cliente e = new Cliente();
-        e.setId(rs.getString(alias + "id"));
-        e.setNombre(rs.getString(alias + "nombre"));
-        e.setTelefono(rs.getString(alias + "telefono"));
-        e.setEmail(rs.getString(alias + "email"));
-        e.setDescuento(rs.getFloat(alias + "descuento"));
+        e.setId(rs.getString(alias + ".id"));
+        e.setNombre(rs.getString(alias + ".nombre"));
+        e.setTelefono(rs.getString(alias + ".telefono"));
+        e.setEmail(rs.getString(alias + ".email"));
+        e.setDescuento(rs.getFloat(alias + ".descuento"));
         return e;
     }
 

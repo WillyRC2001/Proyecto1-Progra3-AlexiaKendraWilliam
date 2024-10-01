@@ -31,13 +31,13 @@ public class Application {
 //        facturasController = new pos.presentation.facturas.Controller(facturasView,facturasModel);
 //        Icon facturasIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/factura.png"));
 //        tabbedPane.addTab("Factura ",facturasIcon,facturasView.getPanel());
+////
+        pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
+        pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
+         clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
+        Icon clientesIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/cliente.png"));
 //
-//        pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
-//        pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
-//        clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
-//        Icon clientesIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/cliente.png"));
-//
-//        tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
+       tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
 //
 //        pos.presentation.cajeros.Model cajeroModel= new pos.presentation.cajeros.Model();
 //        pos.presentation.cajeros.View cajeroView = new pos.presentation.cajeros.View();
