@@ -38,12 +38,12 @@ public class Application {
         Icon clientesIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/cliente.png"));
 //
        tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
-//
-//        pos.presentation.cajeros.Model cajeroModel= new pos.presentation.cajeros.Model();
-//        pos.presentation.cajeros.View cajeroView = new pos.presentation.cajeros.View();
-//        cajeroController = new pos.presentation.cajeros.Controller(cajeroView,cajeroModel);
-//        Icon cajeroIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/cajero.png"));
-//        tabbedPane.addTab("Cajero  ", cajeroIcon,cajeroView.getPanel());
+
+        pos.presentation.cajeros.Model cajeroModel= new pos.presentation.cajeros.Model();
+        pos.presentation.cajeros.View cajeroView = new pos.presentation.cajeros.View();
+        cajeroController = new pos.presentation.cajeros.Controller(cajeroView,cajeroModel);
+        Icon cajeroIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/cajero.png"));
+        tabbedPane.addTab("Cajero  ", cajeroIcon,cajeroView.getPanel());
 
 
         pos.presentation.productos.Model productoModel= new pos.presentation.productos.Model();

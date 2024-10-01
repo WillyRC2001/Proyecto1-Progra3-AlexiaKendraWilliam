@@ -28,7 +28,7 @@ public class Controller {
 
     public void search(Cliente filter) throws  Exception{
         model.setFilter(filter);
-        List<Cliente> rows = Service.instance().search(model.getFilter());
+
         model.setMode(Application.MODE_CREATE);
         model.setList(Service.instance().search(model.getFilter()));
     }

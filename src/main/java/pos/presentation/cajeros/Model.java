@@ -29,8 +29,8 @@ public class Model extends AbstractModel {
 
     public Model() { }
 
-    public void init(List<Cajero> list){
-        this.list = list;
+    public void init(){
+
         this.current = new Cajero();
         this.filter = new Cajero();
         this.mode= Application.MODE_CREATE;
@@ -42,6 +42,7 @@ public class Model extends AbstractModel {
         this.list = list;
         firePropertyChange(LIST);
         firePropertyChange(CAJEROS);
+        setCurrent(new Cajero());
     }
 
     public Cajero getCurrent() {return current;}

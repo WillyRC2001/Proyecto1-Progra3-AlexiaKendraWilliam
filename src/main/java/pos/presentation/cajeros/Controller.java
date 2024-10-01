@@ -19,9 +19,10 @@ public class Controller {
     Model model;
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new Cajero()));
+        model.init();
         this.view = view;
         this.model = model;
+        model.setList(Service.instance().search(new Cajero()));
         view.setController(this);
         view.setModel(model);
     }
@@ -29,7 +30,6 @@ public class Controller {
     public void search(Cajero filter) throws  Exception{
         model.setFilter(filter);
         model.setMode(Application.MODE_CREATE);
-        model.setCurrent(new Cajero());
         model.setList(Service.instance().search(model.getFilter()));
     }
 

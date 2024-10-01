@@ -90,8 +90,8 @@ public class CajeroDao {
 
     public Cajero from(ResultSet rs, String alias) throws Exception {
         Cajero e = new Cajero();
-        e.setId(rs.getString(alias + "id"));
-        e.setNombre(rs.getString(alias + "nombre"));
+        e.setId(rs.getString(alias + ".id"));
+        e.setNombre(rs.getString(alias + ".nombre"));
         return e;
     }
 
