@@ -166,6 +166,11 @@ public class Service {
         }
     }
 
+    public String   generarNumeroLinea() {
+        return lineaDao.generarNumeroLinea();
+    }
+
+
     //================= Factura ============
 
     public List<Factura> search(Factura e) {
@@ -189,6 +194,11 @@ public class Service {
     public void update(Factura e) throws Exception {
        facturaDao.update(e);
     }
+
+   public String   generarNumeroFactura() {
+        return facturaDao.generarNumeroFactura();
+   }
+
 
 
     public double getVentas(Categoria c , int  anno , int mes) {

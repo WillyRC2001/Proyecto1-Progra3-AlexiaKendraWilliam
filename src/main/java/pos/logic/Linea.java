@@ -16,11 +16,12 @@ public class Linea {
     public Linea(){
         this(new Producto(), new Factura(), "", 0, 0);
     }
-    public Linea(Producto producto, Factura factura, String s, int cantidad, float descuento) {
+    public Linea(Producto producto, Factura factura, String codigo, int cantidad, float descuento) {
         this.producto = producto;
         this.factura = factura;
         this.cantidad = cantidad;
         this.descuento = descuento;
+        this.codigo = codigo;
     }
     public Producto getProducto() {return producto;}
     public void setProducto(Producto producto) {}

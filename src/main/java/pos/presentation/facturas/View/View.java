@@ -113,7 +113,7 @@ public class View implements PropertyChangeListener {
 
     public void setModel(pos.presentation.facturas.Model model) {
         this.model = model;
-        model.addPropertyChangeListener(this::propertyChange);
+        model.addPropertyChangeListener(this);
     }
 
     public void setController(pos.presentation.facturas.Controller controller) {
@@ -124,7 +124,7 @@ public class View implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
             case Model.CLIENTES:
-                this.clienteJcb.setModel(new DefaultComboBoxModel((Object[]) model.getClientes().toArray()));
+                this.clienteJcb.setModel(new DefaultComboBoxModel(model.getClientes().toArray()));
                 break;
             case Model.CAJEROS:
                 this.cajeroJcb.setModel(new DefaultComboBoxModel(this.model.getCajeros().toArray()));

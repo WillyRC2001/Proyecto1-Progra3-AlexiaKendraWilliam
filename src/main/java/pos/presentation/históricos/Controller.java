@@ -20,9 +20,11 @@ public class Controller {
 
 
     public Controller(View view, Model model) {
-        model.init(Service.instance().search(new Factura()) , Service.instance().search(new Linea()) );
+        model.init();
         this.view = view;
         this.model = model;
+        model.setList(Service.instance().search(new Factura()));
+        model.setListLinea(Service.instance().search(new Linea()));
         view.setController(this);
         view.setModel(model);
     }
@@ -30,7 +32,6 @@ public class Controller {
     public void search(Factura filter) throws Exception {
         model.setFilter(filter);
         model.setMode(Application.MODE_CREATE);
-        model.setCurrent(new Factura());
         model.setList(Service.instance().search(model.getFilter()));
         model.setListLinea(Service.instance().searchF(model.getFilter()));
     }

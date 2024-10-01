@@ -20,10 +20,6 @@ public class FacturaDao {
 
 
     public void create(Factura e) throws Exception {
-        // Generar un nuevo número de factura
-        String nuevoNumero = generarNumeroFactura();
-        e.setNumero(nuevoNumero);
-
         String sql = "insert into " +
                 "Factura " +
                 "(numero, cliente, cajero, fecha) " +
@@ -34,11 +30,9 @@ public class FacturaDao {
         stm.setString(3, e.getCajero().getId());
         stm.setDate(4, java.sql.Date.valueOf(e.getFecha()));
         db.executeUpdate(stm);
-
         // Insertar las líneas de la factura
         LineaDao lineaDao = new LineaDao();
         for (Linea linea : e.getLinea()) {
-            linea.setCodigo(lineaDao.generarNumeroLinea()); // Generar número de línea
             lineaDao.create(linea);
         }
     }
@@ -153,7 +147,7 @@ public class FacturaDao {
         try {
             int contadorF = getContadorF();
             updateContadorF(contadorF + 1);
-            return String.format("FAC-" + "%05d", contadorF);
+            return String.format( "%04d", contadorF);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -176,6 +170,9 @@ public class FacturaDao {
         stm.setInt(1, nuevoContador);
         db.executeUpdate(stm);
     }
+
+
+
 
     public double getVentas(Categoria c, int anno, int mes) throws Exception {
         double result = 0;

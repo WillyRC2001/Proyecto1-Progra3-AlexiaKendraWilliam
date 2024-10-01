@@ -49,7 +49,7 @@ public class ViewDescuento extends JDialog {
     private void onOK() {
         try {
             float desc = Float.parseFloat(textDesc.getText());
-            if (desc >= 0 && desc <= 9) {
+            if (desc >= 0 && desc <= 90) {
                 linea.setDescuento(desc);
                 if (controller != null) {
                     controller.CambiarDescuentoLinea(linea);

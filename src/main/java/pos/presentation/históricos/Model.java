@@ -27,11 +27,9 @@ public class Model extends AbstractModel {
     public Model() {
     }
 
-    public void init(List<Factura> list , List<Linea> lis){
-        this.listFacturas = list;
+    public void init(){
         this.current = new Factura();
         this.filter = new Factura();
-        this.listLinea = lis;
         this.mode= Application.MODE_CREATE;
     }
 
@@ -42,6 +40,7 @@ public class Model extends AbstractModel {
     public void setList(List<Factura> list){
         this.listFacturas = list;
         firePropertyChange(LISTF);
+        setCurrent(new Factura());
     }
 
     public List<Linea> getListL() {

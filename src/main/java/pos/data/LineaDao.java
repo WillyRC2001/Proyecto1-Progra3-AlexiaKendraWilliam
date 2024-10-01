@@ -6,6 +6,7 @@ import pos.logic.Producto;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,23 +21,38 @@ public class LineaDao {
     }
 
     public void create(Linea e) throws Exception {
-        // Generar un nuevo número de línea
-        String nuevoNumero = generarNumeroLinea();
-        e.setCodigo(nuevoNumero);
+        if (e.getCodigo() == null || e.getCodigo().length() > 10) {
+            throw new IllegalArgumentException("El código no puede ser nulo y debe tener un máximo de 10 caracteres. Código: " + e.getCodigo());
+        }
+        if (e.getProducto().getCodigo() == null || e.getProducto().getCodigo().length() > 10) {
+            throw new IllegalArgumentException("El código del producto no puede ser nulo y debe tener un máximo de 10 caracteres. Código del producto: " + e.getProducto().getCodigo());
+        }
+        if (e.getFactura().getNumero() == null || e.getFactura().getNumero().length() > 10) {
+            throw new IllegalArgumentException("El número de factura no puede ser nulo y debe tener un máximo de 10 caracteres. Número de factura: " + e.getFactura().getNumero());
+        }
 
-        String sql = "insert into " +
-                "Linea " +
-                "(codigo, producto, factura, cantidad, descuento) " +
-                "values(?,?,?,?,?)";
+        // Declaraciones de depuración
+        System.out.println("Código: " + e.getCodigo());
+        System.out.println("Producto: " + e.getProducto().getCodigo());
+        System.out.println("Factura: " + e.getFactura().getNumero());
+        System.out.println("Cantidad: " + e.getCantidad());
+        System.out.println("Descuento: " + e.getDescuento());
+
+        String sql = "INSERT INTO Linea (codigo, producto, factura, cantidad, descuento) values(?,?,?,?,?)";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, e.getCodigo());
         stm.setString(2, e.getProducto().getCodigo());
         stm.setString(3, e.getFactura().getNumero());
         stm.setInt(4, e.getCantidad());
         stm.setFloat(5, e.getDescuento());
-        db.executeUpdate(stm);
-    }
 
+        try {
+            db.executeUpdate(stm);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Exception("Error al insertar en la tabla Linea: " + ex.getMessage());
+        }
+    }
 
     public Linea read(String codigo) throws Exception {
         String sql = "select " +
@@ -91,14 +107,14 @@ public class LineaDao {
 
     public List<Linea> search(Linea e) throws Exception {
         List<Linea> resultado = new ArrayList<>();
-        String sql = "select * " +
-                "from Linea l " +
-                "inner join Producto p on l.producto=p.codigo " +
-                "inner join Factura f on l.factura=f.codigo " +
-                "where l.codigo like ?";
+        String sql = "SELECT * " +
+                "FROM Linea l " +
+                "INNER JOIN Producto p ON l.producto = p.codigo " +
+                "INNER JOIN Factura f ON l.factura = f.codigo " +
+                "WHERE l.codigo LIKE ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, "%" + e.getCodigo() + "%");
-        ResultSet rs = db.executeQuery(stm);
+        ResultSet rs = stm.executeQuery();
         ProductoDao productoDao = new ProductoDao();
         FacturaDao facturaDao = new FacturaDao();
         while (rs.next()) {
@@ -140,7 +156,7 @@ public class LineaDao {
         try {
             int contadorL = getContadorL();
             updateContadorL(contadorL + 1);
-            return String.format("LIN-" + "%05d", contadorL);
+            return String.format( "%05d", contadorL);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

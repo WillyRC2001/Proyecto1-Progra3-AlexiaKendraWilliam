@@ -18,11 +18,12 @@ public class Factura {
         this(new ArrayList<Linea>(), new Cliente(), new Cajero(), LocalDate.now(), "");
     }
 
-    public Factura(List<Linea> lista_productos , Cliente cliente, Cajero cajero, LocalDate fecha, String s) {
+    public Factura(List<Linea> lista_productos , Cliente cliente, Cajero cajero, LocalDate fecha, String numero) {
         this.linea = lista_productos;
         this.cliente = cliente;
         this.cajero = cajero;
         this.fecha = fecha;
+        this.numero = numero;
     }
 
     public List<Linea> getLinea() {return linea;}
@@ -43,14 +44,6 @@ public class Factura {
             subtotal += linea.Importe();
         }
         return subtotal;
-    }
-
-    public double Total(){
-        double subtotal = 0.0;
-        for (Linea linea : linea) {
-            subtotal += linea.Importe();
-        }
-        return subtotal - cliente.descuento * 10 ;
     }
 
     @Override

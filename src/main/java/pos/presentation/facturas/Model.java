@@ -15,7 +15,6 @@ private
     Factura current;
     Producto filter;
     Cliente currentCli;
-    Cajero currentCaj;
     int mode;
 
     public void setSelectedItem(Object anItem){}
@@ -34,16 +33,21 @@ private
 
     public Model() {}
 
-    public List<Producto> getProductosTotales () {
-        return productosTotales;
+    public void init(){
+        this.filter = new Producto();
+        this.current = new Factura();
+        this.mode = Application.MODE_CREATE;
+
     }
-        public List<Linea> getLineaComprados() {
+
+
+    public List<Linea> getLineaComprados() {
         return lineaComprados;
     }
-        public List<Cliente> getClientes () {
+    public List<Cliente> getClientes () {
         return clientes;
     }
-        public List<Cajero> getCajeros () {
+    public List<Cajero> getCajeros () {
         return cajeros;
     }
     public Factura getCurrent(){
@@ -78,6 +82,7 @@ private
         this.cajeros = cajeros;
         firePropertyChange(CAJEROS);
     }
+
     public void setCurrent(Factura current) {
         this.current = current;
         firePropertyChange(CURRENT);
@@ -86,20 +91,15 @@ private
         this.filter = filter;
         firePropertyChange(FILTER);
     }
+
     public void setMode(int mode) {
         this.mode = mode;
     }
 
-    public void init(List<Producto> listPT,List<Linea> linC, List<Cliente> listCli, List<Cajero> listCaj){
-        this.productosTotales = listPT;
-        this.lineaComprados = linC;
-        this.clientes = listCli;
-        this.cajeros = listCaj;
-        this.filter = new Producto();
-        this.current = new Factura();
-        this.mode = Application.MODE_CREATE;
 
-    }
+
+
+
     public void addLineaComprada(Linea linea) {
         if (this.lineaComprados == null) {
             this.lineaComprados = new ArrayList<>();
@@ -144,7 +144,7 @@ private
     }
 
     public double getTotal() {
-        return getSubtotal() - getDescuentoTotal() *100;
+        return getSubtotal() - ( getSubtotal() * (getDescuentoTotal() /100));
     }
 
     public static final String PRODUCTOSTOTALES="productosTotales";

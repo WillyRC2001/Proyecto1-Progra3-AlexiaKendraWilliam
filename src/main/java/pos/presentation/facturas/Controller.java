@@ -18,13 +18,13 @@ public class Controller {
     Model model;
     public Controller(View view, Model model) {
         try {
-            List<Linea> productosC = new ArrayList<>();   //Revisar
-            List<Producto> productosT = Service.instance().search(new Producto());
-            List<Cliente> clientes = Service.instance().search(new Cliente());
-            List<Cajero> cajeros = Service.instance().search(new Cajero());
-            model.init(productosT, productosC, clientes, cajeros);
+            model.init();
             this.view = view;
             this.model = model;
+            model.setCajeros(Service.instance().search(new Cajero()));
+            model.setClientes(Service.instance().search(new Cliente()));
+            model.setProductosComprados(new ArrayList<>());
+            model.setProductosTotales(Service.instance().search(new Producto()));
             view.setController(this);
             view.setModel(model);
         } catch (Exception var5) {
@@ -32,6 +32,15 @@ public class Controller {
             e.printStackTrace();
         }
     }
+
+    public void search(Producto filter) throws Exception{
+        model.setFilter(filter);
+        model.setMode(Application.MODE_CREATE);
+        model.setCurrent(new Factura());
+        //model.setLis();
+    }
+
+
     public void AgregarButtonClick(String codigo, Cliente c) {
         try {
             if (codigo.isEmpty()) {
@@ -50,6 +59,7 @@ public class Controller {
 
             Producto productoEncontrado = productosEncontrados.get(0);
             Linea nuevaLinea = new Linea(productoEncontrado,null, "", 1,c.getDescuento());
+            nuevaLinea.setCodigo(Service.instance().generarNumeroLinea());
             model.addLineaComprada(nuevaLinea);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -106,12 +116,7 @@ public class Controller {
             model.changeDescuento(index, lineaModificada.getDescuento());
         }
     }
-    public void search(Producto filter) throws Exception{
-        model.setFilter(filter);
-        model.setMode(Application.MODE_CREATE);
-        model.setCurrent(new Factura());
-        //model.setLis();
-    }
+
     public void save(Factura factura) throws Exception{
         switch(model.getMode()){
             case Application.MODE_CREATE:
@@ -140,12 +145,14 @@ public class Controller {
             return;  // Salir si el pago no fue exitoso
         }
         Factura factura = model.getCurrent();
+        factura.setNumero(Service.instance().generarNumeroFactura());
         factura.setFecha(LocalDate.now());
         factura.setLinea(model.getLineaComprados());
         factura.setCliente((Cliente) view.getClienteJcb().getSelectedItem());
         factura.setCajero((Cajero) view.getCajeroJcb().getSelectedItem());
         try {
-            // Actualizar inventario
+
+
             for (Linea linea : model.getLineaComprados()) {
                 Producto producto = linea.getProducto();
                 int cantidadComprada = linea.getCantidad();
