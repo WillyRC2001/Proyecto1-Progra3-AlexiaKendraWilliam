@@ -1,46 +1,36 @@
 package pos.logic;
 
-import jakarta.xml.bind.annotation.*;
-import pos.data.LocalDateAdapter;
-
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Factura {
-    @XmlIDREF
-    @XmlElementWrapper(name = "FLineas")
-    @XmlElement(name = "Flinea")
     List<Linea> linea;
-    @XmlIDREF
     Cliente cliente;
-    @XmlIDREF
     Cajero cajero;
-    @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
     LocalDate fecha;
-    @XmlID
     String numero;
 
 
-    public Factura() {}
+    public Factura() {
+        this(new ArrayList<Linea>(), new Cliente(), new Cajero(), LocalDate.now(), "");
+    }
 
-    public Factura(List<Linea> lista_productos , Cliente cliente, Cajero cajero, LocalDate fecha) {
+    public Factura(List<Linea> lista_productos , Cliente cliente, Cajero cajero, LocalDate fecha, String s) {
         this.linea = lista_productos;
         this.cliente = cliente;
         this.cajero = cajero;
         this.fecha = fecha;
     }
 
-    public List<Linea> getLista_productos() {return linea;}
+    public List<Linea> getLinea() {return linea;}
     public Cliente getCliente() {return cliente;}
     public Cajero getCajero() {return cajero;}
     public LocalDate getFecha() {return fecha;}
     public String getNumero() {return numero;}
-    public void setLista_productos(List<Linea> lista_producto) {linea = lista_producto;}
+    public void setLinea(List<Linea> lista_producto) {linea = lista_producto;}
     public void setCliente(Cliente cliente) {this.cliente = cliente;}
     public void setCajero(Cajero cajero) {this.cajero = cajero;}
     public void setFecha(LocalDate fecha) {this.fecha = fecha;}

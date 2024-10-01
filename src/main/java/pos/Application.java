@@ -26,24 +26,24 @@ public class Application {
                 Service.instance().stop();
             }
         });
-        pos.presentation.facturas.Model facturasModel = new pos.presentation.facturas.Model();
-        pos.presentation.facturas.View.View facturasView = new pos.presentation.facturas.View.View();
-        facturasController = new pos.presentation.facturas.Controller(facturasView,facturasModel);
-        Icon facturasIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/factura.png"));
-        tabbedPane.addTab("Factura ",facturasIcon,facturasView.getPanel());
-
-        pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
-        pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
-        clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
-        Icon clientesIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/cliente.png"));
-
-        tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
-
-        pos.presentation.cajeros.Model cajeroModel= new pos.presentation.cajeros.Model();
-        pos.presentation.cajeros.View cajeroView = new pos.presentation.cajeros.View();
-        cajeroController = new pos.presentation.cajeros.Controller(cajeroView,cajeroModel);
-        Icon cajeroIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/cajero.png"));
-        tabbedPane.addTab("Cajero  ", cajeroIcon,cajeroView.getPanel());
+//        pos.presentation.facturas.Model facturasModel = new pos.presentation.facturas.Model();
+//        pos.presentation.facturas.View.View facturasView = new pos.presentation.facturas.View.View();
+//        facturasController = new pos.presentation.facturas.Controller(facturasView,facturasModel);
+//        Icon facturasIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/factura.png"));
+//        tabbedPane.addTab("Factura ",facturasIcon,facturasView.getPanel());
+//
+//        pos.presentation.clientes.Model clientesModel= new pos.presentation.clientes.Model();
+//        pos.presentation.clientes.View clientesView = new pos.presentation.clientes.View();
+//        clientesController = new pos.presentation.clientes.Controller(clientesView,clientesModel);
+//        Icon clientesIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/cliente.png"));
+//
+//        tabbedPane.addTab("Clientes  ",clientesIcon,clientesView.getPanel());
+//
+//        pos.presentation.cajeros.Model cajeroModel= new pos.presentation.cajeros.Model();
+//        pos.presentation.cajeros.View cajeroView = new pos.presentation.cajeros.View();
+//        cajeroController = new pos.presentation.cajeros.Controller(cajeroView,cajeroModel);
+//        Icon cajeroIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/cajero.png"));
+//        tabbedPane.addTab("Cajero  ", cajeroIcon,cajeroView.getPanel());
 
 
         pos.presentation.productos.Model productoModel= new pos.presentation.productos.Model();
@@ -52,17 +52,17 @@ public class Application {
         Icon productoIcon= new ImageIcon(Application.class.getResource("/pos/presentation/icons/productos.png"));
         tabbedPane.addTab("Producto  ", productoIcon,productoView.getPanel());
 
-        pos.presentation.estadisticas.model estadisticaModel = new pos.presentation.estadisticas.model();
-        pos.presentation.estadisticas.View estadisticaView = new pos.presentation.estadisticas.View();
-        estadisticaController = new pos.presentation.estadisticas.controller(estadisticaView , estadisticaModel);
-        Icon estadisticaIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/analitica.png"));
-        tabbedPane.addTab("Estadistica", estadisticaIcon, estadisticaView.getPanel());
+//        pos.presentation.estadisticas.model estadisticaModel = new pos.presentation.estadisticas.model();
+//        pos.presentation.estadisticas.View estadisticaView = new pos.presentation.estadisticas.View();
+//        estadisticaController = new pos.presentation.estadisticas.controller(estadisticaView , estadisticaModel);
+//        Icon estadisticaIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/analitica.png"));
+//        tabbedPane.addTab("Estadistica", estadisticaIcon, estadisticaView.getPanel());
 
-        pos.presentation.históricos.Model historicosModel = new pos.presentation.históricos.Model();
-        pos.presentation.históricos.View historicosView = new pos.presentation.históricos.View();
-        historicoController = new pos.presentation.históricos.Controller(historicosView, historicosModel);
-        Icon historicosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/servidor.png"));
-        tabbedPane.addTab("Históricos", historicosIcon, historicosView.getPanel());
+//        pos.presentation.históricos.Model historicosModel = new pos.presentation.históricos.Model();
+//        pos.presentation.históricos.View historicosView = new pos.presentation.históricos.View();
+//        historicoController = new pos.presentation.históricos.Controller(historicosView, historicosModel);
+//        Icon historicosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/servidor.png"));
+//        tabbedPane.addTab("Históricos", historicosIcon, historicosView.getPanel());
 
         window.setSize(900,450);
         window.setResizable(false);

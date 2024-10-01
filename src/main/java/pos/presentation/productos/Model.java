@@ -40,12 +40,12 @@ public class Model extends AbstractModel{
         firePropertyChange(CATEGORIAS);
     }
 
-    public void init(List< Producto> list, List<Categoria> categorias){
-        this.list = list;
-        this.current = new  Producto();
+    public void init(){
+        List<Producto> rows = new ArrayList<Producto>();
+        this.setList(rows);
         this.filter = new  Producto();
         this.mode= Application.MODE_CREATE;
-        this.categorias = categorias;
+
     }
 
     public List<Producto> getList() {
@@ -55,6 +55,7 @@ public class Model extends AbstractModel{
     public void setList(List<Producto> list){
         this.list = list;
         firePropertyChange(LIST);
+        this.current = new  Producto();
     }
 
     public  Producto getCurrent() {

@@ -1,27 +1,22 @@
 package pos.logic;
 
-import jakarta.xml.bind.annotation.*;
+
 
 import java.util.Objects;
 
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Linea {
-    private static int contador = 0; // Variable estática para el contador
-    @XmlIDREF
     Producto producto;
-    @XmlIDREF
     Factura factura;
-    @XmlID
     String codigo;
     int cantidad;
     float descuento;
 
 
     public Linea(){
-
+        this(new Producto(), new Factura(), "", 0, 0);
     }
-    public Linea(Producto producto, Factura factura, int cantidad, float descuento) {
+    public Linea(Producto producto, Factura factura, String s, int cantidad, float descuento) {
         this.producto = producto;
         this.factura = factura;
         this.cantidad = cantidad;

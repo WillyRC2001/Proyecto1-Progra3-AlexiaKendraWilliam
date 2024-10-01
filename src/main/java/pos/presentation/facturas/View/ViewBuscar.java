@@ -78,7 +78,7 @@ public class ViewBuscar extends JDialog {
                 .collect(Collectors.toList());  // Filtra los productos por el código
 
         // Actualiza el modelo de la tabla con los productos filtrados
-        tableModelProducto.setProductos(productosFiltrados);
+       // tableModelProducto.setProductos(productosFiltrados);
     }
 
     private void onOK() {

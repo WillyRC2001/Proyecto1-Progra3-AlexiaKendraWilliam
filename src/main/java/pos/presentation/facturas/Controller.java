@@ -12,7 +12,6 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Controller {
     View view;
@@ -50,8 +49,7 @@ public class Controller {
             }
 
             Producto productoEncontrado = productosEncontrados.get(0);
-            Linea nuevaLinea = new Linea(productoEncontrado,null,1,c.getDescuento());
-            nuevaLinea.setCodigo(Service.instance().generarNumeroLinea());
+            Linea nuevaLinea = new Linea(productoEncontrado,null, "", 1,c.getDescuento());
             model.addLineaComprada(nuevaLinea);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -142,9 +140,8 @@ public class Controller {
             return;  // Salir si el pago no fue exitoso
         }
         Factura factura = model.getCurrent();
-        factura.setNumero(Service.instance().generarNumeroFactura()); // Asignar número secuencial
         factura.setFecha(LocalDate.now());
-        factura.setLista_productos(model.getLineaComprados());
+        factura.setLinea(model.getLineaComprados());
         factura.setCliente((Cliente) view.getClienteJcb().getSelectedItem());
         factura.setCajero((Cajero) view.getCajeroJcb().getSelectedItem());
         try {

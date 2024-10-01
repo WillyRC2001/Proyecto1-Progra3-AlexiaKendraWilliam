@@ -1,19 +1,19 @@
 package pos.logic;
 
 import java.util.Objects;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import  jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlID;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Categoria {
-    @XmlID
+
     String id;
     String Nombre;
 
     public Categoria() {
+        this("", "");
     }
 
+    public Categoria(String id) {
+        this(id, "");
+    }
     public Categoria(String id , String Nombre) {
         this.id= id; this.Nombre = Nombre;
     }
@@ -42,5 +42,5 @@ public class Categoria {
     }
 
     @Override
-    public String toString() {return id+ "-" + Nombre;}
+    public String toString() {return  Nombre;}
 }

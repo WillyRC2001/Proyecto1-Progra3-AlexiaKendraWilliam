@@ -1,9 +1,7 @@
 package pos.logic;
 
-import pos.data.Data;
-import pos.data.XmlPersister;
+import pos.data.*;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,354 +16,189 @@ public class Service {
         if (theInstance == null) theInstance = new Service();
         return theInstance;
     }
+    private ClienteDao clienteDao;
+    private CajeroDao cajeroDao;
+    private CategoriaDao categoriaDao;
+    private ProductoDao productoDao;
+    private LineaDao lineaDao;
+    private FacturaDao facturaDao;
 
-    private Data data;
+    public Service() {
+        try{
+            clienteDao = new ClienteDao();
+            cajeroDao = new CajeroDao();
+            categoriaDao = new CategoriaDao();
+            productoDao = new ProductoDao();
+            lineaDao = new LineaDao();
+            facturaDao = new FacturaDao();
 
-    private Service() {
-        try {
-            data = XmlPersister.instance().load();
-        } catch (Exception e) {
-            data = new Data();
+        }
+        catch(Exception e){
         }
     }
 
-    public void stop() {
-        try {
-            XmlPersister.instance().store(data);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    public void stop(){
     }
-
-    //Método para obtener el siguiente número de factura
-    public synchronized String generarNumeroFactura() {
-        try {
-            updateF(data.getContadorF()+1);
-            return String.format( "FAC-"+ "%05d", data.getContadorF());  // Formato con ceros a la izquierda si es necesario
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public synchronized String generarNumeroLinea() {
-        try {
-            updateL(data.getContadorL()+1);
-            return String.format( "LIN-"+ "%05d", data.getContadorL());  // Formato con ceros a la izquierda si es necesario
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-    //====================================================================================================================================================
-
 
 
 //================= CLIENTES ============
 
     public void create(Cliente e) throws Exception {
-        Cliente result = data.getClientes().stream().filter(i -> i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result == null) data.getClientes().add(e);
-        else throw new Exception("Cliente ya existe");
+        clienteDao.create(e);
     }
 
-    public Cliente read(Cliente e) throws Exception {
-        Cliente result = data.getClientes().stream().filter(i -> i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result != null) return result;
-        else throw new Exception("Cliente no existe");
+    public Cliente  read(Cliente  e) throws Exception {
+        return clienteDao.read(e.getId());
     }
 
     public void update(Cliente e) throws Exception {
-        Cliente result;
+        clienteDao.update(e);
+    }
+
+    public void delete(Cliente  e) throws Exception {
+        clienteDao.delete(e);
+    }
+
+    public List<Cliente> search(Cliente  e) {
         try {
-            result = this.read(e);
-            data.getClientes().remove(result);
-            data.getClientes().add(e);
+            return clienteDao.search(e);
         } catch (Exception ex) {
-            throw new Exception("Cliente no existe");
+            throw new RuntimeException(ex);
         }
     }
 
-    public void delete(Cliente e) throws Exception {
-        data.getClientes().remove(e);
-    }
 
-    public List<Cliente> search(Cliente e) {
-        return data.getClientes().stream()
-                .filter(i -> i.getNombre().contains(e.getNombre()))
-                .sorted(Comparator.comparing(Cliente::getNombre))
-                .collect(Collectors.toList());
-    }
-    //================= CAJEROS ============
+// ================= CAJEROS ============
 
     public void create(Cajero e) throws Exception {
-        Cajero result = data.getCajeros().stream().filter(i -> i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result == null) data.getCajeros().add(e);
-        else throw new Exception("Cajero ya existe");
+        cajeroDao.create(e);
     }
 
     public Cajero read(Cajero e) throws Exception {
-        Cajero result = data.getCajeros().stream().filter(i -> i.getId().equals(e.getId())).findFirst().orElse(null);
-        if (result != null) return result;
-        else throw new Exception("Cajero no existe");
+    return cajeroDao.read(e.getId());
     }
 
     public void update(Cajero e) throws Exception {
-        Cajero result;
-        try {
-            result = this.read(e);
-            data.getCajeros().remove(result);
-            data.getCajeros().add(e);
-        } catch (Exception ex) {
-            throw new Exception("Cajero no existe");
-        }
+     cajeroDao.update(e);
     }
 
     public void delete(Cajero e) throws Exception {
-        data.getCajeros().remove(e);
+    cajeroDao.delete(e);
     }
 
     public List<Cajero> search(Cajero e) {
-        return data.getCajeros().stream()
-                .filter(i -> i.getNombre().contains(e.getNombre()))
-                .sorted(Comparator.comparing(Cajero::getNombre))
-                .collect(Collectors.toList());
+        try {
+            return cajeroDao.search(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     //================= PRODUCTOS ============
+
     public void create(Producto e) throws Exception {
-        Producto result = data.getProductos().stream()
-                .filter(i -> i.getCodigo().equals(e.getCodigo()))
-                .findFirst().orElse(null);
-        if (result == null) data.getProductos().add(e);
-        else throw new Exception("Producto no existe");
+        productoDao.create(e);
     }
 
     public Producto read(Producto e) throws Exception {
-        Producto result = data.getProductos().stream()
-                .filter(i -> i.getCodigo().equals(e.getCodigo()))
-                .findFirst().orElse(null);
-        if (result != null) return result;
-        else throw new Exception("Producto no existe");
+        return productoDao.read(e.getCodigo());
     }
 
     public void update(Producto e) throws Exception {
-        Producto result;
-        try {
-            result = this.read(e);
-            data.getProductos().remove(result);
-            data.getProductos().add(e);
-        } catch (Exception ex) {
-            throw new Exception("Producto no existe");
-        }
+        productoDao.update(e);
     }
 
     public void delete(Producto e) throws Exception {
-        data.getProductos().remove(e);
+        productoDao.delete(e);
     }
 
     public List<Producto> search(Producto e) {
-
-
-        return data.getProductos().stream()
-                .filter(i -> e.getCodigo() == null || (i.getCodigo() != null && i.getCodigo().contains(e.getCodigo())))
-                .sorted(Comparator.comparing(Producto::getCodigo, Comparator.nullsLast(Comparator.naturalOrder())))
-                .collect(Collectors.toList());
+        try {
+            return productoDao.search(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
+
+
     //================= CATEGORIA ============
 
-    public List<Categoria> getCategorias() {
-        return this.data.getCategorias();
-    }
-
-    public void create(Categoria e) throws Exception {
-        Categoria result = data.getCategorias().stream()
-                .filter(i -> i.getId().equals(e.getId()))
-                .findFirst().orElse(null);
-        if (result == null) data.getCategorias().add(e);
-        else throw new Exception("Categoria no existe");
-    }
-
-    public Categoria read(Categoria e) throws Exception {
-        Categoria result = data.getCategorias().stream()
-                .filter(i -> i.getNombre().equals(e.getNombre()))
-                .findFirst().orElse(null);
-        if (result != null) return result;
-        else throw new Exception("Categoria no existe");
-    }
-
-    public void update(Categoria e) throws Exception {
-        Categoria result;
-        try {
-            result = this.read(e);
-            data.getCategorias().remove(result);
-            data.getCategorias().add(e);
-        } catch (Exception ex) {
-            throw new Exception("Categoria no existe");
-        }
-    }
-
-    public void delete(Categoria e) throws Exception {
-        data.getCategorias().remove(e);
-    }
-
     public List<Categoria> search(Categoria e) {
-        // Verifica que data.getCategorias() no sea null
-        if (data.getCategorias() == null) {
-            //System.out.println("data.getCategorias() es null");
-            return new ArrayList<>();
+        try {
+            return categoriaDao.search(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
-        List<Categoria> result = data.getCategorias().stream()
-                .filter(i -> e.getId() == null || (i.getId() != null && i.getId().contains(e.getId())))
-                .sorted(Comparator.comparing(Categoria::getId, Comparator.nullsLast(Comparator.naturalOrder())))
-                .collect(Collectors.toList());
-        return result;
     }
+
+
     //================= Linea ============
     public void create(Linea e) throws Exception {
-        Linea result = data.getLineas().stream()
-                .filter(i -> i.getCodigo().equals(e.getCodigo()))
-                .findFirst().orElse(null);
-        if (result == null) {
-            data.getLineas().add(e);
-        } else {
-            throw new Exception("Linea ya existe");
-        }
+      lineaDao.create(e);
     }
 
     public Linea read(Linea e) throws Exception {
-        Linea result = data.getLineas().stream().filter(i -> i.getCodigo().equals(e.getCodigo())).findFirst().orElse(null);
-        if (result != null) {
-            return result;
-        } else {
-            throw new Exception("Linea no existe");
-        }
+      return  lineaDao.read(e.getCodigo());
     }
 
     public void update(Linea e) throws Exception {
-        Linea result;
-        try {
-            result = this.read(e);
-            data.getLineas().remove(result);
-            data.getLineas().add(e);
-        } catch (Exception ex) {
-            throw new Exception("Linea no existe");
-        }
+     lineaDao.update(e);
     }
 
 
     public void delete(Linea e) throws Exception {
-        Linea result = data.getLineas().stream()
-                .filter(i -> i.getCodigo().equals(e.getCodigo()))
-                .findFirst().orElse(null);
-        if (result != null) {
-            data.getLineas().remove(result);
-        } else {
-            throw new Exception("Linea no existe");
-        }
+     lineaDao.delete(e);
     }
 
     public List<Linea> search(Linea e) {
-        String numeroBuscado = e.getCodigo() != null ? e.getCodigo() : "";
-
-        return data.getLineas().stream()
-                .filter(i -> i.getCodigo() != null && i.getCodigo().contains(numeroBuscado))
-                .sorted(Comparator.comparing(Linea::getCodigo))
-                .collect(Collectors.toList());
+        try {
+            return lineaDao.search(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public List<Linea> searchF(Factura e) {
-        String numeroBuscado = e.getNumero() != null ? e.getNumero() : "";
-        if (numeroBuscado.isEmpty()) {
-            return Collections.emptyList();
+        try {
+            return lineaDao.searchByFactura(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
-        return data.getLineas().stream()
-                .filter(i -> i.getFactura()!= null && i.getFactura().getNumero() != null &&
-                        i.getFactura().getNumero().contains(numeroBuscado))
-                .sorted(Comparator.comparing(i -> i.getFactura().getNumero()))
-                .collect(Collectors.toList());
     }
-
 
     //================= Factura ============
 
     public List<Factura> search(Factura e) {
-        String numeroBuscado = e.getNumero() != null ? e.getNumero() : "";
-        return data.getFacturas().stream()
-                .filter(i -> i.getNumero() != null && i.getNumero().contains(numeroBuscado))
-                .sorted(Comparator.comparing(Factura::getNumero))
-                .collect(Collectors.toList());
-
+        try {
+            return  facturaDao.search(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public void create(Factura e) throws Exception {
-        // Buscar si ya existe una factura con el mismo número
-        Factura result = data.getFacturas().stream()
-                .filter(i -> i.getNumero().equals(e.getNumero()))
-                .findFirst().orElse(null);
-
-        if (result == null) {
-            // Si no hay factura con ese número, agregarla
-            data.getFacturas().add(e);
-
-        } else {
-            // Si ya existe una factura con el mismo número, lanzar una excepción
-            throw new Exception("Factura ya existe con el número: " + e.getNumero());
-        }
+     facturaDao.create(e);
     }
 
 
     public Factura read(Factura e) throws Exception {
-        Factura result = data.getFacturas().stream()
-                .filter(i -> i.getNumero().equals(e.getNumero()))
-                .findFirst().orElse(null);
-        if (result != null) {
-            return result;
-        } else {
-            throw new Exception("Factura no existe");
-        }
+    return  facturaDao.read(e.getNumero());
     }
 
 
     public void update(Factura e) throws Exception {
-        Factura result;
+       facturaDao.update(e);
+    }
+
+
+    public double getVentas(Categoria c , int  anno , int mes) {
         try {
-            result = this.read(e);
-            data.getFacturas().remove(result);
-            data.getFacturas().add(e);
-        } catch (Exception ex) {
-            throw new Exception("Factura no existe");
+            return facturaDao.getVentas(c, anno, mes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 
-    //=================Contador (Factura y Linea)
-    public void updateF(int contador) throws Exception {
-        try{
-            data.setContadorF(contador);
-        }catch(Exception e){
-            throw new Exception("Contador no existe");
-        }
-    }
-    public void updateL(int contador) throws Exception {
-        try{
-            data.setContadorL(contador);
-        }catch(Exception e){
-            throw new Exception("Contador no existe");
-        }
-    }
-    //====================================================================================================================================================
-
-    public double getVentas(Categoria c , int  anno , int mes){
-        double result = 0;
-        for(Factura f : data.getFacturas()){
-            int facturaAnno = f.getFecha().getYear();
-            int facturaMes = f.getFecha().getMonthValue();
-            if( facturaAnno == anno && facturaMes == mes ) {
-                for(Linea l : f.getLista_productos()){
-                    if(l.getProducto().getCategoria() ==c){
-                        result = l.Importe();
-                    }
-                }
-            }
-        }
-        return result;
-    }
 }
 

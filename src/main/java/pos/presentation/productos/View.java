@@ -28,7 +28,7 @@ public class View  implements PropertyChangeListener{
     private JLabel unidadLbl;
     private JLabel precioLbl;
     private JLabel categoriaLbl;
-    private JComboBox<Categoria> categoriaJcb;
+    private JComboBox categoriaJcb;
     private JLabel nombreLbl;
     private JTextField nombre;
     private JButton buscarButton;
@@ -109,8 +109,6 @@ public class View  implements PropertyChangeListener{
 
     private boolean validate() {
         boolean valid = true;
-
-
         if (codigo.getText().isEmpty()) {
             valid = false;
             codigoLbl.setBorder(Application.BORDER_ERROR);
@@ -189,15 +187,12 @@ public class View  implements PropertyChangeListener{
 
     public Producto take() {
         Producto e = new Producto();
-        e.setCodigo("PRO-" + codigo.getText());
+        e.setCodigo(codigo.getText());
         e.setDescripcion(descripcion.getText());
         e.setUnidadMedida(unidad.getText());
-        int exit = Integer.parseInt(existencia.getText());
-        e.setExistencias(exit);
-        double precioUnita = Double.parseDouble(precio.getText());
-        e.setPrecioUnitario(precioUnita);
-        Categoria categoria = (Categoria) categoriaJcb.getSelectedItem();
-        e.setCategoria(categoria);
+        e.setPrecioUnitario(Double.parseDouble(precio.getText()));
+        e.setExistencias(Integer.parseInt(existencia.getText()));
+        e.setCategoria((Categoria) categoriaJcb.getSelectedItem());
         return e;
     }
 

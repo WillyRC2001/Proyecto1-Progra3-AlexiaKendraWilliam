@@ -1,31 +1,26 @@
 package pos.logic;
 
 import java.util.Objects;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import  jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlID;
-import jakarta.xml.bind.annotation.XmlIDREF;
 
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Producto {
-    @XmlID
+
     String Codigo;
     String Descripcion;
     String UnidadMedida;
     double PrecioUnitario;
-    int Existencias;
-    @XmlIDREF
+    int Existencia;
     Categoria categoria;
 
     public Producto() {
+        this("","","",0,  0, new Categoria());
     }
 
-    public Producto(String Codigo, String Descripcion, String UnidadMedida, double PrecioUnitario, int Existencias, Categoria categoria) {
+    public Producto(String Codigo, String Descripcion, String UnidadMedida, double PrecioUnitario, int existencia, Categoria categoria) {
         this.Codigo = Codigo;
         this.Descripcion = Descripcion;
         this.UnidadMedida = UnidadMedida;
         this.PrecioUnitario = PrecioUnitario;
-        this.Existencias = Existencias;
+        this.Existencia = existencia;
         this.categoria = categoria;
     }
     @Override
@@ -75,11 +70,11 @@ public class Producto {
     }
 
     public int getExistencias() {
-        return Existencias;
+        return Existencia;
     }
 
     public void setExistencias(int Existencias) {
-        this.Existencias = Existencias;
+        this.Existencia = Existencias;
     }
 
     public Categoria getCategoria() {

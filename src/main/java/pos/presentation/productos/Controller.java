@@ -22,13 +22,11 @@ public class Controller {
 
     public Controller(View view, Model model) {
         try{
-            List<Producto> productos = Service.instance().search(new Producto());
-            List<Categoria> categorias = Service.instance().search(new Categoria());
-
-            // Inicializar el modelo con los datos obtenidos
-            model.init(productos, categorias);
+            model.init();
             this.view = view;
             this.model = model;
+            model.setCategorias(Service.instance().search(new Categoria()));
+            model.setList(Service.instance().search(model.getFilter()));
             view.setController(this);
             view.setModel(model);
         } catch (Exception var5) {
@@ -40,9 +38,9 @@ public class Controller {
     }
     public void search(Producto filter) throws Exception {
         model.setFilter(filter);
+        List<Producto> rows = Service.instance().search(model.getFilter());
         model.setMode(Application.MODE_CREATE);
-        model.setCurrent(new Producto());
-        model.setList(Service.instance().search(model.getFilter()));
+        model.setList(rows);
     }
 
     public void save(Producto p) throws Exception {
