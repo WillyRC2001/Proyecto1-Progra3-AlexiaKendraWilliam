@@ -13,7 +13,7 @@ public class Factura {
 
 
     public Factura() {
-        this(new ArrayList<Linea>(), new Cliente(), new Cajero(), LocalDate.now(), "");
+        this(new ArrayList<Linea>(), new Cliente(), new Cajero(), LocalDate.now(), " ");
     }
 
     public Factura(List<Linea> lista_productos , Cliente cliente, Cajero cajero, LocalDate fecha, String numero) {

@@ -233,6 +233,7 @@ public class Controller {
                     return;  // Salir si la factura no está asignada
                 }
                 Service.instance().create(linea);  // Guardar la línea de la factura
+                //Service.instance().insertLineas(factura.getNumero() , linea.getCodigo());
             }
 
             // Limpiar el modelo después de guardar

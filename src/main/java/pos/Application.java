@@ -57,12 +57,12 @@ public class Application {
         Icon estadisticaIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/analitica.png"));
         tabbedPane.addTab("Estadistica", estadisticaIcon, estadisticaView.getPanel());
 
-//        pos.presentation.históricos.Model historicosModel = new pos.presentation.históricos.Model();
-//        pos.presentation.históricos.View historicosView = new pos.presentation.históricos.View();
-//        historicoController = new pos.presentation.históricos.Controller(historicosView, historicosModel);
-//        Icon historicosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/servidor.png"));
-//        tabbedPane.addTab("Históricos", historicosIcon, historicosView.getPanel());
-//
+       pos.presentation.históricos.Model historicosModel = new pos.presentation.históricos.Model();
+       pos.presentation.históricos.View historicosView = new pos.presentation.históricos.View();
+      historicoController = new pos.presentation.históricos.Controller(historicosView, historicosModel);
+        Icon historicosIcon = new ImageIcon(Application.class.getResource("/pos/presentation/icons/servidor.png"));
+      tabbedPane.addTab("Históricos", historicosIcon, historicosView.getPanel());
+
         window.setSize(900,450);
         window.setResizable(false);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

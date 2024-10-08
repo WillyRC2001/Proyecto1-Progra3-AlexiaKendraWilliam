@@ -169,8 +169,6 @@ public class Service {
     public String   generarNumeroLinea() {
         return lineaDao.generarNumeroLinea();
     }
-
-
     //================= Factura ============
 
     public List<Factura> search(Factura e) {
@@ -198,6 +196,12 @@ public class Service {
    public String   generarNumeroFactura() {
         return facturaDao.generarNumeroFactura();
    }
+
+
+   public  void  insertLineas(String facturaNumero, String lineaId) throws Exception {
+        facturaDao.insertLineaExistente(facturaNumero , lineaId);
+   }
+
 
 
 

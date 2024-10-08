@@ -35,7 +35,10 @@ public class LineaDao {
         System.out.println("Cantidad: " + e.getCantidad());
         System.out.println("Descuento: " + e.getDescuento());
 
-        String sql = "INSERT INTO Linea (codigo, producto, factura, cantidad, descuento) values(?,?,?,?,?)";
+        String sql = "INSERT INTO " +
+                "Linea " +
+                "(codigo, producto, factura, cantidad, descuento) " +
+                "values(?,?,?,?,?)";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, e.getCodigo());
         stm.setString(2, e.getProducto().getCodigo());
@@ -102,26 +105,53 @@ public class LineaDao {
         }
     }
 
-    public List<Linea> search(Linea e) throws Exception {
-        List<Linea> resultado = new ArrayList<>();
-        String sql = "SELECT * " +
-                "FROM Linea l " +
-                "INNER JOIN Producto p ON l.producto = p.codigo " +
-                "INNER JOIN Factura f ON l.factura = f.codigo " +
-                "WHERE l.codigo LIKE ?";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, "%" + e.getCodigo() + "%");
-        ResultSet rs = stm.executeQuery();
-        ProductoDao productoDao = new ProductoDao();
-        FacturaDao facturaDao = new FacturaDao();
-        while (rs.next()) {
-            Linea r = from(rs, "l");
-            r.setProducto(productoDao.from(rs, "p"));
-            r.setFactura(facturaDao.from(rs, "f"));
-            resultado.add(r);
-        }
-        return resultado;
+
+//    public List<Linea> search(Linea e) throws Exception {
+//        List<Linea> resultado = new ArrayList<>();
+//        String sql = "SELECT * " +
+//                "FROM Linea l " +
+//                "INNER JOIN Producto p ON l.producto = p.codigo " +
+//                "INNER JOIN Factura f ON l.factura = f.numero " + // Asegúrate de que el campo sea correcto
+//                "WHERE l.codigo LIKE ?";
+//        PreparedStatement stm = db.prepareStatement(sql);
+//        stm.setString(1, "%" + e.getCodigo() + "%");
+//        System.out.println("SQL Query: " + stm); // Declaración de depuración
+//        ResultSet rs = stm.executeQuery();
+//        ProductoDao productoDao = new ProductoDao();
+//        FacturaDao facturaDao = new FacturaDao();
+//        while (rs.next()) {
+//            Linea r = from(rs, "l");
+//            r.setProducto(productoDao.from(rs, "p"));
+//            r.setFactura(facturaDao.from(rs, "f"));
+//            resultado.add(r);
+//        }
+//        return resultado;
+//    }
+public List<Linea> search(Linea e) throws Exception {
+    if (e.getCodigo() == null || e.getCodigo().isEmpty()) {
+        throw new IllegalArgumentException("El código no puede ser nulo o vacío.");
     }
+
+    System.out.println("Código de búsqueda: " + e.getCodigo());
+
+    List<Linea> resultado = new ArrayList<>();
+    String sql = "SELECT * " +
+            "FROM Linea l " +
+            "INNER JOIN Producto p ON l.producto = p.codigo " +
+            "INNER JOIN Factura f ON l.factura = f.numero " ;
+    PreparedStatement stm = db.prepareStatement(sql);
+    System.out.println("SQL Query: " + stm);
+    ResultSet rs = stm.executeQuery();
+    ProductoDao productoDao = new ProductoDao();
+    FacturaDao facturaDao = new FacturaDao();
+    while (rs.next()) {
+        Linea r = from(rs, "l");
+        r.setProducto(productoDao.from(rs, "p"));
+        r.setFactura(facturaDao.from(rs, "f"));
+        resultado.add(r);
+    }
+    return resultado;
+}
 
     public Linea from(ResultSet rs, String alias) throws Exception {
         Linea e = new Linea();
@@ -151,30 +181,28 @@ public class LineaDao {
 
     public synchronized String generarNumeroLinea() {
         try {
-            int contadorL = getContadorL();
-            updateContadorL(contadorL + 1);
-            return String.format( "%05d", contadorL);
+            int contadorL = getContadorLinea();
+            updateContadorLinea(contadorL + 1);
+            return String.valueOf(contadorL);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private int getContadorL() throws Exception {
+    private int getContadorLinea() throws Exception {
         String sql = "select contadorL from Contador";
         PreparedStatement stm = db.prepareStatement(sql);
         ResultSet rs = db.executeQuery(stm);
         if (rs.next()) {
             return rs.getInt("contadorL");
         } else {
-            throw new Exception("No se pudo obtener el contador de líneas");
+            throw new Exception("No se pudo obtener el contador de línea");
         }
     }
-
-    private void updateContadorL(int nuevoContador) throws Exception {
+    private void updateContadorLinea(int nuevoContador) throws Exception {
         String sql = "update Contador set contadorL=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setInt(1, nuevoContador);
         db.executeUpdate(stm);
     }
-
 }

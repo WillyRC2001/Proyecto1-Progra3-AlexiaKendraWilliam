@@ -27,10 +27,6 @@ public class FacturaDao {
         stm.setDate(4, java.sql.Date.valueOf(e.getFecha()));
         db.executeUpdate(stm);
         // Insertar las líneas de la factura
-        LineaDao lineaDao = new LineaDao();
-        for (Linea linea : e.getLinea()) {
-            lineaDao.create(linea);
-        }
     }
 
     public Factura read(String numero) throws Exception {
@@ -75,13 +71,20 @@ public class FacturaDao {
         if (count == 0) {
             throw new Exception("Factura NO EXISTE");
         }
-
         // Actualizar las líneas de la factura
         LineaDao lineaDao = new LineaDao();
         for (Linea linea : e.getLinea()) {
             lineaDao.update(linea);
         }
     }
+    public void insertLineaExistente(String facturaNumero, String lineaId) throws Exception {
+        String sql = "insert into Factura_Linea (factura_numero, linea_id) values (?,?)";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, facturaNumero);
+        stm.setString(2, lineaId);
+        db.executeUpdate(stm);
+    }
+
 
     public void delete(Factura e) throws Exception {
         // Eliminar las líneas de la factura
@@ -106,10 +109,9 @@ public class FacturaDao {
         String sql = "select * " +
                 "from Factura f " +
                 "inner join Cliente c on f.cliente=c.id " +
-                "inner join Cajero j on f.cajero=j.id " +
-                "where f.numero like ?";
+                "inner join Cajero j on f.cajero=j.id " ;
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, "%" + e.getNumero() + "%");
+       // stm.setString(1, "%" + e.getNumero() + "%");
         ResultSet rs = db.executeQuery(stm);
         ClienteDao clienteDao = new ClienteDao();
         CajeroDao cajeroDao = new CajeroDao();
@@ -140,7 +142,7 @@ public class FacturaDao {
         try {
             int contadorF = getContadorF();
             updateContadorF(contadorF + 1);
-            return String.format( "%04d", contadorF);
+            return String.valueOf(contadorF);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

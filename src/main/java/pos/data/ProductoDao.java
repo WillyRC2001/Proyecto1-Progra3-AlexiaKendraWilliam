@@ -68,9 +68,9 @@ public class ProductoDao {
 
     public List<Producto> search(Producto e) throws Exception {
         List<Producto> resultado = new ArrayList<>();
-        String sql = "SELECT * FROM Producto t INNER JOIN Categoria c ON t.categoria = c.id WHERE t.descripcion LIKE ?";
+        String sql = "SELECT * FROM Producto t INNER JOIN Categoria c ON t.categoria = c.id WHERE t.codigo LIKE ?";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, "%" + e.getDescripcion() + "%");
+        stm.setString(1, "%" + e.getCodigo() + "%");
         ResultSet rs = db.executeQuery(stm);
         CategoriaDao categoriaDao = new CategoriaDao();
         while (rs.next()) {

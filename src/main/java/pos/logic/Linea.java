@@ -10,7 +10,7 @@ public class Linea {
 
 
     public Linea(){
-        this(new Producto(), new Factura(), "", 0, 0);
+        this(new Producto(), new Factura(), " ", 0, 0);
     }
     public Linea(Producto producto, Factura factura, String codigo, int cantidad, float descuento) {
         this.producto = producto;
@@ -37,7 +37,7 @@ public class Linea {
         return  producto.getPrecioUnitario() ;
     }
     public double Importe(){
-        return (Neto() * cantidad) - descuento *10;
+        return (Neto() * cantidad) - ( Neto() * descuento /100);
     }
 
     @Override
