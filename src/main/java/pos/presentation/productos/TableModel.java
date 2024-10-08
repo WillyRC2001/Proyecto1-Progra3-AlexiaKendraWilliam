@@ -43,6 +43,7 @@ public class TableModel extends AbstractTableModel implements javax.swing.table.
             case DESCRIPCION: return e.getDescripcion();
             case UNIDAD: return e.getUnidadMedida();
             case PRECIO: return e.getPrecioUnitario();
+            case EXISTENCIA: return e.getExistencias();
             case CATEGORIA: return e.getCategoria().getNombre();
             case IMAGEN: return getImagen(e.getCategoria().getId());
             default: return "";
@@ -58,11 +59,16 @@ public class TableModel extends AbstractTableModel implements javax.swing.table.
         return rows.get(row);
     }
 
+    public void setProductos(List<Producto> productos) {
+        this.rows = productos;
+        fireTableDataChanged();  // Notifica a la tabla que los datos han cambiado
+    }
+
     public static final int CODIGO=0;
     public static final int DESCRIPCION=1;
     public static final int UNIDAD=2;
     public static final int PRECIO=3;
-    public static final int EXISTENCIA=3;
+    public static final int EXISTENCIA=4;
     public static final int CATEGORIA=5;
     public static final int IMAGEN = 6;
 

@@ -1,9 +1,7 @@
 package pos.data;
-
 import pos.logic.Factura;
 import pos.logic.Linea;
 import pos.logic.Producto;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 
 public class LineaDao {
     Database db;
@@ -179,6 +176,5 @@ public class LineaDao {
         stm.setInt(1, nuevoContador);
         db.executeUpdate(stm);
     }
-
 
 }

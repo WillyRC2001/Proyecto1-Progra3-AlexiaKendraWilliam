@@ -1,10 +1,7 @@
 package pos.data;
-
-
 import pos.logic.Categoria;
 import pos.logic.Factura;
 import pos.logic.Linea;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -17,7 +14,6 @@ public class FacturaDao {
     public FacturaDao() {
         db = Database.instance();
     }
-
 
     public void create(Factura e) throws Exception {
         String sql = "insert into " +
@@ -36,9 +32,6 @@ public class FacturaDao {
             lineaDao.create(linea);
         }
     }
-
-
-
 
     public Factura read(String numero) throws Exception {
         String sql = "select " +
@@ -170,9 +163,6 @@ public class FacturaDao {
         stm.setInt(1, nuevoContador);
         db.executeUpdate(stm);
     }
-
-
-
 
     public double getVentas(Categoria c, int anno, int mes) throws Exception {
         double result = 0;
