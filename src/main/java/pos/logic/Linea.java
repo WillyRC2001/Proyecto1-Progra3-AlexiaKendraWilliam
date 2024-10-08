@@ -20,7 +20,7 @@ public class Linea {
         this.codigo = codigo;
     }
     public Producto getProducto() {return producto;}
-    public void setProducto(Producto producto) {}
+    public void setProducto(Producto producto) { this.producto = producto;}
     public Factura getFactura() {
         return factura;
     }

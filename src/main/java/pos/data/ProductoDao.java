@@ -1,5 +1,6 @@
 package pos.data;
 
+import pos.logic.Categoria;
 import pos.logic.Producto;
 
 import java.sql.PreparedStatement;
@@ -83,11 +84,26 @@ public class ProductoDao {
 
     public Producto from(ResultSet rs, String alias) throws Exception {
         Producto e = new Producto();
+//        e.setCodigo(rs.getString(alias + ".codigo"));
+//        e.setDescripcion(rs.getString(alias + ".descripcion"));
+//        e.setUnidadMedida(rs.getString(alias + ".unidadMedida"));
+//        e.setPrecioUnitario(rs.getFloat(alias + ".precioUnitario"));
+//        e.setExistencias(rs.getInt(alias + ".existencia"));
+//        Categoria categoria = new Categoria();
+//        categoria.setNombre(rs.getString(alias + ".categoria")); // Asegúrate de que la columna 'categoria' existe
+//        e.setCategoria(categoria);
         e.setCodigo(rs.getString(alias + ".codigo"));
+        System.out.println("Código Producto (from): " + e.getCodigo());
         e.setDescripcion(rs.getString(alias + ".descripcion"));
+        System.out.println("Descripción Producto (from): " + e.getDescripcion());
         e.setUnidadMedida(rs.getString(alias + ".unidadMedida"));
         e.setPrecioUnitario(rs.getFloat(alias + ".precioUnitario"));
+        System.out.println("Precio Producto (from): " + e.getPrecioUnitario());
         e.setExistencias(rs.getInt(alias + ".existencia"));
+        Categoria categoria = new Categoria();
+        categoria.setNombre(rs.getString(alias + ".categoria"));
+        e.setCategoria(categoria);
+
         return e;
     }
 }

@@ -105,35 +105,11 @@ public class LineaDao {
         }
     }
 
-
-//    public List<Linea> search(Linea e) throws Exception {
-//        List<Linea> resultado = new ArrayList<>();
-//        String sql = "SELECT * " +
-//                "FROM Linea l " +
-//                "INNER JOIN Producto p ON l.producto = p.codigo " +
-//                "INNER JOIN Factura f ON l.factura = f.numero " + // Asegúrate de que el campo sea correcto
-//                "WHERE l.codigo LIKE ?";
-//        PreparedStatement stm = db.prepareStatement(sql);
-//        stm.setString(1, "%" + e.getCodigo() + "%");
-//        System.out.println("SQL Query: " + stm); // Declaración de depuración
-//        ResultSet rs = stm.executeQuery();
-//        ProductoDao productoDao = new ProductoDao();
-//        FacturaDao facturaDao = new FacturaDao();
-//        while (rs.next()) {
-//            Linea r = from(rs, "l");
-//            r.setProducto(productoDao.from(rs, "p"));
-//            r.setFactura(facturaDao.from(rs, "f"));
-//            resultado.add(r);
-//        }
-//        return resultado;
-//    }
 public List<Linea> search(Linea e) throws Exception {
     if (e.getCodigo() == null || e.getCodigo().isEmpty()) {
         throw new IllegalArgumentException("El código no puede ser nulo o vacío.");
     }
-
     System.out.println("Código de búsqueda: " + e.getCodigo());
-
     List<Linea> resultado = new ArrayList<>();
     String sql = "SELECT * " +
             "FROM Linea l " +
@@ -145,9 +121,14 @@ public List<Linea> search(Linea e) throws Exception {
     ProductoDao productoDao = new ProductoDao();
     FacturaDao facturaDao = new FacturaDao();
     while (rs.next()) {
+
         Linea r = from(rs, "l");
         r.setProducto(productoDao.from(rs, "p"));
         r.setFactura(facturaDao.from(rs, "f"));
+        System.out.println("Código Producto (rs): " + rs.getString("p.codigo"));
+        System.out.println("Descripción Producto (rs): " + rs.getString("p.descripcion"));
+        System.out.println("Precio Producto (rs): " + rs.getFloat("p.precioUnitario"));
+        System.out.println("Código Producto: " + rs.getString("p.codigo"));
         resultado.add(r);
     }
     return resultado;

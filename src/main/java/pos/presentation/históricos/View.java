@@ -1,6 +1,7 @@
 package pos.presentation.históricos;
 
 import pos.logic.Factura;
+import pos.logic.Linea;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
@@ -10,6 +11,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -111,7 +113,10 @@ public class View implements PropertyChangeListener {
                         LineaTableModel.NETO,
                         LineaTableModel.IMPORTE
                 };
+
                 lineas.setModel(new LineaTableModel(colsL, model.getListL()));
+                lineas.revalidate();
+                lineas.repaint();
                 lineas.setRowHeight(30);
                 break;
 
