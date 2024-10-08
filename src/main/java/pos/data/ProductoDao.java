@@ -1,8 +1,5 @@
 package pos.data;
-
-import pos.logic.Categoria;
 import pos.logic.Producto;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -16,7 +13,9 @@ public class ProductoDao {
     }
 
     public void create(Producto e) throws Exception {
-        String sql = "INSERT INTO Producto (codigo, descripcion, unidadMedida, precioUnitario, existencia, categoria) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO " +
+                "Producto (codigo, descripcion, unidadMedida, precioUnitario, existencia, categoria) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, e.getCodigo());
         stm.setString(2, e.getDescripcion());
@@ -28,7 +27,10 @@ public class ProductoDao {
     }
 
     public Producto read(String codigo) throws Exception {
-        String sql = "SELECT * FROM Producto t INNER JOIN Categoria c ON t.categoria = c.id WHERE t.codigo = ?";
+        String sql = "SELECT * FROM " +
+                "Producto t " +
+                "INNER JOIN Categoria c ON t.categoria = c.id " +
+                "WHERE t.codigo = ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, codigo);
         ResultSet rs = db.executeQuery(stm);
@@ -43,7 +45,10 @@ public class ProductoDao {
     }
 
     public void update(Producto e) throws Exception {
-        String sql = "UPDATE Producto SET descripcion = ?, unidadMedida = ?, precioUnitario = ?, existencia = ?, categoria = ? WHERE codigo = ?";
+        String sql = "UPDATE" +
+                " Producto SET " +
+                "descripcion = ?, unidadMedida = ?, precioUnitario = ?, existencia = ?, categoria = ?" +
+                " WHERE codigo = ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, e.getDescripcion());
         stm.setString(2, e.getUnidadMedida());
@@ -58,7 +63,9 @@ public class ProductoDao {
     }
 
     public void delete(Producto e) throws Exception {
-        String sql = "DELETE FROM Producto WHERE codigo = ?";
+        String sql = "DELETE " +
+                "FROM Producto " +
+                "WHERE codigo = ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, e.getCodigo());
         int count = db.executeUpdate(stm);
@@ -69,7 +76,9 @@ public class ProductoDao {
 
     public List<Producto> search(Producto e) throws Exception {
         List<Producto> resultado = new ArrayList<>();
-        String sql = "SELECT * FROM Producto t INNER JOIN Categoria c ON t.categoria = c.id WHERE t.codigo LIKE ?";
+        String sql = "SELECT * FROM " +
+                "Producto t INNER JOIN Categoria c ON t.categoria = c.id " +
+                "WHERE t.codigo LIKE ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, "%" + e.getCodigo() + "%");
         ResultSet rs = db.executeQuery(stm);
@@ -84,26 +93,11 @@ public class ProductoDao {
 
     public Producto from(ResultSet rs, String alias) throws Exception {
         Producto e = new Producto();
-//        e.setCodigo(rs.getString(alias + ".codigo"));
-//        e.setDescripcion(rs.getString(alias + ".descripcion"));
-//        e.setUnidadMedida(rs.getString(alias + ".unidadMedida"));
-//        e.setPrecioUnitario(rs.getFloat(alias + ".precioUnitario"));
-//        e.setExistencias(rs.getInt(alias + ".existencia"));
-//        Categoria categoria = new Categoria();
-//        categoria.setNombre(rs.getString(alias + ".categoria")); // Asegúrate de que la columna 'categoria' existe
-//        e.setCategoria(categoria);
         e.setCodigo(rs.getString(alias + ".codigo"));
-        System.out.println("Código Producto (from): " + e.getCodigo());
         e.setDescripcion(rs.getString(alias + ".descripcion"));
-        System.out.println("Descripción Producto (from): " + e.getDescripcion());
         e.setUnidadMedida(rs.getString(alias + ".unidadMedida"));
         e.setPrecioUnitario(rs.getFloat(alias + ".precioUnitario"));
-        System.out.println("Precio Producto (from): " + e.getPrecioUnitario());
         e.setExistencias(rs.getInt(alias + ".existencia"));
-        Categoria categoria = new Categoria();
-        categoria.setNombre(rs.getString(alias + ".categoria"));
-        e.setCategoria(categoria);
-
         return e;
     }
 }

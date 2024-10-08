@@ -18,16 +18,6 @@ public class LineaDao {
     }
 
     public void create(Linea e) throws Exception {
-        if (e.getCodigo() == null || e.getCodigo().length() > 10) {
-            throw new IllegalArgumentException("El código no puede ser nulo y debe tener un máximo de 10 caracteres. Código: " + e.getCodigo());
-        }
-        if (e.getProducto().getCodigo() == null || e.getProducto().getCodigo().length() > 10) {
-            throw new IllegalArgumentException("El código del producto no puede ser nulo y debe tener un máximo de 10 caracteres. Código del producto: " + e.getProducto().getCodigo());
-        }
-        if (e.getFactura().getNumero() == null || e.getFactura().getNumero().length() > 10) {
-            throw new IllegalArgumentException("El número de factura no puede ser nulo y debe tener un máximo de 10 caracteres. Número de factura: " + e.getFactura().getNumero());
-        }
-
         // Declaraciones de depuración
         System.out.println("Código: " + e.getCodigo());
         System.out.println("Producto: " + e.getProducto().getCodigo());
@@ -109,26 +99,19 @@ public List<Linea> search(Linea e) throws Exception {
     if (e.getCodigo() == null || e.getCodigo().isEmpty()) {
         throw new IllegalArgumentException("El código no puede ser nulo o vacío.");
     }
-    System.out.println("Código de búsqueda: " + e.getCodigo());
     List<Linea> resultado = new ArrayList<>();
     String sql = "SELECT * " +
             "FROM Linea l " +
             "INNER JOIN Producto p ON l.producto = p.codigo " +
             "INNER JOIN Factura f ON l.factura = f.numero " ;
     PreparedStatement stm = db.prepareStatement(sql);
-    System.out.println("SQL Query: " + stm);
     ResultSet rs = stm.executeQuery();
     ProductoDao productoDao = new ProductoDao();
     FacturaDao facturaDao = new FacturaDao();
     while (rs.next()) {
-
         Linea r = from(rs, "l");
         r.setProducto(productoDao.from(rs, "p"));
         r.setFactura(facturaDao.from(rs, "f"));
-        System.out.println("Código Producto (rs): " + rs.getString("p.codigo"));
-        System.out.println("Descripción Producto (rs): " + rs.getString("p.descripcion"));
-        System.out.println("Precio Producto (rs): " + rs.getFloat("p.precioUnitario"));
-        System.out.println("Código Producto: " + rs.getString("p.codigo"));
         resultado.add(r);
     }
     return resultado;

@@ -77,14 +77,6 @@ public class FacturaDao {
             lineaDao.update(linea);
         }
     }
-    public void insertLineaExistente(String facturaNumero, String lineaId) throws Exception {
-        String sql = "insert into Factura_Linea (factura_numero, linea_id) values (?,?)";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, facturaNumero);
-        stm.setString(2, lineaId);
-        db.executeUpdate(stm);
-    }
-
 
     public void delete(Factura e) throws Exception {
         // Eliminar las líneas de la factura
@@ -92,7 +84,6 @@ public class FacturaDao {
         for (Linea linea : e.getLinea()) {
             lineaDao.delete(linea);
         }
-
         String sql = "delete " +
                 "from Factura " +
                 "where numero=?";
@@ -103,7 +94,6 @@ public class FacturaDao {
             throw new Exception("Factura NO EXISTE");
         }
     }
-
     public List<Factura> search(Factura e) throws Exception {
         List<Factura> resultado = new ArrayList<>();
         String sql = "select * " +

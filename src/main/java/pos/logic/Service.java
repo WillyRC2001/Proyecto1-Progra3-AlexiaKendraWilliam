@@ -31,7 +31,6 @@ public class Service {
             productoDao = new ProductoDao();
             lineaDao = new LineaDao();
             facturaDao = new FacturaDao();
-
         }
         catch(Exception e){
         }
@@ -196,14 +195,6 @@ public class Service {
    public String   generarNumeroFactura() {
         return facturaDao.generarNumeroFactura();
    }
-
-
-   public  void  insertLineas(String facturaNumero, String lineaId) throws Exception {
-        facturaDao.insertLineaExistente(facturaNumero , lineaId);
-   }
-
-
-
 
     public double getVentas(Categoria c , int  anno , int mes) {
         try {

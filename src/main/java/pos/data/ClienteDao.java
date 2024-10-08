@@ -35,6 +35,7 @@ public class ClienteDao {
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, id);
         ResultSet rs = db.executeQuery(stm);
+
         if (rs.next()) {
             return from(rs, "t");
         } else {
