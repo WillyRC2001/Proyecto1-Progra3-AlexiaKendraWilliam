@@ -51,6 +51,7 @@ public class Service {
     }
 
     public void update(Cliente e) throws Exception {
+        System.out.println("Metodo Update Service");
         clienteDao.update(e);
     }
 

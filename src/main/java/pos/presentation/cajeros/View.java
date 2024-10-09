@@ -124,7 +124,7 @@ public class View   implements PropertyChangeListener{
 
     public Cajero take() {
         Cajero e = new Cajero();
-        e.setId("CAJ-"+id.getText());
+        e.setId(id.getText());
         e.setNombre(nombre.getText());
         return e;
     }

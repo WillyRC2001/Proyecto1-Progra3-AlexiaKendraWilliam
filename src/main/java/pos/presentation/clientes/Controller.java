@@ -39,6 +39,7 @@ public class Controller {
                 Service.instance().create(e);
                 break;
             case Application.MODE_EDIT:
+                System.out.println("Metodo Save");
                 Service.instance().update(e);
                 break;
         }

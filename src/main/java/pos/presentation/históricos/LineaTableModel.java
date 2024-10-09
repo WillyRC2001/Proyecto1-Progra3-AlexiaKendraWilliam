@@ -24,9 +24,6 @@ public class LineaTableModel extends AbstractTableModel<Linea> implements javax.
             System.out.println("Producto is null");
             return "";
         }
-        System.out.println("Tablemodel: Código: " + e.getProducto().getCodigo());
-        System.out.println("Tablemodel: Descripción: " + e.getProducto().getDescripcion());
-        System.out.println("Tablemodel: Precio: " + e.getProducto().getPrecioUnitario());
         switch (cols[col]) {
             case CODIGO:
                 return e.getProducto().getCodigo();

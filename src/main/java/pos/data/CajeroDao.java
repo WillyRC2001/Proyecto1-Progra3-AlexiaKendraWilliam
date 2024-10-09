@@ -40,18 +40,21 @@ public class CajeroDao {
         if (rs.next()) {
             return from(rs, "t");
         } else {
-            throw new Exception("CAJERO NO EXISTE");
+            throw new Exception("CAJERO NO EXISTE1");
         }
     }
 
     public void update(Cajero e) throws Exception {
         String sql = "update " +
                 "Cajero " +
-                "set id=?, nombre=?" +
+                "set nombre=?" +
                 "where id=?";
         PreparedStatement stm = db.prepareStatement(sql);
-       stm.setString(1, e.getId());
-       stm.setString(2, e.getNombre());
+       //stm.setString(1, e.getId());
+       stm.setString(1, e.getNombre());
+       stm.setString(2, e.getId());
+       System.out.println(e.getNombre());
+        System.out.println(e.getId());
         int count = db.executeUpdate(stm);
         if (count == 0) {
             throw new Exception("CAJERO NO EXISTE");
@@ -66,18 +69,23 @@ public class CajeroDao {
         stm.setString(1, e.getId());
         int count = db.executeUpdate(stm);
         if (count == 0) {
-            throw new Exception("CAJERO NO EXISTE");
+            throw new Exception("CAJERO NO EXISTE3");
         }
     }
 
     public List<Cajero> search(Cajero e) throws Exception {
         List<Cajero> resultado = new ArrayList<Cajero>();
+//        String sql = "select * " +
+//                "from " +
+//                "Cajero t " +
+//                "where t.id like ?";
         String sql = "select * " +
                 "from " +
                 "Cajero t " +
-                "where t.id like ?";
+                "where t.nombre like ?";
         PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, "%" + e.getId() + "%");
+        //stm.setString(1, "%" + e.getId() + "%");
+        stm.setString(1, "%" + e.getNombre() + "%");
         ResultSet rs = db.executeQuery(stm);
         while (rs.next()) {
             Cajero r = from(rs, "t");
