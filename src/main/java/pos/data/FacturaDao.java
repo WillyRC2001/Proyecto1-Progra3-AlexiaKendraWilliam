@@ -155,28 +155,25 @@ public class FacturaDao {
         stm.setInt(1, nuevoContador);
         db.executeUpdate(stm);
     }
+public double getVentas(Categoria c, int anno, int mes) throws Exception {
+    double result = 0;
+    String sql = "select SUM((p.precioUnitario * l.cantidad) * (1 - l.descuento / 100)) as total " +
+            "from Factura f " +
+            "inner join Linea l on f.numero = l.factura " +
+            "inner join Producto p on l.producto = p.codigo " +
+            "where YEAR(f.fecha) = ? and MONTH(f.fecha) = ? and p.categoria = ?";
 
-    public double getVentas(Categoria c, int anno, int mes) throws Exception {
-        double result = 0;
-        String sql = "select f.numero, f.fecha, l.producto, l.cantidad, l.descuento, p.categoria, p.precioUnitario " +
-                "from Factura f " +
-                "inner join Linea l on f.numero = l.factura " +
-                "inner join Producto p on l.producto = p.codigo " +
-                "where YEAR(f.fecha) = ? and MONTH(f.fecha) = ? and p.categoria = ?";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setInt(1, anno);
-        stm.setInt(2, mes);
-        stm.setString(3, c.getId());
-        ResultSet rs = db.executeQuery(stm);
+    PreparedStatement stm = db.prepareStatement(sql);
+    stm.setInt(1, anno);
+    stm.setInt(2, mes);
+    stm.setString(3, c.getId());
+    ResultSet rs = db.executeQuery(stm);
 
-        while (rs.next()) {
-            double precioUnitario = rs.getDouble("precioUnitario");
-            int cantidad = rs.getInt("cantidad");
-            double descuento = rs.getDouble("descuento");
-            result += (precioUnitario * cantidad) * (1 - descuento / 100);
-        }
-
-        return result;
+    if (rs.next()) {
+        result = rs.getDouble("total");
     }
+
+    return result;
+}
 
 }

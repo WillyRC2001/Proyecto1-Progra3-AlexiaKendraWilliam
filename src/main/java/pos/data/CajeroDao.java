@@ -40,7 +40,7 @@ public class CajeroDao {
         if (rs.next()) {
             return from(rs, "t");
         } else {
-            throw new Exception("CAJERO NO EXISTE1");
+            throw new Exception("CAJERO NO EXISTE");
         }
     }
 
@@ -69,7 +69,7 @@ public class CajeroDao {
         stm.setString(1, e.getId());
         int count = db.executeUpdate(stm);
         if (count == 0) {
-            throw new Exception("CAJERO NO EXISTE3");
+            throw new Exception("CAJERO NO EXISTE");
         }
     }
 
