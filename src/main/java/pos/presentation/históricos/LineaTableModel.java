@@ -20,10 +20,6 @@ public class LineaTableModel extends AbstractTableModel<Linea> implements javax.
 
     @Override
     protected Object getPropetyAt(Linea e, int col) {
-        if (e.getProducto() == null) {
-            System.out.println("Producto is null");
-            return "";
-        }
         switch (cols[col]) {
             case CODIGO:
                 return e.getProducto().getCodigo();

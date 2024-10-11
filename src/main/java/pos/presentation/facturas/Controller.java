@@ -130,58 +130,6 @@ public class Controller {
         search(model.getFilter());
     }
 
-//    public void Cobrar() { //metodo base
-//        if (model.getLineaComprados().isEmpty()) {
-//            JOptionPane.showMessageDialog(view.getPanel(), "No hay productos en la factura.", "Error", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//
-//        double totalFactura = model.getTotal();
-//        ViewCobrar dialog = new ViewCobrar(totalFactura);
-//        dialog.pack();
-//        dialog.setVisible(true);
-//        if (!dialog.isPagoExitoso()) {
-//            JOptionPane.showMessageDialog(view.getPanel(), "El pago no se completó. No se ha creado la factura.", "Error", JOptionPane.ERROR_MESSAGE);
-//            return;  // Salir si el pago no fue exitoso
-//        }
-//        Factura factura = model.getCurrent();
-//        factura.setNumero(Service.instance().generarNumeroFactura());
-//        factura.setFecha(LocalDate.now());
-//        factura.setLinea(model.getLineaComprados());
-//        factura.setCliente((Cliente) view.getClienteJcb().getSelectedItem());
-//        factura.setCajero((Cajero) view.getCajeroJcb().getSelectedItem());
-//        try {
-//
-//
-//            for (Linea linea : model.getLineaComprados()) {
-//                Producto producto = linea.getProducto();
-//                int cantidadComprada = linea.getCantidad();
-//                int nuevaCantidad = producto.getExistencias() - cantidadComprada;
-//
-//                if (nuevaCantidad < 0) {
-//                    JOptionPane.showMessageDialog(view.getPanel(), "No hay suficiente stock para el producto: " + producto.getDescripcion(), "Error", JOptionPane.ERROR_MESSAGE);
-//                    return;  // Detener si no hay suficiente stock
-//                }
-//
-//                // Actualizar las existencias del producto
-//                producto.setExistencias(nuevaCantidad);
-//                Service.instance().update(producto);  // Guardar el cambio en la base de datos
-//            }
-//
-//            // Guardar la factura
-//            for (Linea linea : model.getLineaComprados()) {
-//                linea.setFactura(factura);
-//                Service.instance().create(linea);  // Guardar la línea de la factura
-//            }
-//
-//            Service.instance().create(factura);  // Guardar la factura completa
-//            model.setProductosComprados(new ArrayList<>());
-//            model.setCurrent(new Factura());
-//            JOptionPane.showMessageDialog(view.getPanel(), "Factura guardada exitosamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(view.getPanel(), ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
 
     public void Cobrar() { //nuevo (sigue sin servir supongo)
         if (model.getLineaComprados().isEmpty()) {
