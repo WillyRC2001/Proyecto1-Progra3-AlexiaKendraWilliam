@@ -199,7 +199,6 @@ public class Controller {
         }
         Factura factura = model.getCurrent();
         factura.setNumero(Service.instance().generarNumeroFactura());
-        factura.setFecha(LocalDate.now());
         factura.setLinea(model.getLineaComprados());
         factura.setCliente((Cliente) view.getClienteJcb().getSelectedItem());
         factura.setCajero((Cajero) view.getCajeroJcb().getSelectedItem());

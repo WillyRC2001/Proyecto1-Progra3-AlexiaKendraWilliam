@@ -15,19 +15,18 @@ public class FacturaDao {
         db = Database.instance();
     }
 
-    public void create(Factura e) throws Exception {
-        String sql = "insert into " +
-                "Factura " +
-                "(numero, cliente, cajero, fecha) " +
-                "values(?,?,?,?)";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, e.getNumero());
-        stm.setString(2, e.getCliente().getId());
-        stm.setString(3, e.getCajero().getId());
-        stm.setDate(4, java.sql.Date.valueOf(e.getFecha()));
-        db.executeUpdate(stm);
-        // Insertar las líneas de la factura
-    }
+public void create(Factura e) throws Exception {
+    String sql = "insert into " +
+            "Factura " +
+            "(numero, cliente, cajero, fecha) " +
+            "values(?,?,?, NOW())"; // Usar NOW() para la fecha
+    PreparedStatement stm = db.prepareStatement(sql);
+    stm.setString(1, e.getNumero());
+    stm.setString(2, e.getCliente().getId());
+    stm.setString(3, e.getCajero().getId());
+    db.executeUpdate(stm);
+    // Insertar las líneas de la factura
+}
 
     public Factura read(String numero) throws Exception {
         String sql = "select " +
